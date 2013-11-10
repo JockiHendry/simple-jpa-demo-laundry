@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?><persistence xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/persistence" xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd" version="2.0">
+  <persistence-unit name="default" transaction-type="RESOURCE_LOCAL">
+    <provider>org.hibernate.ejb.HibernatePersistence</provider>
+    <class>domain.WorkOrder</class>
+    <class>domain.ItemWorkOrder</class>
+    <class>domain.Work</class>
+    <class>domain.ItemPakaian</class>
+    <class>domain.Pembayaran</class>
+    <class>domain.EventPekerjaan</class>
+    <class>domain.Pelanggan</class>
+    <class>domain.PembayaranCash</class>
+    <class>domain.PembayaranSignedBill</class>
+    <class>domain.PembayaranKartuDebit</class>
+    <class>domain.PembayaranCompliant</class>
+    <class>domain.Kategori</class>
+    <class>domain.JenisWork</class>
+    <properties>
+      <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver"/>
+      <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost/laundry"/>
+      <property name="javax.persistence.jdbc.user" value="laundry"/>
+      <property name="javax.persistence.jdbc.password" value="laundry:)"/>
+      <property name="hibernate.connection.autocommit" value="false"/>
+      <property name="hibernate.dialect" value="org.hibernate.dialect.MySQL5Dialect"/>
+      <property name="hibernate.hbm2ddl.auto" value="create-drop"/>
+      <property name="jadira.usertype.autoRegisterUserTypes" value="true"/>
+    </properties>
+  </persistence-unit>
+</persistence>
