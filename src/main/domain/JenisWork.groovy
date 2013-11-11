@@ -38,5 +38,9 @@ class JenisWork {
     @OneToMany(cascade=CascadeType.ALL, orphanRemoval=true, mappedBy="jenisWork")
     List<Work> works = []
 
+    @Override
+    String toString() {
+        nama
+    }
 }
 

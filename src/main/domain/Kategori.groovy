@@ -36,5 +36,9 @@ class Kategori {
     @OneToMany(cascade=CascadeType.ALL, orphanRemoval=true, mappedBy="kategori")
     List<ItemPakaian> items = []
 
+    @Override
+    String toString() {
+        nama
+    }
 }
 

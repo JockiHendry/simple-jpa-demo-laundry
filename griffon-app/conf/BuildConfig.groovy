@@ -124,7 +124,7 @@ griffon {
 deploy {
     application {
         title = "${appName} ${appVersion}"
-        vendor = System.properties['user.name']
+        vendor = 'Jocki Hendry'
         homepage = "http://localhost/${appName}"
         description {
             complete = "${appName} ${appVersion}"

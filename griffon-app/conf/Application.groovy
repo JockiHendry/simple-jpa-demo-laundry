@@ -15,21 +15,46 @@
  */
 
 application {
-    title = 'Laundry'
-    startupGroups = ['laundry']
-
-    // Should Griffon exit when no Griffon created frames are showing?
+    title = 'Demo Sistem Laundry'
+    startupGroups = ['mainGroup']
     autoShutdown = true
-
-    // If you want some non-standard application class, apply it here
-    //frameClass = 'javax.swing.JFrame'
+    locale = 'id_ID'
 }
 mvcGroups {
-    // MVC Group for "laundry"
-    'laundry' {
-        model      = 'laundry.LaundryModel'
-        view       = 'laundry.LaundryView'
-        controller = 'laundry.LaundryController'
+    // MVC Group for "work"
+    'work' {
+        model      = 'project.WorkModel'
+        view       = 'project.WorkView'
+        controller = 'project.WorkController'
+    }
+
+    // MVC Group for "jenisWork"
+    'jenisWork' {
+        model      = 'project.JenisWorkModel'
+        view       = 'project.JenisWorkView'
+        controller = 'project.JenisWorkController'
+    }
+
+
+    // MVC Group for "itemPakaian"
+    'itemPakaian' {
+        model      = 'project.ItemPakaianModel'
+        view       = 'project.ItemPakaianView'
+        controller = 'project.ItemPakaianController'
+    }
+
+    // MVC Group for "kategori"
+    'kategori' {
+        model      = 'project.KategoriModel'
+        view       = 'project.KategoriView'
+        controller = 'project.KategoriController'
+    }
+
+    // MVC Group for "mainGroup"
+    'mainGroup' {
+        model      = 'project.MainGroupModel'
+        view       = 'project.MainGroupView'
+        controller = 'project.MainGroupController'
     }
 
 }

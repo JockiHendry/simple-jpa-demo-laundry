@@ -36,5 +36,9 @@ class ItemPakaian {
     @OneToMany(cascade=CascadeType.ALL, orphanRemoval=true, mappedBy="itemPakaian")
     List<Work> works = []
 
+    @Override
+    String toString() {
+        nama
+    }
 }
 
