@@ -26,8 +26,8 @@ import javax.validation.constraints.*
 import org.hibernate.validator.constraints.*
 import org.joda.time.*
 
-@DomainClass @Entity @Canonical
-class Work {
+@DomainClass @Entity @Canonical(excludes = 'harga')
+class Work implements Comparable {
 
     @NotNull @ManyToOne
     ItemPakaian itemPakaian
@@ -37,6 +37,18 @@ class Work {
 
     @NotNull
     BigDecimal harga
+
+    @Override
+    int compareTo(Object o) {
+        if (!o instanceof Work) return -1
+        if (!itemPakaian && !o.itemPakaian) {
+            return 0
+        } else if (itemPakaian && !o.itemPakaian) {
+            return 1
+        } else {
+            return itemPakaian.compareTo(o.itemPakaian)
+        }
+    }
 
 }
 

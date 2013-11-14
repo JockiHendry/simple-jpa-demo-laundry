@@ -76,6 +76,10 @@ class KategoriController {
     def delete = {
         Kategori kategori = view.table.selectionModel.selected[0]
 		remove(kategori)
+        execInsideUISync {
+            model.kategoriList.remove(kategori)
+            clear()
+        }
     }
 
     @Transaction(Transaction.Policy.SKIP)

@@ -76,6 +76,10 @@ class JenisWorkController {
     def delete = {
         JenisWork jenisWork = view.table.selectionModel.selected[0]
         remove(jenisWork)
+        execInsideUISync {
+            model.jenisWorkList.remove(jenisWork)
+            clear()
+        }
     }
 
     @Transaction(Transaction.Policy.SKIP)

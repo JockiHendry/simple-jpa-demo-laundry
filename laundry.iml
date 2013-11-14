@@ -119,15 +119,6 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://$MODULE_DIR$/staging/griffon-simple-jpa-runtime-0.5.1.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library">
-      <library>
-        <CLASSES>
           <root url="jar://$MODULE_DIR$/staging/swingx-autocomplete-1.6.4.jar!/" />
         </CLASSES>
         <JAVADOC />
@@ -399,6 +390,15 @@
       <library>
         <CLASSES>
           <root url="jar://$MODULE_DIR$/staging/hibernate-core-4.2.0.Final.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/staging/griffon-simple-jpa-runtime-0.5.2.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />

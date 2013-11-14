@@ -1,14 +1,30 @@
+/*
+ * Copyright 2013 Jocki Hendry.
+ *
+ * Licensed under the Apache License, Version 2.0 (the 'License');
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an 'AS IS' BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package project
 
 import domain.*
 import simplejpa.transaction.Transaction
-import javax.swing.*
+
 import javax.swing.event.ListSelectionEvent
 
 @Transaction
 class WorkController {
 
-    final static String SEMUA_ITEM_PAKAIAN = "- Semua Item Pakaian -"
+    final static String SEMUA = "- Semua Item  -"
 
     WorkModel model
     def view
@@ -21,63 +37,81 @@ class WorkController {
         destroyEntityManager()
     }
 
-    @Transaction(newSession = true)
+    @Transaction
     def listAll = {
         execInsideUISync {
             model.workList.clear()
-            model.itemPakaianList.clear()
+            model.kategoriSearchList.clear()
             model.itemPakaianSearchList.clear()
-            model.jenisWorkList.clear()
+            model.jenisWorkSearchList.clear()
         }
 
+        List kategoriResult = findAllKategori([orderBy: 'nama'])
+        List itemPakaianResult = findAllItemPakaian([orderBy: 'nama'])
+        List jenisWorkResult = findAllJenisWork([orderBy: 'nama'])
         List workResult = findAllWork()
-        List itemPakaianResult = findAllItemPakaian()
-        List jenisWorkResult = findAllJenisWork()
+
+        // Menambah Work baru bila belum terdaftar
+        for (ItemPakaian itemPakaian: itemPakaianResult) {
+            for (JenisWork jenisWork: jenisWorkResult) {
+                if (!workResult.find {it.itemPakaian == itemPakaian && it.jenisWork == jenisWork}) {
+                    Work work = new Work(itemPakaian, jenisWork)
+                    work.harga = 0
+                    persist(work)
+                    workResult << work
+                }
+            }
+        }
 
         execInsideUISync {
-            model.workList.addAll(workResult)
+            model.workList.addAll(workResult.sort())
             model.searchMessage = app.getMessage("simplejpa.search.all.message")
-            model.itemPakaianSearchList << SEMUA_ITEM_PAKAIAN
+
+            model.kategoriSearchList << SEMUA
+            model.kategoriSearchList.addAll(kategoriResult)
+            model.kategoriSearch.selectedItem = SEMUA
+
+            model.itemPakaianSearchList << SEMUA
             model.itemPakaianSearchList.addAll(itemPakaianResult)
-            model.itemPakaianSearch.selectedItem = SEMUA_ITEM_PAKAIAN
-            model.itemPakaianList.addAll(itemPakaianResult)
-            model.jenisWorkList.addAll(jenisWorkResult)
+            model.itemPakaianSearch.selectedItem = SEMUA
+
+            model.jenisWorkSearchList << SEMUA
+            model.jenisWorkSearchList.addAll(jenisWorkResult)
+            model.jenisWorkSearch.selectedItem = SEMUA
         }
     }
 
-    @Transaction(newSession = true)
+    @Transaction
     def search = {
         execInsideUISync { model.workList.clear() }
         List result
-        if (model.itemPakaianSearch.selectedItem==SEMUA_ITEM_PAKAIAN) {
-            result = findAllWork()
+        if (model.kategoriSearch.selectedItem==SEMUA && model.itemPakaianSearch.selectedItem==SEMUA && model.jenisWorkSearch.selectedItem==SEMUA) {
+            result = findAllWork().sort()
         } else {
-            result = findAllWorkByItemPakaian(model.itemPakaianSearch.selectedItem)
+            result = findAllWorkByDsl() {
+                if (model.kategoriSearch.selectedItem!=SEMUA) {
+                    itemPakaian__kategori eq(model.kategoriSearch.selectedItem)
+                }
+                if (model.itemPakaianSearch.selectedItem!=SEMUA) {
+                    and()
+                    itemPakaian eq(model.itemPakaianSearch.selectedItem)
+                }
+                if (model.jenisWorkSearch.selectedItem!=SEMUA) {
+                    and()
+                    jenisWork eq(model.jenisWorkSearch.selectedItem)
+                }
+            }.sort()
         }
         execInsideUISync {
             model.workList.addAll(result)
-            model.searchMessage = "Menampilkan hasil pencarian item pakaian ${model.itemPakaianSearch.selectedItem}"
         }
     }
 
     def save = {
-        Work work = new Work('itemPakaian': model.itemPakaian.selectedItem, 'jenisWork': model.jenisWork.selectedItem, 'harga': model.harga)
-
-        if (!validate(work)) return
-
-        if (model.id == null) {
-            work = merge(work)
-            execInsideUISync {
-                model.workList << work
-                view.table.changeSelection(model.workList.size() - 1, 0, false, false)
-            }
-        } else {
-            // Update operation
+        if (model.id != null) {
             Work selectedWork = view.table.selectionModel.selected[0]
-            selectedWork.itemPakaian = model.itemPakaian.selectedItem
-            selectedWork.jenisWork = model.jenisWork.selectedItem
             selectedWork.harga = model.harga
-
+            if (!validate(selectedWork)) return
             selectedWork = merge(selectedWork)
             execInsideUISync { view.table.selectionModel.selected[0] = selectedWork }
         }
@@ -97,8 +131,6 @@ class WorkController {
     def clear = {
         execInsideUISync {
             model.id = null
-            model.itemPakaian.selectedItem = null
-            model.jenisWork.selectedItem = null
             model.harga = null
 
             model.errors.clear()
@@ -115,8 +147,6 @@ class WorkController {
                 Work selected = view.table.selectionModel.selected[0]
                 model.errors.clear()
                 model.id = selected.id
-                model.itemPakaian.selectedItem = selected.itemPakaian
-                model.jenisWork.selectedItem = selected.jenisWork
                 model.harga = selected.harga
             }
         }

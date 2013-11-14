@@ -93,6 +93,10 @@ class ItemPakaianController {
     def delete = {
         ItemPakaian itemPakaian = view.table.selectionModel.selected[0]
         remove(itemPakaian)
+        execInsideUISync {
+            model.itemPakaianList.remove(itemPakaian)
+            clear()
+        }
     }
 
     @Transaction(Transaction.Policy.SKIP)

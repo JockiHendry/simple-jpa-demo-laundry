@@ -14,8 +14,6 @@
  * limitations under the License.
  */
 
-
-
 package domain
 
 import groovy.transform.*
@@ -27,7 +25,7 @@ import org.hibernate.validator.constraints.*
 import org.joda.time.*
 
 @DomainClass @Entity @Canonical(excludes='works')
-class JenisWork {
+class JenisWork implements Comparable {
 
     @NotBlank @Size(min=2, max=50)
     String nama
@@ -41,6 +39,18 @@ class JenisWork {
     @Override
     String toString() {
         nama
+    }
+
+    @Override
+    int compareTo(Object o) {
+        if (!o instanceof JenisWork) return -1
+        if (!nama && !o.nama) {
+            return 0
+        } else if (!nama) {
+            return 1
+        } else {
+            return nama.compareToIgnoreCase(o.nama)
+        }
     }
 }
 

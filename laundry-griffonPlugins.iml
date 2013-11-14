@@ -3,7 +3,7 @@
   <component name="NewModuleRootManager" inherit-compiler-output="true">
     <exclude-output />
     <content url="file://$USER_HOME$/.griffon/1.4.0/projects/laundry/plugins/miglayout-1.0.0" />
-    <content url="file://$USER_HOME$/.griffon/1.4.0/projects/laundry/plugins/simple-jpa-0.5.1" />
+    <content url="file://$USER_HOME$/.griffon/1.4.0/projects/laundry/plugins/simple-jpa-0.5.2" />
     <content url="file://$USER_HOME$/.griffon/1.4.0/projects/laundry/plugins/swing-1.4.0" />
     <content url="file://$USER_HOME$/.griffon/1.4.0/projects/laundry/plugins/swingx-builder-0.7" />
     <orderEntry type="inheritedJdk" />

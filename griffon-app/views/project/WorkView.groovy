@@ -20,8 +20,12 @@ application(title: 'Work',
 
         panel(constraints: PAGE_START) {
             flowLayout(alignment: FlowLayout.LEADING)
+            label("Kategori")
+            comboBox(id: 'kategoriSearch', model: model.kategoriSearch)
             label("Item Pakaian")
             comboBox(id: 'itemPakaianSearch', model: model.itemPakaianSearch)
+            label("Jenis Pekerjaan")
+            comboBox(id: 'jenisWorkSearch', model: model.jenisWorkSearch)
             button(app.getMessage('simplejpa.search.label'), actionPerformed: controller.search)
             button(app.getMessage('simplejpa.search.all.label'), actionPerformed: controller.listAll)
         }
@@ -43,12 +47,6 @@ application(title: 'Work',
         }
 
         taskPane(id: "form", layout: new MigLayout('', '[right][left][left,grow]', ''), constraints: PAGE_END) {
-            label('Item Pakaian:')
-            comboBox(id: 'itemPakaian', model: model.itemPakaian, templateRenderer: '${value}', errorPath: 'itemPakaian')
-            errorLabel(path: 'itemPakaian', constraints: 'wrap')
-            label('Jenis Work:')
-            comboBox(id: 'jenisWork', model: model.jenisWork, templateRenderer: '${value}', errorPath: 'jenisWork')
-            errorLabel(path: 'jenisWork', constraints: 'wrap')
             label('Harga:')
             numberTextField(id: 'harga', columns: 20, bindTo: 'harga', nfParseBigDecimal: true, errorPath: 'harga')
             errorLabel(path: 'harga', constraints: 'wrap')
@@ -56,17 +54,10 @@ application(title: 'Work',
 
             panel(constraints: 'span, growx, wrap') {
                 flowLayout(alignment: FlowLayout.LEADING)
-                button(app.getMessage("simplejpa.dialog.save.button"), actionPerformed: {
-                    if (model.id != null) {
-                        if (JOptionPane.showConfirmDialog(mainPanel, app.getMessage("simplejpa.dialog.update.message"),
-                                app.getMessage("simplejpa.dialog.update.title"), JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE) != JOptionPane.YES_OPTION) {
-                            return
-                        }
-                    }
+                button(app.getMessage("simplejpa.dialog.save.button"), visible: bind {table.isRowSelected }, actionPerformed: {
                     controller.save()
-                    itemPakaian.requestFocusInWindow()
+                    harga.requestFocusInWindow()
                 })
-                button(app.getMessage("simplejpa.dialog.cancel.button"), visible: bind { table.isRowSelected }, actionPerformed: controller.clear)
                 button(app.getMessage("simplejpa.dialog.delete.button"), visible: bind { table.isRowSelected }, actionPerformed: {
                     if (JOptionPane.showConfirmDialog(mainPanel, app.getMessage("simplejpa.dialog.delete.message"),
                             app.getMessage("simplejpa.dialog.delete.title"), JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE) == JOptionPane.YES_OPTION) {
