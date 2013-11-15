@@ -25,7 +25,7 @@ import org.hibernate.validator.constraints.*
 import org.joda.time.*
 
 @DomainClass @Entity @Canonical
-abstract class Pembayaran {
+abstract class Pembayaran implements Comparable {
 
     @NotNull @Type(type="org.jadira.usertype.dateandtime.joda.PersistentLocalDate")
     LocalDate tanggal
@@ -37,6 +37,22 @@ abstract class Pembayaran {
     String keterangan
 
     public abstract BigDecimal total()
+
+    public abstract Boolean isLunas()
+
+    public abstract String getNamaDeskripsi()
+
+    @Override
+    int compareTo(Object o) {
+        if (!o instanceof Pembayaran) return -1
+        if (!getNamaDeskripsi()&& !o.getNamaDeskripsi()) {
+            return 0
+        } else if (!o.getNamaDeskripsi()) {
+            return -1
+        } else {
+            return getNamaDeskripsi().compareTo(o.getNamaDeskripsi())
+        }
+    }
 
 }
 

@@ -34,5 +34,15 @@ class PembayaranKartuDebit extends Pembayaran {
     BigDecimal total() {
         super.tagihan
     }
+
+    @Override
+    Boolean isLunas() {
+        true
+    }
+
+    @Override
+    String getNamaDeskripsi() {
+        'Kartu Debit'
+    }
 }
 

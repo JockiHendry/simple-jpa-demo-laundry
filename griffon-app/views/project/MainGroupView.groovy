@@ -12,13 +12,6 @@ def popupMaintenance = {
 
 actions {
 //	action(id: 'eventPekerjaan', name: 'Event Pekerjaan', actionCommandKey: 'eventPekerjaan', closure: controller.switchPage)
-/*
-	action(id: 'pembayaran', name: 'Pembayaran', actionCommandKey: 'pembayaran', closure: controller.switchPage)
-	action(id: 'pembayaranCash', name: 'Pembayaran Cash', actionCommandKey: 'pembayaranCash', closure: controller.switchPage)
-	action(id: 'pembayaranCompliant', name: 'Pembayaran Compliant', actionCommandKey: 'pembayaranCompliant', closure: controller.switchPage)
-	action(id: 'pembayaranKartuDebit', name: 'Pembayaran Kartu Debit', actionCommandKey: 'pembayaranKartuDebit', closure: controller.switchPage)
-	action(id: 'pembayaranSignedBill', name: 'Pembayaran Signed Bill', actionCommandKey: 'pembayaranSignedBill', closure: controller.switchPage)
-*/
     action(id: 'pelanggan', name: 'Pelanggan', actionCommandKey: 'pelanggan', mnemonic: KeyEvent.VK_P,
         smallIcon: imageIcon('/menu_pelanggan.png'), closure: controller.switchPage)
     action(id: 'workOrder', name: 'Order', actionCommandKey: 'workOrder', mnemonic: KeyEvent.VK_O,
@@ -58,11 +51,6 @@ application(id: 'mainFrame',
     toolBar(constraints: BorderLayout.PAGE_START, floatable: false) {
         buttonGroup(id: 'buttons')
 //		toggleButton(buttonGroup: buttons, action: eventPekerjaan, verticalTextPosition: SwingConstants.BOTTOM, horizontalTextPosition: SwingConstants.CENTER)
-//		toggleButton(buttonGroup: buttons, action: pembayaran, verticalTextPosition: SwingConstants.BOTTOM, horizontalTextPosition: SwingConstants.CENTER)
-//		toggleButton(buttonGroup: buttons, action: pembayaranCash, verticalTextPosition: SwingConstants.BOTTOM, horizontalTextPosition: SwingConstants.CENTER)
-//		toggleButton(buttonGroup: buttons, action: pembayaranCompliant, verticalTextPosition: SwingConstants.BOTTOM, horizontalTextPosition: SwingConstants.CENTER)
-//		toggleButton(buttonGroup: buttons, action: pembayaranKartuDebit, verticalTextPosition: SwingConstants.BOTTOM, horizontalTextPosition: SwingConstants.CENTER)
-//		toggleButton(buttonGroup: buttons, action: pembayaranSignedBill, verticalTextPosition: SwingConstants.BOTTOM, horizontalTextPosition: SwingConstants.CENTER)
 		toggleButton(buttonGroup: buttons, action: pelanggan, verticalTextPosition: SwingConstants.BOTTOM, horizontalTextPosition: SwingConstants.CENTER)
 		toggleButton(buttonGroup: buttons, action: workOrder, verticalTextPosition: SwingConstants.BOTTOM, horizontalTextPosition: SwingConstants.CENTER)
         toggleButton(buttonGroup: buttons, action: maintenance, id: 'maintenanceButton', verticalTextPosition: SwingConstants.BOTTOM, horizontalTextPosition: SwingConstants.CENTER)

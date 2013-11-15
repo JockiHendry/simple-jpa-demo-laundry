@@ -32,5 +32,14 @@ class PembayaranCompliant extends Pembayaran {
         0
     }
 
+    @Override
+    Boolean isLunas() {
+        true
+    }
+
+    @Override
+    String getNamaDeskripsi() {
+        'Compliant'
+    }
 }
 

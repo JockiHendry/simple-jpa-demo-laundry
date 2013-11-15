@@ -15,6 +15,14 @@ class WorkOrderModel {
     @Bindable String nomor
     @Bindable LocalDate tanggal
 
+    @Bindable boolean pembayaranCash
+    @Bindable boolean pembayaranSignedBill
+    @Bindable boolean pembayaranKartuDebit
+    @Bindable boolean pembayaranCompliant
+    @Bindable String keteranganPembayaran
+    @Bindable BigDecimal jumlahBayarDimuka
+    @Bindable String nomorKartu
+
     @Bindable String nomorSearch
     @Bindable String searchMessage
     @Bindable LocalDate tanggalMulaiSearch

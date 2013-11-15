@@ -32,5 +32,15 @@ class PembayaranCash extends Pembayaran {
         super.tagihan
     }
 
+    @Override
+    Boolean isLunas() {
+        true
+    }
+
+    @Override
+    String getNamaDeskripsi() {
+        'Tunai'
+    }
+
 }
 

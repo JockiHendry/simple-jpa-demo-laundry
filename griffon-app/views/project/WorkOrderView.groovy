@@ -42,14 +42,20 @@ application(title: 'Work Order',
             }
             scrollPane(constraints: CENTER) {
                 glazedTable(id: 'table', list: model.workOrderList, sortingStrategy: SINGLE_COLUMN, onValueChanged: controller.tableSelectionChanged) {
-                    glazedColumn(name: 'Nomor', property: 'nomor')
-                    glazedColumn(name: 'Tanggal', property: 'tanggal') {
+                    glazedColumn(name: 'Nomor', property: 'nomor', width: 120)
+                    glazedColumn(name: 'Tanggal', property: 'tanggal', width: 100) {
                         templateRenderer("\${it.toString('dd-MM-yyyy')}")
                     }
                     glazedColumn(name: 'Pelanggan', property: 'pelanggan') {
                         templateRenderer('${it.nama}')
                     }
-                    glazedColumn(name: 'Status', property: 'statusTerakhir')
+                    glazedColumn(name: 'Status', property: 'statusTerakhir', width: 150)
+                    glazedColumn(name: 'Pembayaran', property: 'pembayaran', width: 200) {
+                        templateRenderer(templateExpression: { it?.getNamaDeskripsi()?: '-'})
+                    }
+                    glazedColumn(name: 'Lunas?', expression: {it.pembayaran?.isLunas()}, width: 60) {
+                        templateRenderer(templateExpression: { it?'Y':'-'})
+                    }
                     glazedColumn(name: 'Total', expression: {it.total()}, columnClass: Integer) {
                         templateRenderer('${currencyFormat(it)}', horizontalAlignment: RIGHT)
                     }
@@ -57,7 +63,7 @@ application(title: 'Work Order',
             }
         }
 
-        taskPane(id: "form", layout: new MigLayout('', '[right][left][left,grow]', ''), constraints: PAGE_END) {
+        taskPane(id: "form", layout: new MigLayout('hidemode 2', '[right][left][left,grow]', ''), constraints: PAGE_END) {
             label('Nomor:')
             textField(id: 'nomor', columns: 20, text: bind('nomor', target: model, mutual: true), errorPath: 'nomor')
             errorLabel(path: 'nomor', constraints: 'wrap')
@@ -99,13 +105,33 @@ application(title: 'Work Order',
 //            label('Status Terakhir:')
 //            comboBox(id: 'statusTerakhir', model: model.statusTerakhir, errorPath: 'statusTerakhir')
 //            errorLabel(path: 'statusTerakhir', constraints: 'wrap')
-//            label('Pembayaran:')
-//            mvcPopupButton(id: 'pembayaran', text: 'Pembayaran', errorPath: 'pembayaran', mvcGroup: 'pembayaranAsPair',
-//                    args: { [pair: model.pembayaran] }, dialogProperties: [title: 'Pembayaran'], onFinish: { m, v, c ->
-//                model.pembayaran = m.pembayaran
-//            }
-//            )
-//            errorLabel(path: 'pembayaran', constraints: 'wrap')
+//
+            label('Pembayaran:')
+            pembayaranGroup = buttonGroup()
+            panel {
+                radioButton('Tunai', id: 'pembayaranCash', buttonGroup: pembayaranGroup, actionPerformed: { mainPanel.revalidate() },
+                    selected: bind('pembayaranCash', target: model, mutual: true))
+                radioButton('Signed Bill', id: 'pembayaranSignedBill', buttonGroup: pembayaranGroup, actionPerformed: { mainPanel.revalidate() },
+                    selected: bind('pembayaranSignedBill', target: model, mutual: true))
+                radioButton('Kartu Debit', id: 'pembayaranKartuDebit', buttonGroup: pembayaranGroup, actionPerformed: { mainPanel.revalidate() },
+                    selected: bind('pembayaranKartuDebit', target: model, mutual: true))
+                radioButton('Compliant', id: 'pembayaranCompliant', buttonGroup: pembayaranGroup, actionPerformed: { mainPanel.revalidate() },
+                    selected: bind('pembayaranCompliant', target: model, mutual: true))
+            }
+            errorLabel(path: 'pembayaran', constraints: 'wrap')
+
+            label('Ket. Pembayaran:')
+            textField(id: 'keteranganPembayaran', columns: 20, text: bind('keteranganPembayaran', target: model, mutual: true),
+                constraints: 'wrap')
+
+            label('Downpayment:', visible: bind{model.pembayaranSignedBill}, constraints: 'hidemode 3')
+            numberTextField(id: 'jumlahBayarDimuka', columns: 20, bindTo: 'jumlahBayarDimuka', nfParseBigDecimal: true,
+                visible: bind {model.pembayaranSignedBill}, constraints: 'hidemode 3, wrap')
+
+            label('Nomor Kartu:', visible: bind{model.pembayaranKartuDebit})
+            textField(id: 'nomorKartu', columns: 20, text: bind('nomorKartu', target: model, mutual: true),
+                visible: bind {model.pembayaranKartuDebit}, constraints: 'wrap')
+
             panel(constraints: 'span, growx, wrap') {
                 flowLayout(alignment: FlowLayout.LEADING)
                 button(app.getMessage("simplejpa.dialog.save.button"), actionPerformed: {

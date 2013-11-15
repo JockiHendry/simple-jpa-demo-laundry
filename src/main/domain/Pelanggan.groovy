@@ -25,7 +25,7 @@ import org.hibernate.validator.constraints.*
 import org.joda.time.*
 
 @DomainClass @Entity @Canonical
-class Pelanggan {
+class Pelanggan implements Comparable {
 
     @NotBlank @Size(min=2, max=50)
     String nama
@@ -36,5 +36,16 @@ class Pelanggan {
     @Size(max=50)
     String nomorTelepon
 
+    @Override
+    int compareTo(Object o) {
+        if (!o instanceof Pelanggan) return -1
+        if (!nama && !o.nama) {
+            return 0
+        } else if (!o.nama) {
+            return -1
+        } else {
+            return nama.compareTo(o.nama)
+        }
+    }
 }
 

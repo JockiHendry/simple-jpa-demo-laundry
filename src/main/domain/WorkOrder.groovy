@@ -45,7 +45,7 @@ class WorkOrder {
     @NotNull @Enumerated
     StatusPekerjaan statusTerakhir
 
-    @OneToOne
+    @NotNull @OneToOne
     Pembayaran pembayaran
 
     void tambahItem(Work work) {

@@ -38,5 +38,14 @@ class PembayaranSignedBill extends Pembayaran {
         super.tagihan - jumlahBayarDimuka
     }
 
+    @Override
+    Boolean isLunas() {
+        tanggalPelunasan != null
+    }
+
+    @Override
+    String getNamaDeskripsi() {
+        'Signed Bill'
+    }
 }
 

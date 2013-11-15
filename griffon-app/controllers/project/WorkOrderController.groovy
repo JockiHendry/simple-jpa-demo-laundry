@@ -66,6 +66,24 @@ class WorkOrderController {
             itemWorkOrder.workOrder = workOrder
         }
         if (!workOrder.statusTerakhir) workOrder.diterima()
+
+        Pembayaran pembayaran
+        if (model.pembayaranCash) {
+            pembayaran = new PembayaranCash(tanggal: workOrder.tanggal, tagihan: workOrder.total(), keterangan: model.keteranganPembayaran)
+        } else if (model.pembayaranSignedBill) {
+            pembayaran = new PembayaranSignedBill(tanggal: workOrder.tanggal, tagihan: workOrder.total(),
+                keterangan: model.keteranganPembayaran, jumlahBayarDimuka: model.jumlahBayarDimuka)
+        } else if (model.pembayaranKartuDebit) {
+            pembayaran = new PembayaranKartuDebit(tanggal: workOrder.tanggal, tagihan: workOrder.total(),
+                keterangan: model.keteranganPembayaran, nomorKartu: model.nomorKartu)
+        } else if (model.pembayaranCompliant) {
+            pembayaran = new PembayaranCompliant(tanggal: workOrder.tanggal, tagihan: workOrder.total(),
+                keterangan: model.keteranganPembayaran)
+        }
+        model.pembayaran = pembayaran
+        workOrder.pembayaran = pembayaran
+
+
         if (!validate(workOrder)) return
 
         if (model.id == null) {
@@ -81,7 +99,9 @@ class WorkOrderController {
                 return
             }
 
+            persist(workOrder.pembayaran)
             workOrder = merge(workOrder)
+
             execInsideUISync {
                 model.workOrderList << workOrder
                 view.table.changeSelection(model.workOrderList.size() - 1, 0, false, false)
@@ -97,6 +117,11 @@ class WorkOrderController {
             selectedWorkOrder.itemWorkOrders.each { ItemWorkOrder itemWorkOrder ->
                 itemWorkOrder.workOrder = selectedWorkOrder
             }
+            if (selectedWorkOrder.pembayaran!=model.pembayaran) {
+                if (selectedWorkOrder.pembayaran) remove(selectedWorkOrder.pembayaran)
+                persist(model.pembayaran)
+                selectedWorkOrder.pembayaran = model.pembayaran
+            }
             selectedWorkOrder = merge(selectedWorkOrder)
             execInsideUISync { view.table.selectionModel.selected[0] = selectedWorkOrder }
         }
@@ -105,7 +130,9 @@ class WorkOrderController {
 
     def delete = {
         WorkOrder workOrder = view.table.selectionModel.selected[0]
+        Pembayaran pembayaran = workOrder.pembayaran
         remove(workOrder)
+        remove(pembayaran)
         execInsideUISync {
             model.workOrderList.remove(workOrder)
             clear()
@@ -121,6 +148,13 @@ class WorkOrderController {
             model.statusTerakhir = null
             model.itemWorkOrders.clear()
             model.pembayaran = null
+            model.keteranganPembayaran = null
+            model.jumlahBayarDimuka = null
+            model.pembayaranCash = true
+            model.pembayaranSignedBill = false
+            model.pembayaranKartuDebit = false
+            model.pembayaranCompliant = false
+            model.nomorKartu = null
             model.errors.clear()
             view.table.selectionModel.clearSelection()
         }
@@ -143,6 +177,18 @@ class WorkOrderController {
                 model.itemWorkOrders.clear()
                 model.itemWorkOrders.addAll(selected.itemWorkOrders)
                 model.pembayaran = selected.pembayaran
+                model.pembayaranCash = model.pembayaran instanceof PembayaranCash
+                model.pembayaranSignedBill = model.pembayaran instanceof PembayaranSignedBill
+                model.pembayaranKartuDebit = model.pembayaran instanceof PembayaranKartuDebit
+                model.pembayaranCompliant = model.pembayaran instanceof PembayaranCompliant
+                if (model.pembayaranSignedBill) {
+                    model.jumlahBayarDimuka = selected.pembayaran.jumlahBayarDimuka
+                }
+                if (model.pembayaranKartuDebit) {
+                    model.nomorKartu = selected.pembayaran.nomorKartu
+                }
+
+                model.keteranganPembayaran = selected.pembayaran?.keterangan
             }
         }
     }

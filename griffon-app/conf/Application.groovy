@@ -21,12 +21,6 @@ application {
     locale = 'id_ID'
 }
 mvcGroups {
-//    // MVC Group for "pembayaranAsPair"
-//    'pembayaranAsPair' {
-//        model      = 'project.PembayaranAsPairModel'
-//        view       = 'project.PembayaranAsPairView'
-//        controller = 'project.PembayaranAsPairController'
-//    }
 
 //    // MVC Group for "eventPekerjaanAsChild"
 //    'eventPekerjaanAsChild' {
