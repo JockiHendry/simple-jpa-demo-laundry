@@ -44,4 +44,6 @@ class WorkModel {
 
     BasicEventList<Work> workList = new BasicEventList<>()
 
+    @Bindable boolean popupMode = false
+
 }

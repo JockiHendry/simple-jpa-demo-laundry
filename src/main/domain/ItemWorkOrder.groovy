@@ -18,20 +18,27 @@ package domain
 
 import groovy.transform.*
 import simplejpa.DomainClass
+import validation.Pengisian
+
 import javax.persistence.*
 import org.hibernate.annotations.Type
 import javax.validation.constraints.*
 import org.hibernate.validator.constraints.*
 import org.joda.time.*
 
+import javax.validation.groups.Default
+
 @DomainClass @Entity @Canonical
 class ItemWorkOrder {
 
-    @NotNull @ManyToOne
+    @NotNull(groups=[Pengisian, Default]) @ManyToOne
     Work work
 
-    @NotNull
+    @NotNull(groups=[Pengisian, Default])
     BigDecimal harga
+
+    @NotNull(groups=[Pengisian, Default]) @Min(0l)
+    Integer jumlah
 
     @NotNull @ManyToOne
     WorkOrder workOrder

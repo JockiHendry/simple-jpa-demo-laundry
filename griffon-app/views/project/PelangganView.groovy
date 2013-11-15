@@ -1,11 +1,25 @@
 package project
 
+import javax.swing.JComponent
+import javax.swing.KeyStroke
+import javax.swing.SwingConstants
+import javax.swing.SwingUtilities
+import java.awt.event.KeyEvent
+
 import static ca.odell.glazedlists.gui.AbstractTableComparatorChooser.*
 import static javax.swing.SwingConstants.*
 import net.miginfocom.swing.MigLayout
 import org.joda.time.*
 import java.awt.*
 import org.jdesktop.swingx.prompt.PromptSupport
+
+actions {
+    action(id: 'pilih', name: 'Pilih', mnemonic: KeyEvent.VK_P, closure: {
+        if (model.popupMode) {
+            SwingUtilities.getWindowAncestor(mainPanel).visible = false
+        }
+    })
+}
 
 application(title: 'Pelanggan',
         preferredSize: [520, 340],
@@ -20,11 +34,19 @@ application(title: 'Pelanggan',
         borderLayout()
 
         panel(constraints: PAGE_START) {
-            flowLayout(alignment: FlowLayout.LEADING)
-            label("Nama")
-            textField(id: 'namaSearch', columns: 20, text: bind('namaSearch', target: model, mutual: true), actionPerformed: controller.search)
-            button(app.getMessage('simplejpa.search.label'), actionPerformed: controller.search)
-            button(app.getMessage('simplejpa.search.all.label'), actionPerformed: controller.listAll)
+            borderLayout()
+            label('<html><b>Petunjuk:</b> <i>Cari dan pilih pelanggan di tabel, kemudian klik tombol Pilih untuk selesai!</i></html>',
+                visible: bind {model.popupMode}, horizontalAlignment: CENTER, constraints: PAGE_START)
+            panel(constraints: CENTER) {
+                flowLayout(alignment: FlowLayout.LEADING)
+                label("Nama")
+                textField(id: 'namaSearch', columns: 20, text: bind('namaSearch', target: model, mutual: true),
+                        actionPerformed: controller.search, keyPressed: { KeyEvent k ->
+                    if (k.keyCode==KeyEvent.VK_DOWN) table.requestFocusInWindow()
+                })
+                button(app.getMessage('simplejpa.search.label'), actionPerformed: controller.search)
+                button(app.getMessage('simplejpa.search.all.label'), actionPerformed: controller.listAll)
+            }
         }
 
         panel(constraints: CENTER) {
@@ -37,6 +59,8 @@ application(title: 'Pelanggan',
                     glazedColumn(name: 'Nama', property: 'nama')
                     glazedColumn(name: 'Alamat', property: 'alamat')
                     glazedColumn(name: 'Nomor Telepon', property: 'nomorTelepon')
+                    keyStrokeAction(actionKey: 'pilih', condition: JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT,
+                        keyStroke: KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, 0), action: pilih)
                 }
             }
         }
@@ -55,6 +79,7 @@ application(title: 'Pelanggan',
 
             panel(constraints: 'span, growx, wrap') {
                 flowLayout(alignment: FlowLayout.LEADING)
+                button('Pilih', visible: bind('isRowSelected', source: table, converter: {it && model.popupMode}), action: pilih)
                 button(app.getMessage("simplejpa.dialog.save.button"), actionPerformed: {
                     if (model.id != null) {
                         if (JOptionPane.showConfirmDialog(mainPanel, app.getMessage("simplejpa.dialog.update.message"),

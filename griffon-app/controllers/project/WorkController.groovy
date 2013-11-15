@@ -30,6 +30,7 @@ class WorkController {
     def view
 
     void mvcGroupInit(Map args) {
+        if (args.'popup') model.popupMode = true
         listAll()
     }
 
@@ -78,6 +79,10 @@ class WorkController {
             model.jenisWorkSearchList << SEMUA
             model.jenisWorkSearchList.addAll(jenisWorkResult)
             model.jenisWorkSearch.selectedItem = SEMUA
+
+            if (workResult.size() > 0) {
+                view.table.requestFocusInWindow()
+            }
         }
     }
 
@@ -104,6 +109,9 @@ class WorkController {
         }
         execInsideUISync {
             model.workList.addAll(result)
+            if (result.size() > 0) {
+                view.table.requestFocusInWindow()
+            }
         }
     }
 

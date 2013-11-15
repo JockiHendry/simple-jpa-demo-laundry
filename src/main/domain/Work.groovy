@@ -50,5 +50,9 @@ class Work implements Comparable {
         }
     }
 
+    @Override
+    String toString() {
+        "${jenisWork.nama} - ${itemPakaian.nama}"
+    }
 }
 

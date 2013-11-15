@@ -21,4 +21,5 @@ class PelangganModel {
 
     BasicEventList<Pelanggan> pelangganList = new BasicEventList<>()
 
+    @Bindable boolean popupMode = false
 }

@@ -12,17 +12,17 @@ def popupMaintenance = {
 
 actions {
 //	action(id: 'eventPekerjaan', name: 'Event Pekerjaan', actionCommandKey: 'eventPekerjaan', closure: controller.switchPage)
-//	action(id: 'itemWorkOrder', name: 'Item Work Order', actionCommandKey: 'itemWorkOrder', closure: controller.switchPage)
 /*
 	action(id: 'pembayaran', name: 'Pembayaran', actionCommandKey: 'pembayaran', closure: controller.switchPage)
 	action(id: 'pembayaranCash', name: 'Pembayaran Cash', actionCommandKey: 'pembayaranCash', closure: controller.switchPage)
 	action(id: 'pembayaranCompliant', name: 'Pembayaran Compliant', actionCommandKey: 'pembayaranCompliant', closure: controller.switchPage)
 	action(id: 'pembayaranKartuDebit', name: 'Pembayaran Kartu Debit', actionCommandKey: 'pembayaranKartuDebit', closure: controller.switchPage)
 	action(id: 'pembayaranSignedBill', name: 'Pembayaran Signed Bill', actionCommandKey: 'pembayaranSignedBill', closure: controller.switchPage)
-	action(id: 'workOrder', name: 'Work Order', actionCommandKey: 'workOrder', closure: controller.switchPage)
 */
     action(id: 'pelanggan', name: 'Pelanggan', actionCommandKey: 'pelanggan', mnemonic: KeyEvent.VK_P,
         smallIcon: imageIcon('/menu_pelanggan.png'), closure: controller.switchPage)
+    action(id: 'workOrder', name: 'Order', actionCommandKey: 'workOrder', mnemonic: KeyEvent.VK_O,
+        smallIcon: imageIcon('/menu_workorder.png'), closure: controller.switchPage)
     action(id: 'maintenance', name: 'Maintenance', actionCommandKey: 'maintenance', mnemonic: KeyEvent.VK_M,
         smallIcon: imageIcon('/menu_maintenance.png'), closure: popupMaintenance)
     action(id: 'kategori', name: 'Kategori', actionCommandKey: 'kategori', mnemonic: KeyEvent.VK_K,
@@ -38,6 +38,7 @@ actions {
 application(id: 'mainFrame',
   title: "${app.config.application.title} ${app.metadata.getApplicationVersion()}",
   extendedState: JFrame.MAXIMIZED_BOTH,
+  preferredSize: new Dimension(500,500),
   pack: true,
   iconImage:   imageIcon('/griffon-icon-48x48.png').image,
   iconImages: [imageIcon('/griffon-icon-48x48.png').image,
@@ -57,14 +58,13 @@ application(id: 'mainFrame',
     toolBar(constraints: BorderLayout.PAGE_START, floatable: false) {
         buttonGroup(id: 'buttons')
 //		toggleButton(buttonGroup: buttons, action: eventPekerjaan, verticalTextPosition: SwingConstants.BOTTOM, horizontalTextPosition: SwingConstants.CENTER)
-//		toggleButton(buttonGroup: buttons, action: itemWorkOrder, verticalTextPosition: SwingConstants.BOTTOM, horizontalTextPosition: SwingConstants.CENTER)
 //		toggleButton(buttonGroup: buttons, action: pembayaran, verticalTextPosition: SwingConstants.BOTTOM, horizontalTextPosition: SwingConstants.CENTER)
 //		toggleButton(buttonGroup: buttons, action: pembayaranCash, verticalTextPosition: SwingConstants.BOTTOM, horizontalTextPosition: SwingConstants.CENTER)
 //		toggleButton(buttonGroup: buttons, action: pembayaranCompliant, verticalTextPosition: SwingConstants.BOTTOM, horizontalTextPosition: SwingConstants.CENTER)
 //		toggleButton(buttonGroup: buttons, action: pembayaranKartuDebit, verticalTextPosition: SwingConstants.BOTTOM, horizontalTextPosition: SwingConstants.CENTER)
 //		toggleButton(buttonGroup: buttons, action: pembayaranSignedBill, verticalTextPosition: SwingConstants.BOTTOM, horizontalTextPosition: SwingConstants.CENTER)
-//		toggleButton(buttonGroup: buttons, action: workOrder, verticalTextPosition: SwingConstants.BOTTOM, horizontalTextPosition: SwingConstants.CENTER)
 		toggleButton(buttonGroup: buttons, action: pelanggan, verticalTextPosition: SwingConstants.BOTTOM, horizontalTextPosition: SwingConstants.CENTER)
+		toggleButton(buttonGroup: buttons, action: workOrder, verticalTextPosition: SwingConstants.BOTTOM, horizontalTextPosition: SwingConstants.CENTER)
         toggleButton(buttonGroup: buttons, action: maintenance, id: 'maintenanceButton', verticalTextPosition: SwingConstants.BOTTOM, horizontalTextPosition: SwingConstants.CENTER)
     }
 

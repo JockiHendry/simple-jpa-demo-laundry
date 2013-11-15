@@ -36,7 +36,7 @@ class WorkOrder {
     @NotNull @ManyToOne
     Pelanggan pelanggan
 
-    @OneToMany(cascade=CascadeType.ALL, orphanRemoval=true, mappedBy="workOrder")
+    @NotEmpty @OneToMany(cascade=CascadeType.ALL, orphanRemoval=true, mappedBy="workOrder", fetch=FetchType.EAGER)
     List<ItemWorkOrder> itemWorkOrders = []
 
     @OneToMany(cascade=CascadeType.ALL, orphanRemoval=true, mappedBy="workOrder")
@@ -72,18 +72,22 @@ class WorkOrder {
 
     void diterima(LocalDate tanggal = LocalDate.now()) {
         tambahEvent(tanggal, StatusPekerjaan.DITERIMA)
+        statusTerakhir = StatusPekerjaan.DITERIMA
     }
 
     void dicuci(LocalDate tanggal = LocalDate.now()) {
         tambahEvent(tanggal, StatusPekerjaan.DICUCI)
+        statusTerakhir = StatusPekerjaan.DICUCI
     }
 
     void diselesaikan(LocalDate tanggal = LocalDate.now()) {
         tambahEvent(tanggal, StatusPekerjaan.DISELESAIKAN)
+        statusTerakhir = StatusPekerjaan.DISELESAIKAN
     }
 
     void diambil(LocalDate tanggal = LocalDate.now()) {
         tambahEvent(tanggal, StatusPekerjaan.DIAMBIL)
+        statusTerakhir = StatusPekerjaan.DIAMBIL
     }
 
     void bayar(Pembayaran pembayaran) {

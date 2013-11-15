@@ -21,6 +21,34 @@ application {
     locale = 'id_ID'
 }
 mvcGroups {
+//    // MVC Group for "pembayaranAsPair"
+//    'pembayaranAsPair' {
+//        model      = 'project.PembayaranAsPairModel'
+//        view       = 'project.PembayaranAsPairView'
+//        controller = 'project.PembayaranAsPairController'
+//    }
+
+//    // MVC Group for "eventPekerjaanAsChild"
+//    'eventPekerjaanAsChild' {
+//        model      = 'project.EventPekerjaanAsChildModel'
+//        view       = 'project.EventPekerjaanAsChildView'
+//        controller = 'project.EventPekerjaanAsChildController'
+//    }
+
+    // MVC Group for "itemWorkOrderAsChild"
+    'itemWorkOrderAsChild' {
+        model      = 'project.ItemWorkOrderAsChildModel'
+        view       = 'project.ItemWorkOrderAsChildView'
+        controller = 'project.ItemWorkOrderAsChildController'
+    }
+
+    // MVC Group for "workOrder"
+    'workOrder' {
+        model      = 'project.WorkOrderModel'
+        view       = 'project.WorkOrderView'
+        controller = 'project.WorkOrderController'
+    }
+
     // MVC Group for "pelanggan"
     'pelanggan' {
         model      = 'project.PelangganModel'

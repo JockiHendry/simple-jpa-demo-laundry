@@ -17,5 +17,16 @@
 package domain;
 
 public enum StatusPekerjaan{
-    DITERIMA, DICUCI, DISELESAIKAN, DIAMBIL
+    DITERIMA("Sudah Diterima"), DICUCI("Sedang Dicuci"), DISELESAIKAN("Selesai Dicuci"), DIAMBIL("Sudah Diambil");
+
+    String description;
+
+    StatusPekerjaan(String description) {
+        this.description = description;
+    }
+
+    @Override
+    public String toString() {
+        return description;
+    }
 }

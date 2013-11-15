@@ -12,7 +12,7 @@ class PelangganController {
     def view
 
     void mvcGroupInit(Map args) {
-        listAll()
+        if (args.'popup') model.popupMode = true
     }
 
     void mvcGroupDestroy() {
