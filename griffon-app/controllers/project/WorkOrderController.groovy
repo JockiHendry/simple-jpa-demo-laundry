@@ -3,6 +3,8 @@ package project
 import domain.*
 import org.joda.time.LocalDate
 import simplejpa.transaction.Transaction
+
+import javax.persistence.FlushModeType
 import javax.swing.*
 import javax.swing.event.ListSelectionEvent
 import java.text.NumberFormat
@@ -99,33 +101,38 @@ class WorkOrderController {
                 return
             }
 
-            persist(workOrder.pembayaran)
-            workOrder = merge(workOrder)
-
             execInsideUISync {
+                pembayaran.workOrder = workOrder
+                persist(workOrder)
+
                 model.workOrderList << workOrder
                 view.table.changeSelection(model.workOrderList.size() - 1, 0, false, false)
+                clear()
             }
         } else {
             // Update operation
-            WorkOrder selectedWorkOrder = view.table.selectionModel.selected[0]
-            selectedWorkOrder.nomor = model.nomor
-            selectedWorkOrder.tanggal = model.tanggal
-            selectedWorkOrder.pelanggan = model.selectedPelanggan
-            selectedWorkOrder.itemWorkOrders.clear()
-            selectedWorkOrder.itemWorkOrders.addAll(model.itemWorkOrders)
-            selectedWorkOrder.itemWorkOrders.each { ItemWorkOrder itemWorkOrder ->
-                itemWorkOrder.workOrder = selectedWorkOrder
+            execInsideUISync {
+                WorkOrder selectedWorkOrder = view.table.selectionModel.selected[0]
+                selectedWorkOrder.nomor = model.nomor
+                selectedWorkOrder.tanggal = model.tanggal
+                selectedWorkOrder.pelanggan = model.selectedPelanggan
+                selectedWorkOrder.itemWorkOrders.clear()
+                selectedWorkOrder.itemWorkOrders.addAll(model.itemWorkOrders)
+                selectedWorkOrder.itemWorkOrders.each { ItemWorkOrder itemWorkOrder ->
+                    itemWorkOrder.workOrder = selectedWorkOrder
+                }
+                selectedWorkOrder = merge(selectedWorkOrder)
+                if (selectedWorkOrder.pembayaran!=model.pembayaran) {
+                    if (selectedWorkOrder.pembayaran) remove(selectedWorkOrder.pembayaran)
+                    model.pembayaran.workOrder = selectedWorkOrder
+                    persist(model.pembayaran)
+                    selectedWorkOrder.pembayaran = model.pembayaran
+                }
+
+                view.table.selectionModel.selected[0] = selectedWorkOrder
+                clear()
             }
-            if (selectedWorkOrder.pembayaran!=model.pembayaran) {
-                if (selectedWorkOrder.pembayaran) remove(selectedWorkOrder.pembayaran)
-                persist(model.pembayaran)
-                selectedWorkOrder.pembayaran = model.pembayaran
-            }
-            selectedWorkOrder = merge(selectedWorkOrder)
-            execInsideUISync { view.table.selectionModel.selected[0] = selectedWorkOrder }
         }
-        execInsideUISync { clear() }
     }
 
     def delete = {
@@ -139,6 +146,7 @@ class WorkOrderController {
         }
     }
 
+    @Transaction(Transaction.Policy.SKIP)
     def clear = {
         execInsideUISync {
             model.id = null
@@ -193,15 +201,16 @@ class WorkOrderController {
         }
     }
 
+    @Transaction(Transaction.Policy.SKIP)
     def buatNomorWO() {
-        WorkOrder workOrderTahunIniTerakhir = findWorkOrderByTanggalGt(LocalDate.now().withDayOfYear(1).minusDays(1),
-            [pageSize: 1, orderBy: 'nomor', orderDirection: 'desc'])
+        //List result = executeNativeQuery('SELECT nomor FROM workorder ORDER BY nomor DESC LIMIT 1')
+        List result = executeQuery('SELECT w.nomor FROM WorkOrder w ORDER BY w.nomor DESC', [pageSize: 1, flushMode: FlushModeType.COMMIT])
         long nomor = 1
-        if (workOrderTahunIniTerakhir) {
+        if (!result.isEmpty()) {
             try {
-                nomor = Integer.valueOf(workOrderTahunIniTerakhir.nomor.substring(6))
+                nomor = Integer.valueOf(result[0].substring(6))
             } catch (NumberFormatException nfe) {
-                JOptionPane.showMessageDialog(view.mainPanel, "Nomor order tidak sesuai standar: ${workOrderTahunIniTerakhir.nomor}",
+                JOptionPane.showMessageDialog(view.mainPanel, "Nomor order tidak sesuai standar: ${result[0]}",
                     'Kesalahan Nomor Order', JOptionPane.ERROR_MESSAGE)
             }
             nomor++

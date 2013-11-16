@@ -45,7 +45,7 @@ class WorkOrder {
     @NotNull @Enumerated
     StatusPekerjaan statusTerakhir
 
-    @NotNull @OneToOne
+    @OneToOne(cascade = [CascadeType.PERSIST, CascadeType.MERGE])
     Pembayaran pembayaran
 
     void tambahItem(Work work) {

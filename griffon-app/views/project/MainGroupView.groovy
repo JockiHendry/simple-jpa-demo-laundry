@@ -15,6 +15,8 @@ actions {
         smallIcon: imageIcon('/menu_pelanggan.png'), closure: controller.switchPage)
     action(id: 'workOrder', name: 'Order', actionCommandKey: 'workOrder', mnemonic: KeyEvent.VK_O,
         smallIcon: imageIcon('/menu_workorder.png'), closure: controller.switchPage)
+    action(id: 'pembayaranSignedBill', name: 'Tagihan', actionCommandKey: 'pembayaranSignedBill', mnemonic: KeyEvent.VK_T,
+        smallIcon: imageIcon('/menu_tagihan.png'), closure: controller.switchPage)
     action(id: 'maintenance', name: 'Maintenance', actionCommandKey: 'maintenance', mnemonic: KeyEvent.VK_M,
         smallIcon: imageIcon('/menu_maintenance.png'), closure: popupMaintenance)
     action(id: 'kategori', name: 'Kategori', actionCommandKey: 'kategori', mnemonic: KeyEvent.VK_K,
@@ -51,6 +53,7 @@ application(id: 'mainFrame',
         buttonGroup(id: 'buttons')
 		toggleButton(buttonGroup: buttons, action: pelanggan, verticalTextPosition: SwingConstants.BOTTOM, horizontalTextPosition: SwingConstants.CENTER)
 		toggleButton(buttonGroup: buttons, action: workOrder, verticalTextPosition: SwingConstants.BOTTOM, horizontalTextPosition: SwingConstants.CENTER)
+        toggleButton(buttonGroup: buttons, action: pembayaranSignedBill, verticalTextPosition: SwingConstants.BOTTOM, horizontalTextPosition: SwingConstants.CENTER)
         toggleButton(buttonGroup: buttons, action: maintenance, id: 'maintenanceButton', verticalTextPosition: SwingConstants.BOTTOM, horizontalTextPosition: SwingConstants.CENTER)
     }
 

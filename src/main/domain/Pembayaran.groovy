@@ -36,6 +36,9 @@ abstract class Pembayaran implements Comparable {
     @Size(max=50)
     String keterangan
 
+    @NotNull @OneToOne(mappedBy = 'pembayaran', fetch = FetchType.EAGER)
+    WorkOrder workOrder
+
     public abstract BigDecimal total()
 
     public abstract Boolean isLunas()

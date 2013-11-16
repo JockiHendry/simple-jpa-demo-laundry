@@ -25,9 +25,9 @@ import org.hibernate.validator.constraints.*
 import org.joda.time.*
 
 @DomainClass @Entity @Canonical
-class PembayaranSignedBill extends Pembayaran {
+class PembayaranSignedBill extends domain.Pembayaran{
 
-    @NotNull @Min(0l)
+    @Min(0l)
     BigDecimal jumlahBayarDimuka = 0
 
     @Type(type="org.jadira.usertype.dateandtime.joda.PersistentLocalDate")
@@ -35,7 +35,7 @@ class PembayaranSignedBill extends Pembayaran {
 
     @Override
     BigDecimal total() {
-        super.tagihan - jumlahBayarDimuka
+        super.tagihan - (jumlahBayarDimuka?: 0)
     }
 
     @Override

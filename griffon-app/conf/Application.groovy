@@ -21,6 +21,13 @@ application {
     locale = 'id_ID'
 }
 mvcGroups {
+    // MVC Group for "pembayaran"
+    'pembayaranSignedBill' {
+        model      = 'project.PembayaranSignedBillModel'
+        view       = 'project.PembayaranSignedBillView'
+        controller = 'project.PembayaranSignedBillController'
+    }
+
     // MVC Group for "workOrderAsChild"
     'workOrderAsChild' {
         model      = 'project.WorkOrderAsChildModel'
