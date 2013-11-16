@@ -1,17 +1,13 @@
 package project
 
-import domain.*
-import org.joda.time.LocalDate
+import domain.StatusPekerjaan
+import domain.WorkOrder
 import simplejpa.transaction.Transaction
 
-import javax.persistence.FlushModeType
-import javax.swing.*
 import javax.swing.event.ListSelectionEvent
-import java.text.NumberFormat
 
 @Transaction
-class AntrianCuciController {
-
+class PencucianController {
     def model
     def view
 
@@ -29,7 +25,7 @@ class AntrianCuciController {
             model.workOrderList.clear()
         }
 
-        List workOrderResult = findAllWorkOrderByStatusTerakhir(StatusPekerjaan.DITERIMA)
+        List workOrderResult = findAllWorkOrderByStatusTerakhir(StatusPekerjaan.DICUCI)
 
         execInsideUISync {
             model.workOrderList.addAll(workOrderResult)
@@ -41,19 +37,19 @@ class AntrianCuciController {
     def search = {
         if (model.nomorSearch) {
             execInsideUISync { model.workOrderList.clear() }
-            List result = findAllWorkOrderByNomorLikeAndStatusTerakhir("%${model.nomorSearch}%", StatusPekerjaan.DITERIMA)
+            List result = findAllWorkOrderByNomorLikeAndStatusTerakhir("%${model.nomorSearch}%", StatusPekerjaan.DICUCI)
             execInsideUISync {
                 model.workOrderList.addAll(result)
             }
         }
     }
 
-    def prosesCuci = {
+    def prosesSelesaiCuci = {
         WorkOrder workOrder = merge(view.table.selectionModel.selected[0])
         if (model.keterangan && model.keterangan.isEmpty()) {
             workOrder.keterangan = model.keterangan
         }
-        workOrder.dicuci(model.tanggal)
+        workOrder.diselesaikan(model.tanggal)
         execInsideUISync {
             model.workOrderList.remove(view.table.selectionModel.selected[0])
             clear()
