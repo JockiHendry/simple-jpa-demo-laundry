@@ -60,6 +60,9 @@ application(title: 'Work Order',
                     glazedColumn(name: 'Total', expression: {it.total()}, columnClass: Integer) {
                         templateRenderer('${currencyFormat(it)}', horizontalAlignment: RIGHT)
                     }
+                    glazedColumn(name: 'Estimasi Selesai', property: 'estimasiSelesai', width: 120) {
+                        templateRenderer("\${it? it.toString('dd-MM-yyyy'): '-'}")
+                    }
                     glazedColumn(name: 'Keterangan', property: 'keterangan')
                 }
             }
@@ -100,6 +103,10 @@ application(title: 'Work Order',
             label('Keterangan:')
             textField(id: 'keterangan', columns: 50, text: bind('keterangan', target: model, mutual: true), errorPath: 'keterangan')
             errorLabel(path: 'keterangan', constraints: 'wrap')
+
+            label('Estimasi Selesai:')
+            dateTimePicker(id: 'estimasiSelesai', localDate: bind('estimasiSelesai', target: model, mutual: true), errorPath: 'estimasiSelesai', dateVisible: true, timeVisible: false)
+            errorLabel(path: 'estimasiSelesai', constraints: 'wrap')
 
             label('Pembayaran:')
             pembayaranGroup = buttonGroup()

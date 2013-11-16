@@ -50,6 +50,9 @@ class WorkOrder {
 
     String keterangan
 
+    @Type(type="org.jadira.usertype.dateandtime.joda.PersistentLocalDate")
+    LocalDate estimasiSelesai
+
     void tambahItem(Work work) {
         tambahItem(work, work.harga)
     }
