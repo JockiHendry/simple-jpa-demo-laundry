@@ -48,6 +48,8 @@ class WorkOrder {
     @OneToOne(cascade = [CascadeType.PERSIST, CascadeType.MERGE])
     Pembayaran pembayaran
 
+    String keterangan
+
     void tambahItem(Work work) {
         tambahItem(work, work.harga)
     }

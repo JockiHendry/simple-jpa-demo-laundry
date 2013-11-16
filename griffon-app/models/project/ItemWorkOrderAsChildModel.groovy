@@ -15,6 +15,7 @@ class ItemWorkOrderAsChildModel {
     @Bindable Work selectedWork
     @Bindable Integer jumlah
     @Bindable BigDecimal harga
+    @Bindable String keterangan
 
     BasicEventList<ItemWorkOrder> itemWorkOrderList = new BasicEventList<>()
 

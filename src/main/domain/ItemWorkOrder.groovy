@@ -40,6 +40,8 @@ class ItemWorkOrder {
     @NotNull(groups=[Pengisian, Default]) @Min(0l)
     Integer jumlah
 
+    String keterangan
+
     @NotNull @ManyToOne
     WorkOrder workOrder
 }

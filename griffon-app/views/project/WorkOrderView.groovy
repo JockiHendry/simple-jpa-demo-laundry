@@ -60,6 +60,7 @@ application(title: 'Work Order',
                     glazedColumn(name: 'Total', expression: {it.total()}, columnClass: Integer) {
                         templateRenderer('${currencyFormat(it)}', horizontalAlignment: RIGHT)
                     }
+                    glazedColumn(name: 'Keterangan', property: 'keterangan')
                 }
             }
         }
@@ -95,18 +96,11 @@ application(title: 'Work Order',
                 model.itemWorkOrders.addAll(m.itemWorkOrderList)
             })
             errorLabel(path: 'itemWorkOrders', constraints: 'wrap')
-//            label('Event Pekerjaans:')
-//            mvcPopupButton(id: 'eventPekerjaans', text: 'Event Pekerjaans', errorPath: 'eventPekerjaans', mvcGroup: 'eventPekerjaanAsChild',
-//                    args: { [parentList: model.eventPekerjaans] }, dialogProperties: [title: 'Event Pekerjaans'], onFinish: { m, v, c ->
-//                model.eventPekerjaans.clear()
-//                model.eventPekerjaans.addAll(m.eventPekerjaanList)
-//            }
-//            )
-//            errorLabel(path: 'eventPekerjaans', constraints: 'wrap')
-//            label('Status Terakhir:')
-//            comboBox(id: 'statusTerakhir', model: model.statusTerakhir, errorPath: 'statusTerakhir')
-//            errorLabel(path: 'statusTerakhir', constraints: 'wrap')
-//
+
+            label('Keterangan:')
+            textField(id: 'keterangan', columns: 50, text: bind('keterangan', target: model, mutual: true), errorPath: 'keterangan')
+            errorLabel(path: 'keterangan', constraints: 'wrap')
+
             label('Pembayaran:')
             pembayaranGroup = buttonGroup()
             panel {

@@ -14,6 +14,7 @@ class WorkOrderModel {
     @Bindable Long id
     @Bindable String nomor
     @Bindable LocalDate tanggal
+    @Bindable String keterangan
 
     @Bindable boolean pembayaranCash
     @Bindable boolean pembayaranSignedBill

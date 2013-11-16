@@ -33,7 +33,7 @@ class ItemWorkOrderAsChildController {
     }
 
     def save = {
-        ItemWorkOrder itemWorkOrder = new ItemWorkOrder('work': model.selectedWork, 'harga': model.harga, 'jumlah': model.jumlah)
+        ItemWorkOrder itemWorkOrder = new ItemWorkOrder('work': model.selectedWork, 'harga': model.harga, 'jumlah': model.jumlah, 'keterangan': model.keterangan)
         if (!validate(itemWorkOrder, Pengisian)) return_failed()
 
         if (view.table.selectionModel.selectionEmpty) {
@@ -52,6 +52,7 @@ class ItemWorkOrderAsChildController {
             selectedItemWorkOrder.work = model.selectedWork
             selectedItemWorkOrder.harga = model.harga
             selectedItemWorkOrder.jumlah = model.jumlah
+            selectedItemWorkOrder.keterangan = model.keterangan
         }
         execInsideUISync {
             clear()
@@ -75,6 +76,7 @@ class ItemWorkOrderAsChildController {
             model.selectedWork = null
             model.harga = null
             model.jumlah = null
+            model.keterangan = null
 
             model.errors.clear()
             view.table.selectionModel.clearSelection()
@@ -93,6 +95,7 @@ class ItemWorkOrderAsChildController {
                 model.selectedWork = selected.work
                 model.harga = selected.harga
                 model.jumlah = selected.jumlah
+                model.keterangan = selected.keterangan
             }
         }
     }

@@ -63,7 +63,7 @@ class WorkOrderController {
 
     def save = {
         WorkOrder workOrder = new WorkOrder('nomor': model.nomor, 'tanggal': model.tanggal, 'pelanggan': model.selectedPelanggan,
-            'itemWorkOrders': new ArrayList(model.itemWorkOrders), 'statusTerakhir': model.statusTerakhir)
+            'itemWorkOrders': new ArrayList(model.itemWorkOrders), 'statusTerakhir': model.statusTerakhir, 'keterangan': model.keterangan)
         workOrder.itemWorkOrders.each { ItemWorkOrder itemWorkOrder ->
             itemWorkOrder.workOrder = workOrder
         }
@@ -101,34 +101,35 @@ class WorkOrderController {
                 return
             }
 
-            execInsideUISync {
-                pembayaran.workOrder = workOrder
-                persist(workOrder)
+            pembayaran.workOrder = workOrder
+            persist(workOrder)
 
+            execInsideUISync {
                 model.workOrderList << workOrder
                 view.table.changeSelection(model.workOrderList.size() - 1, 0, false, false)
                 clear()
             }
         } else {
             // Update operation
-            execInsideUISync {
-                WorkOrder selectedWorkOrder = view.table.selectionModel.selected[0]
-                selectedWorkOrder.nomor = model.nomor
-                selectedWorkOrder.tanggal = model.tanggal
-                selectedWorkOrder.pelanggan = model.selectedPelanggan
-                selectedWorkOrder.itemWorkOrders.clear()
-                selectedWorkOrder.itemWorkOrders.addAll(model.itemWorkOrders)
-                selectedWorkOrder.itemWorkOrders.each { ItemWorkOrder itemWorkOrder ->
-                    itemWorkOrder.workOrder = selectedWorkOrder
-                }
-                selectedWorkOrder = merge(selectedWorkOrder)
-                if (selectedWorkOrder.pembayaran!=model.pembayaran) {
-                    if (selectedWorkOrder.pembayaran) remove(selectedWorkOrder.pembayaran)
-                    model.pembayaran.workOrder = selectedWorkOrder
-                    persist(model.pembayaran)
-                    selectedWorkOrder.pembayaran = model.pembayaran
-                }
+            WorkOrder selectedWorkOrder = view.table.selectionModel.selected[0]
+            selectedWorkOrder.nomor = model.nomor
+            selectedWorkOrder.tanggal = model.tanggal
+            selectedWorkOrder.pelanggan = model.selectedPelanggan
+            selectedWorkOrder.keterangan = model.keterangan
+            selectedWorkOrder.itemWorkOrders.clear()
+            selectedWorkOrder.itemWorkOrders.addAll(model.itemWorkOrders)
+            selectedWorkOrder.itemWorkOrders.each { ItemWorkOrder itemWorkOrder ->
+                itemWorkOrder.workOrder = selectedWorkOrder
+            }
+            selectedWorkOrder = merge(selectedWorkOrder)
+            if (selectedWorkOrder.pembayaran.id!=model.pembayaran.id) {
+                if (selectedWorkOrder.pembayaran) remove(selectedWorkOrder.pembayaran)
+                model.pembayaran.workOrder = selectedWorkOrder
+                persist(model.pembayaran)
+                selectedWorkOrder.pembayaran = model.pembayaran
+            }
 
+            execInsideUISync {
                 view.table.selectionModel.selected[0] = selectedWorkOrder
                 clear()
             }
@@ -153,6 +154,7 @@ class WorkOrderController {
             model.nomor = null
             model.tanggal = null
             model.selectedPelanggan = null
+            model.keterangan = null
             model.statusTerakhir = null
             model.itemWorkOrders.clear()
             model.pembayaran = null
@@ -182,6 +184,7 @@ class WorkOrderController {
                 model.tanggal = selected.tanggal
                 model.selectedPelanggan = selected.pelanggan
                 model.statusTerakhir = selected.statusTerakhir
+                model.keterangan = selected.keterangan
                 model.itemWorkOrders.clear()
                 model.itemWorkOrders.addAll(selected.itemWorkOrders)
                 model.pembayaran = selected.pembayaran

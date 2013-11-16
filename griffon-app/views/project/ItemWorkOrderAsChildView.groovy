@@ -31,6 +31,7 @@ application(title: 'Item Work Order',
                     glazedColumn(name: 'Harga', property: 'harga', columnClass: Integer) {
                         templateRenderer('${currencyFormat(it)}', horizontalAlignment: RIGHT)
                     }
+                    glazedColumn(name: 'Keterangan', property: 'keterangan')
                 }
             }
             label(constraints: PAGE_END, horizontalAlignment: SwingConstants.RIGHT,
@@ -61,7 +62,9 @@ application(title: 'Item Work Order',
             label('Harga:')
             numberTextField(id: 'harga', columns: 20, bindTo: 'harga', nfParseBigDecimal: true, errorPath: 'harga')
             errorLabel(path: 'harga', constraints: 'wrap')
-
+            label('Keterangan:')
+            textField(id: 'keterangan', columns: 50, text: bind('keterangan', target: model, mutual: true), errorPath: 'keterangan')
+            errorLabel(path: 'keterangan', constraints: 'wrap')
 
             panel(constraints: 'span, growx, wrap') {
                 flowLayout(alignment: FlowLayout.LEADING)

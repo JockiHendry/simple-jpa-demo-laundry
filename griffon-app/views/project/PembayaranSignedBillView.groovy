@@ -38,14 +38,14 @@ application(title: 'Pembayaran',
             borderLayout()
             scrollPane(constraints: CENTER) {
                 glazedTable(id: 'table', list: model.pembayaranSignedBillList, sortingStrategy: SINGLE_COLUMN) {
-                    glazedColumn(name: 'Nomor', expression: {it.workOrder.nomor}, width: 120)
+                    glazedColumn(name: 'Nomor', expression: {it.workOrder?.nomor}, width: 120)
                     glazedColumn(name: 'Tanggal', property: 'tanggal', width: 100) {
                         templateRenderer("\${it.toString('dd-MM-yyyy')}")
                     }
-                    glazedColumn(name: 'Pelanggan', expression: {it.workOrder.pelanggan}) {
-                        templateRenderer('${it.nama}')
+                    glazedColumn(name: 'Pelanggan', expression: {it.workOrder?.pelanggan}) {
+                        templateRenderer('${it?.nama}')
                     }
-                    glazedColumn(name: 'Status', expression: {it.workOrder.statusTerakhir}, width: 150)
+                    glazedColumn(name: 'Status', expression: {it.workOrder?.statusTerakhir}, width: 150)
                     glazedColumn(name: 'Lunas?', expression: {it.isLunas()}, width: 60) {
                         templateRenderer(templateExpression: { it?'Y':'-'})
                     }
