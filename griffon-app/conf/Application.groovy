@@ -21,6 +21,12 @@ application {
     locale = 'id_ID'
 }
 mvcGroups {
+    // MVC Group for "workOrderAsChild"
+    'workOrderAsChild' {
+        model      = 'project.WorkOrderAsChildModel'
+        view       = 'project.WorkOrderAsChildView'
+        controller = 'project.WorkOrderAsChildController'
+    }
 
     // MVC Group for "eventPekerjaanAsChild"
     'eventPekerjaanAsChild' {

@@ -90,6 +90,10 @@ application(title: 'Pelanggan',
                     controller.save()
                     nama.requestFocusInWindow()
                 })
+                mvcPopupButton(id: 'lihatWorkOrder', text: 'Lihat Order...', mvcGroup: 'workOrderAsChild',
+                    args: {[parentPelanggan: view.table.selectionModel.selected[0]]},
+                    dialogProperties: [title: 'Daftar Order Untuk Pelanggan Ini', size: new Dimension(900,420)],
+                    visible: bind{table.isRowSelected})
                 button(app.getMessage("simplejpa.dialog.cancel.button"), visible: bind { table.isRowSelected }, actionPerformed: controller.clear)
                 button(app.getMessage("simplejpa.dialog.delete.button"), visible: bind { table.isRowSelected }, actionPerformed: {
                     if (JOptionPane.showConfirmDialog(mainPanel, app.getMessage("simplejpa.dialog.delete.message"),
