@@ -1,6 +1,7 @@
 package project
 
 import javax.swing.JOptionPane
+import java.awt.event.KeyEvent
 
 import static ca.odell.glazedlists.gui.AbstractTableComparatorChooser.*
 import static javax.swing.SwingConstants.*
@@ -31,8 +32,8 @@ application(title: 'Work Order',
             dateTimePicker(id: 'tanggalMulaiSearch', localDate: bind('tanggalMulaiSearch', target: model, mutual: true), errorPath: 'tanggalMulaiSearch', dateVisible: true, timeVisible: false)
             label(" s/d ")
             dateTimePicker(id: 'tanggalSelesaiSearch', localDate: bind('tanggalSelesaiSearch', target: model, mutual: true), errorPath: 'tanggalMulaiSearch', dateVisible: true, timeVisible: false)
-            button(app.getMessage('simplejpa.search.label'), actionPerformed: controller.search)
-            button(app.getMessage('simplejpa.search.all.label'), actionPerformed: controller.listAll)
+            button(app.getMessage('simplejpa.search.label'), actionPerformed: controller.search, mnemonic: KeyEvent.VK_C)
+            button(app.getMessage('simplejpa.search.all.label'), actionPerformed: controller.listAll, mnemonic: KeyEvent.VK_L)
         }
 
         panel(constraints: CENTER) {
@@ -143,6 +144,11 @@ application(title: 'Work Order',
                     }
                     controller.save()
                     nomor.requestFocusInWindow()
+                })
+                mvcPopupButton(id: 'detailStatus', text: 'Detail Status...', mvcGroup: 'eventPekerjaanAsChild',
+                        args: {[parentWorkOrder: view.table.selectionModel.selected[0]]}, dialogProperties: [title: 'Detail Status'],
+                        visible: bind {table.isRowSelected}, onFinish: { m, v, c ->
+                    view.table.selectionModel.selected[0] = controller.findWorkOrderById(view.table.selectionModel.selected[0].id)
                 })
                 button(app.getMessage("simplejpa.dialog.cancel.button"), visible: bind { table.isRowSelected }, actionPerformed: controller.clear)
                 button(app.getMessage("simplejpa.dialog.delete.button"), visible: bind { table.isRowSelected }, actionPerformed: {

@@ -22,12 +22,12 @@ application {
 }
 mvcGroups {
 
-//    // MVC Group for "eventPekerjaanAsChild"
-//    'eventPekerjaanAsChild' {
-//        model      = 'project.EventPekerjaanAsChildModel'
-//        view       = 'project.EventPekerjaanAsChildView'
-//        controller = 'project.EventPekerjaanAsChildController'
-//    }
+    // MVC Group for "eventPekerjaanAsChild"
+    'eventPekerjaanAsChild' {
+        model      = 'project.EventPekerjaanAsChildModel'
+        view       = 'project.EventPekerjaanAsChildView'
+        controller = 'project.EventPekerjaanAsChildController'
+    }
 
     // MVC Group for "itemWorkOrderAsChild"
     'itemWorkOrderAsChild' {

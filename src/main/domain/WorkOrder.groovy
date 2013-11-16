@@ -68,26 +68,32 @@ class WorkOrder {
     void tambahEvent(EventPekerjaan eventPekerjaan) {
         eventPekerjaan.workOrder = this
         eventPekerjaans << eventPekerjaan
+        statusTerakhir = eventPekerjaan.status
+    }
+
+    void hapusEvent(EventPekerjaan eventPekerjaan) {
+        eventPekerjaans.remove(eventPekerjaan)
+        if (eventPekerjaans.isEmpty()) {
+            statusTerakhir = null
+        } else {
+            statusTerakhir = eventPekerjaans.last().status
+        }
     }
 
     void diterima(LocalDate tanggal = LocalDate.now()) {
         tambahEvent(tanggal, StatusPekerjaan.DITERIMA)
-        statusTerakhir = StatusPekerjaan.DITERIMA
     }
 
     void dicuci(LocalDate tanggal = LocalDate.now()) {
         tambahEvent(tanggal, StatusPekerjaan.DICUCI)
-        statusTerakhir = StatusPekerjaan.DICUCI
     }
 
     void diselesaikan(LocalDate tanggal = LocalDate.now()) {
         tambahEvent(tanggal, StatusPekerjaan.DISELESAIKAN)
-        statusTerakhir = StatusPekerjaan.DISELESAIKAN
     }
 
     void diambil(LocalDate tanggal = LocalDate.now()) {
         tambahEvent(tanggal, StatusPekerjaan.DIAMBIL)
-        statusTerakhir = StatusPekerjaan.DIAMBIL
     }
 
     void bayar(Pembayaran pembayaran) {
