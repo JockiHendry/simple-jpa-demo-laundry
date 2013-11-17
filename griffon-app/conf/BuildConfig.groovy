@@ -186,14 +186,15 @@ griffon.project.dependency.resolution = {
         //jcenter()
         //bintray(username: 'foo', repository: 'bar')
         //bintray('foo/bar')
+        mavenRepo "http://jasperreports.sourceforge.net/maven2"
     }
     dependencies {
         runtime 'mysql:mysql-connector-java:5.1.20'
         runtime 'org.hibernate:hibernate-entitymanager:4.2.0.Final'
         runtime 'org.hibernate:hibernate-validator:4.3.0.Final'
-        // specify dependencies here under either 'build', 'compile', 'runtime' or 'test' scopes eg.
-
-        // runtime 'mysql:mysql-connector-java:5.1.5'
+        compile('net.sf.jasperreports:jasperreports:5.1.0') {
+            exclude 'commons-collections'
+        }
     }
 }
 
