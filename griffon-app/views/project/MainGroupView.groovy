@@ -21,6 +21,8 @@ actions {
         smallIcon: imageIcon('/menu_antriancuci.png'), closure: controller.switchPage)
     action(id: 'pencucian', name: 'Pencucian', actionCommandKey: 'pencucian', mnemonic: KeyEvent.VK_C,
         smallIcon: imageIcon('/menu_pencucian.png'), closure: controller.switchPage)
+    action(id: 'pengambilan', name: 'Pengambilan', actionCommandKey: 'pengambilan', mnemonic: KeyEvent.VK_B,
+        smallIcon: imageIcon('/menu_pengambilan.png'), closure: controller.switchPage)
     action(id: 'maintenance', name: 'Maintenance', actionCommandKey: 'maintenance', mnemonic: KeyEvent.VK_M,
         smallIcon: imageIcon('/menu_maintenance.png'), closure: popupMaintenance)
     action(id: 'kategori', name: 'Kategori', actionCommandKey: 'kategori', mnemonic: KeyEvent.VK_K,
@@ -60,6 +62,7 @@ application(id: 'mainFrame',
         toggleButton(buttonGroup: buttons, action: pembayaranSignedBill, verticalTextPosition: SwingConstants.BOTTOM, horizontalTextPosition: SwingConstants.CENTER)
         toggleButton(buttonGroup: buttons, action: antrianCuci, verticalTextPosition: SwingConstants.BOTTOM, horizontalTextPosition: SwingConstants.CENTER)
         toggleButton(buttonGroup: buttons, action: pencucian, verticalTextPosition: SwingConstants.BOTTOM, horizontalTextPosition: SwingConstants.CENTER)
+        toggleButton(buttonGroup: buttons, action: pengambilan, verticalTextPosition: SwingConstants.BOTTOM, horizontalTextPosition: SwingConstants.CENTER)
         toggleButton(buttonGroup: buttons, action: maintenance, id: 'maintenanceButton', verticalTextPosition: SwingConstants.BOTTOM, horizontalTextPosition: SwingConstants.CENTER)
     }
 
