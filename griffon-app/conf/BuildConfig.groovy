@@ -70,7 +70,7 @@ griffon {
         sign = false
         pack = false
         destDir = "${basedir}/staging"
-        jarName = "${appName}.jar"
+        jarName = "${appName}-${appVersion}.jar"
     }
     extensions {
         jarUrls = []

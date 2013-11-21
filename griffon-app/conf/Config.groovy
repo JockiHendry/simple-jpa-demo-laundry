@@ -17,16 +17,48 @@
 log4j = {
     // Example of changing the log pattern for the default console
     // appender:
-    appenders {
-        console name: 'stdout', layout: pattern(conversionPattern: '%d [%t] %-5p %c - %m%n')
+
+    environments {
+
+        development {
+            appenders {
+                console name: 'stdout', layout: pattern(conversionPattern: '%d [%t] %-5p %c - %m%n')
+                rollingFile name: 'sqlLog', file: "${System.getProperty('user.home')}/Desktop/sql.log",
+                        layout: pattern(conversionPattern: '%d [%t] %-5p %c - %m%n'),
+                        maxFileSize: 10485760, maxBackupIndex: 20
+            }
+            root {
+                debug 'stdout'
+                additivity = false
+            }
+
+            error  additivity: false, stdout: ['org.dbunit']
+
+            debug  additivity: false, stdout: [
+                    'simplejpa',
+                    'net.sf.jasperreports',
+                    'org.jboss',
+                    'org.codehaus',
+                    'org.hibernate',
+                    'project',
+                    'griffon.util',
+                    'griffon.core',
+                    'griffon.swing',
+                    'griffon.app']
+
+            debug  sqlLog: ['com.mysql.jdbc.log']
+        }
+
+        production {
+            appenders {
+                rollingFile name: 'log', file: 'log/log.txt', layout: pattern(conversionPattern: '%d [%t] %-5p %c - %m%n'),
+                        maxFileSize: 10485760, maxBackupIndex: 20
+            }
+            root {
+                error 'log'
+            }
+        }
     }
-
-    error  'org.codehaus.griffon'
-
-    info   'griffon.util',
-           'griffon.core',
-           'griffon.swing',
-           'griffon.app'
 }
 
 i18n.basenames = ['messages','ValidationMessages']

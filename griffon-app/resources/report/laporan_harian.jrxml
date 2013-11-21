@@ -127,7 +127,7 @@ FROM
 				<measure name="jumlahMeasure" class="java.lang.Integer" calculation="Sum">
 					<measureExpression><![CDATA[$F{jumlah}]]></measureExpression>
 				</measure>
-				<crosstabCell width="50" height="25">
+				<crosstabCell width="50" height="26">
 					<cellContents>
 						<box>
 							<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
@@ -135,7 +135,7 @@ FROM
 						<textField>
 							<reportElement uuid="0727336a-b429-449c-867d-beb73c6d48ba" style="Crosstab Data Text" x="0" y="0" width="40" height="25"/>
 							<textElement textAlignment="Right" verticalAlignment="Middle"/>
-							<textFieldExpression><![CDATA[$V{jumlahMeasure}]]></textFieldExpression>
+							<textFieldExpression><![CDATA[$V{jumlahMeasure}!=0?$V{jumlahMeasure}:'']]></textFieldExpression>
 						</textField>
 					</cellContents>
 				</crosstabCell>
@@ -151,7 +151,7 @@ FROM
 						</textField>
 					</cellContents>
 				</crosstabCell>
-				<crosstabCell width="50" columnTotalGroup="nama">
+				<crosstabCell width="50" height="26" columnTotalGroup="nama">
 					<cellContents backcolor="#FFBFBF" mode="Opaque">
 						<box>
 							<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>

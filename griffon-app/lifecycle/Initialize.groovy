@@ -29,6 +29,19 @@
  */
 
 import groovy.swing.SwingBuilder
+
+import java.awt.Color
+import java.awt.Graphics2D
+import java.awt.SplashScreen
+
 import static griffon.util.GriffonApplicationUtils.isMacOSX
+
+SplashScreen splash = SplashScreen.splashScreen
+if (splash) {
+    Graphics2D g = splash.createGraphics()
+    g.setColor(Color.BLACK)
+    g.drawString("Versi ${app.metadata.getApplicationVersion()}", 35, 310)
+    splash.update()
+}
 
 SwingBuilder.lookAndFeel((isMacOSX ? 'system' : 'nimbus'), 'gtk', ['metal', [boldFonts: false]])
