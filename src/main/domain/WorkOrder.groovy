@@ -89,9 +89,9 @@ class WorkOrder {
         tambahEvent(tanggal, StatusPekerjaan.DITERIMA)
     }
 
-    void dicuci(LocalDate tanggal = LocalDate.now()) {
-        tambahEvent(tanggal, StatusPekerjaan.DICUCI)
-    }
+//    void dicuci(LocalDate tanggal = LocalDate.now()) {
+//        tambahEvent(tanggal, StatusPekerjaan.DICUCI)
+//    }
 
     void diselesaikan(LocalDate tanggal = LocalDate.now()) {
         tambahEvent(tanggal, StatusPekerjaan.DISELESAIKAN)

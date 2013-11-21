@@ -53,7 +53,8 @@ class AntrianCuciController {
         if (model.keterangan && model.keterangan.isEmpty()) {
             workOrder.keterangan = model.keterangan
         }
-        workOrder.dicuci(model.tanggal)
+        //workOrder.dicuci(model.tanggal)
+        workOrder.diselesaikan(model.tanggal)
         execInsideUISync {
             model.workOrderList.remove(view.table.selectionModel.selected[0])
             clear()

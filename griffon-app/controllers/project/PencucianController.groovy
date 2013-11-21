@@ -21,27 +21,27 @@ class PencucianController {
 
     @Transaction(newSession = true)
     def listAll = {
-        execInsideUISync {
-            model.workOrderList.clear()
-        }
-
-        List workOrderResult = findAllWorkOrderByStatusTerakhir(StatusPekerjaan.DICUCI)
-
-        execInsideUISync {
-            model.workOrderList.addAll(workOrderResult)
-            model.nomorSearch = null
-        }
+//        execInsideUISync {
+//            model.workOrderList.clear()
+//        }
+//
+//        List workOrderResult = findAllWorkOrderByStatusTerakhir(StatusPekerjaan.DICUCI)
+//
+//        execInsideUISync {
+//            model.workOrderList.addAll(workOrderResult)
+//            model.nomorSearch = null
+//        }
     }
 
     @Transaction(newSession = true)
     def search = {
-        if (model.nomorSearch) {
-            execInsideUISync { model.workOrderList.clear() }
-            List result = findAllWorkOrderByNomorLikeAndStatusTerakhir("%${model.nomorSearch}%", StatusPekerjaan.DICUCI)
-            execInsideUISync {
-                model.workOrderList.addAll(result)
-            }
-        }
+//        if (model.nomorSearch) {
+//            execInsideUISync { model.workOrderList.clear() }
+//            List result = findAllWorkOrderByNomorLikeAndStatusTerakhir("%${model.nomorSearch}%", StatusPekerjaan.DICUCI)
+//            execInsideUISync {
+//                model.workOrderList.addAll(result)
+//            }
+//        }
     }
 
     def prosesSelesaiCuci = {
