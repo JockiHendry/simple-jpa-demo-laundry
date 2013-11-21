@@ -33,6 +33,7 @@ class WorkOrderController {
         model.tanggalSelesaiSearch = LocalDate.now()
         List workOrderResult = findAllWorkOrderByTanggalBetween(model.tanggalMulaiSearch, model.tanggalSelesaiSearch, [orderBy: 'nomor,tanggal'])
         buatNomorWO()
+        refreshInformasi()
 
         execInsideUISync {
             model.workOrderList.addAll(workOrderResult)
@@ -56,10 +57,19 @@ class WorkOrderController {
                 tanggal between(model.tanggalMulaiSearch, model.tanggalSelesaiSearch)
             }
         }
+        refreshInformasi()
         execInsideUISync {
             model.workOrderList.addAll(result)
         }
     }
+
+    @Transaction(Transaction.Policy.SKIP)
+    def refreshInformasi = {
+        def jumlahItem = model.itemWorkOrders.sum { it.jumlah }?: 0
+        def total = model.itemWorkOrders.sum { it.harga }?: 0
+        model.informasi = "Jumlah Pakaian ${jumlahItem}   Total ${NumberFormat.currencyInstance.format(total)}"
+    }
+
 
     def save = {
         WorkOrder workOrder = new WorkOrder('nomor': model.nomor, 'tanggal': model.tanggal, 'pelanggan': model.selectedPelanggan,
@@ -177,6 +187,7 @@ class WorkOrderController {
             view.table.selectionModel.clearSelection()
         }
         buatNomorWO()
+        refreshInformasi()
     }
 
     @Transaction(Transaction.Policy.SKIP)
@@ -196,6 +207,7 @@ class WorkOrderController {
                 model.estimasiSelesai = selected.estimasiSelesai
                 model.itemWorkOrders.clear()
                 model.itemWorkOrders.addAll(selected.itemWorkOrders)
+                refreshInformasi()
                 model.pembayaran = selected.pembayaran
                 model.pembayaranCash = model.pembayaran instanceof PembayaranCash
                 model.pembayaranSignedBill = model.pembayaran instanceof PembayaranSignedBill

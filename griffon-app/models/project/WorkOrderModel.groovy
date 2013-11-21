@@ -40,4 +40,6 @@ class WorkOrderModel {
 
     BasicEventList<WorkOrder> workOrderList = new BasicEventList<>()
 
+    @Bindable String informasi
+
 }

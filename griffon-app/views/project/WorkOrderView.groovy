@@ -91,13 +91,17 @@ application(title: 'Work Order',
             }
             errorLabel(path: 'pelanggan', constraints: 'wrap')
             label('Isi:')
-            mvcPopupButton(id: 'itemWorkOrders', text: 'Klik Disini Untuk Melihat atau Mengisi Rincian Order...',
-                    errorPath: 'itemWorkOrders', mvcGroup: 'itemWorkOrderAsChild',
-                    args: { [parentList: model.itemWorkOrders, parentWorkOrder: view.table.selectionModel.selected[0]] },
-                    dialogProperties: [title: 'Item Work Orders', size: new Dimension(900,420)], onFinish: { m, v, c ->
-                model.itemWorkOrders.clear()
-                model.itemWorkOrders.addAll(m.itemWorkOrderList)
-            })
+            panel {
+                label(text: bind {model.informasi})
+                mvcPopupButton(id: 'itemWorkOrders', text: 'Klik Disini Untuk Melihat atau Mengisi Rincian Order...',
+                        errorPath: 'itemWorkOrders', mvcGroup: 'itemWorkOrderAsChild',
+                        args: { [parentList: model.itemWorkOrders, parentWorkOrder: view.table.selectionModel.selected[0]] },
+                        dialogProperties: [title: 'Item Work Orders', size: new Dimension(900,420)], onFinish: { m, v, c ->
+                    model.itemWorkOrders.clear()
+                    model.itemWorkOrders.addAll(m.itemWorkOrderList)
+                    controller.refreshInformasi()
+                })
+            }
             errorLabel(path: 'itemWorkOrders', constraints: 'wrap')
 
             label('Keterangan:')
