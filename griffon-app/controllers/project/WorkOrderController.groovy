@@ -83,6 +83,11 @@ class WorkOrderController {
             pembayaran = new PembayaranCompliant(tanggal: workOrder.tanggal, tagihan: workOrder.total(),
                 keterangan: model.keteranganPembayaran)
         }
+        if (!pembayaran) {
+            JOptionPane.showMessageDialog(view.mainPanel, 'Anda harus memilih salah satu metode pembayaran.', 'Kesalahan Validasi',
+                JOptionPane.ERROR_MESSAGE)
+            return
+        }
         model.pembayaran = pembayaran
         workOrder.pembayaran = pembayaran
 
