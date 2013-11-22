@@ -15,7 +15,8 @@ class LaporanModel {
 
 enum JenisLaporan {
 
-    LAPORAN_BULANAN('Laporan Harian', 'laporan_harian', '')
+    LAPORAN_BULANAN('Laporan Harian', 'laporan_harian', 'ItemWorkOrder.LaporanBulanan'),
+    LAPORAN_PEMASUKAN('Laporan Pemasukan', 'laporan_pemasukan', 'ItemWorkOrder.LaporanPemasukan')
 
     String keterangan
     String namaLaporan

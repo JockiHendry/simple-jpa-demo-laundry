@@ -28,6 +28,21 @@ import org.joda.time.*
 
 import javax.validation.groups.Default
 
+@NamedQueries([
+    @NamedQuery(name='ItemWorkOrder.LaporanBulanan', query='''
+        SELECT DAY(wo.tanggal) AS tanggal, i.jumlah, i.work.itemPakaian.nama AS nama
+        FROM WorkOrder wo JOIN wo.itemWorkOrders i
+        WHERE wo.tanggal BETWEEN :tanggalMulaiCari AND :tanggalSelesaiCari
+        ORDER BY tanggal, nama
+    '''),
+    @NamedQuery(name='ItemWorkOrder.LaporanPemasukan', query='''
+        SELECT  i.work.itemPakaian.nama AS nama, SUM(i.harga *  i.jumlah) AS total
+        FROM WorkOrder wo JOIN wo.itemWorkOrders i
+        WHERE wo.tanggal BETWEEN :tanggalMulaiCari AND :tanggalSelesaiCari
+        GROUP BY nama
+        ORDER BY nama
+    ''')
+])
 @DomainClass @Entity @Canonical
 class ItemWorkOrder {
 

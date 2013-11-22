@@ -38,16 +38,24 @@ class LaporanController {
         }
 
         Map parameter = ['tanggalMulaiCari': model.tanggalMulaiCari, 'tanggalSelesaiCari': model.tanggalSelesaiCari]
-        //List source = executeNamedQuery(jenisLaporan.namedQuery, parameter)
-        List queryResult = executeQuery('SELECT DAY(wo.tanggal) AS tanggal, i.jumlah, i.work.itemPakaian.nama AS nama FROM WorkOrder wo JOIN wo.itemWorkOrders i ORDER BY tanggal, nama')
+        List queryResult = executeNamedQuery(jenisLaporan.namedQuery, parameter)
         List source = []
-        queryResult.each {
-            source << ['tanggal': it[0], 'jumlah': it[1], 'nama': it[2]]
-        }
 
-        // data default untuk seluruh jenis pakaian
-        findAllItemPakaian().each { ItemPakaian itemPakaian ->
-            (1..31).each { source << ['tanggal': it, 'jumlah': 0, 'nama': itemPakaian.nama]}
+        switch(jenisLaporan) {
+            case JenisLaporan.LAPORAN_BULANAN:
+                queryResult.each {
+                    source << ['tanggal': it[0], 'jumlah': it[1], 'nama': it[2]]
+                }
+                // data default untuk seluruh jenis pakaian
+                findAllItemPakaian().each { ItemPakaian itemPakaian ->
+                    (1..31).each { source << ['tanggal': it, 'jumlah': 0, 'nama': itemPakaian.nama]}
+                }
+                break
+            case JenisLaporan.LAPORAN_PEMASUKAN:
+                queryResult.each {
+                    source << ['nama': it[0], 'total': it[1]]
+                }
+                break
         }
 
         JRDataSource dataSource = new JRMapCollectionDataSource(source)

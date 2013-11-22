@@ -4,10 +4,10 @@
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<style name="Crosstab Data Text" hAlign="Center"/>
-	<parameter name="tanggalMulai" class="org.joda.time.LocalDate">
+	<parameter name="tanggalMulaiCari" class="org.joda.time.LocalDate">
 		<defaultValueExpression><![CDATA[org.joda.time.LocalDate.now()]]></defaultValueExpression>
 	</parameter>
-	<parameter name="tanggalSelesai" class="org.joda.time.LocalDate">
+	<parameter name="tanggalSelesaiCari" class="org.joda.time.LocalDate">
 		<defaultValueExpression><![CDATA[org.joda.time.LocalDate.now()]]></defaultValueExpression>
 	</parameter>
 	<queryString>
@@ -42,7 +42,7 @@ FROM
 				<textElement textAlignment="Center">
 					<font isBold="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA["Periode ${$P{tanggalMulai}.toString('dd-MM-yyyy')} s/d ${$P{tanggalSelesai}.toString('dd-MM-yyyy')}"]]></textFieldExpression>
+				<textFieldExpression><![CDATA["Periode ${$P{tanggalMulaiCari}.toString('dd-MM-yyyy')} s/d ${$P{tanggalSelesaiCari}.toString('dd-MM-yyyy')}"]]></textFieldExpression>
 			</textField>
 		</band>
 	</pageHeader>

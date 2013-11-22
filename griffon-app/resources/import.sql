@@ -214,7 +214,20 @@ VALUES
 INSERT INTO `laundry`.`hibernate_sequences`
 (`sequence_name`,`sequence_next_hi_value`)
 VALUES
+('Pelanggan',2),
 ('ItemPakaian',2),
 ('work',2),
 ('kategori',2),
 ('jeniswork',2);
+
+
+INSERT INTO `laundry`.`pelanggan`
+(`id`, `alamat`, `createdDate`, `deleted`, `modifiedDate`, `nama`, `nomorTelepon`)
+VALUES
+(1, 'Jl. Imam Bonjol', '2013-11-16 00:00:00', 'N', null, 'Steven', null),
+(2, 'Jl. Setia Budi', '2013-11-16 00:00:00', 'N', null, 'David', null),
+(3, 'Jl. Siantan', '2013-11-16 00:00:00', 'N', null, 'Bram', null),
+(4, 'Jl. Sungai Raya Dalam', '2013-11-16 00:00:00', 'N', null, 'Edi Yi Wei', null),
+(5, 'Jl. Purnama', '2013-11-16 00:00:00', 'N', null, 'Sandi Kosasi', null),
+(6, 'Jl. Pahlawan', '2013-11-16 00:00:00', 'N', null, 'Yip Man', null),
+(7, 'Jl. Tenaga Baru', '2013-11-16 00:00:00', 'N', null, 'Bruce Lee', null);
