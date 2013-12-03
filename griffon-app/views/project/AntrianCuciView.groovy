@@ -81,7 +81,7 @@ application(title: 'Work Order',
 
             panel(constraints: 'span, growx, wrap') {
                 flowLayout(alignment: FlowLayout.LEADING)
-                button('Order Ini Sedang Dicuci...', actionPerformed: {
+                button('Order Ini Selesai Dicuci...', actionPerformed: {
                     if (JOptionPane.showConfirmDialog(mainPanel, "Apakah Anda yakin order ini sudah memasuki proses pencucian pada tanggal ${model.tanggal.toString('dd-MM-yyyy')}?",
                             'Konfirmasi Pencucian', JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE) != JOptionPane.YES_OPTION) {
                         return
