@@ -42,6 +42,8 @@ environments {
                 // NOTE: for production keys it is more secure to rely on key prompting
                 // no value means we will prompt //storepass = 'BadStorePassword'
                 // no value means we will prompt //keypass   = 'BadKeyPassword'
+                storepass = 'laundry:)'
+                keypass = 'laundry:)'
                 lazy = false // sign, regardless of existing signatures
             }
         }

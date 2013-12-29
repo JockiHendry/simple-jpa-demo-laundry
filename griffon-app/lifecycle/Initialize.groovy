@@ -40,7 +40,7 @@ SplashScreen splash = SplashScreen.splashScreen
 if (splash) {
     Graphics2D g = splash.createGraphics()
     g.setColor(Color.BLACK)
-    g.drawString("Versi ${app.metadata.getApplicationVersion()}", 35, 310)
+    g.drawString("Versi ${app.metadata.getApplicationVersion()}", 318, 387)
     splash.update()
 }
 
