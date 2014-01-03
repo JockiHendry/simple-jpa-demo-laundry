@@ -45,15 +45,8 @@ application(title: 'Item Work Order',
                 mvcPopupButton('Cari Di Daftar Pekerjaan...', id: 'cariPekerjaan', mvcGroup: 'work', errorPath: 'work', dialogProperties: [
                     title: 'Cari Item Pekerjaan',
                     size: new Dimension(900, 420)
-                ], onFinish: { WorkModel m, v, c ->
-                    if (v.table.selectionModel.isSelectionEmpty()) {
-                        JOptionPane.showMessageDialog(mainPanel, 'Tidak ada item pekerjaan yang dipilih!', 'Cari Item Pekerjaan',
-                            JOptionPane.ERROR_MESSAGE)
-                    } else {
-                        model.selectedWork = controller.findWorkById(v.table.selectionModel.selected[0].id)
-                        model.harga = model.selectedWork.harga
-                    }
-                }, mnemonic: KeyEvent.VK_P)
+                ], onFinish: controller.prosesWork, mnemonic: KeyEvent.VK_P, enabled: bind { model.parentPelanggan != null })
+                label('Anda harus memilih pelanggan terlebih dahulu!', visible: bind { model.parentPelanggan == null})
             }
             errorLabel(path: 'work', constraints: 'wrap')
             label('Jumlah:')

@@ -8,7 +8,7 @@ import javax.swing.event.ListSelectionEvent
 @Transaction
 class PelangganController {
 
-    def model
+    PelangganModel model
     def view
 
     void mvcGroupInit(Map args) {
@@ -20,34 +20,24 @@ class PelangganController {
     }
 
     @Transaction(newSession = true)
-    def listAll = {
-        execInsideUISync {
-            model.pelangganList.clear()
-        }
-
-        List pelangganResult = findAllPelanggan()
-
-        execInsideUISync {
-            model.pelangganList.addAll(pelangganResult)
-            model.namaSearch = null
-            model.searchMessage = app.getMessage("simplejpa.search.all.message")
-        }
-    }
-
-    @Transaction(newSession = true)
     def search = {
-        if (model.namaSearch?.length() > 0) {
-            execInsideUISync { model.pelangganList.clear() }
-            List result = findAllPelangganByNamaLike("%${model.namaSearch}%")
-            execInsideUISync {
-                model.pelangganList.addAll(result)
-                model.searchMessage = app.getMessage("simplejpa.search.result.message", ['Nama', model.namaSearch])
+        execInsideUISync { model.pelangganList.clear() }
+        List result = findAllPelangganByDsl {
+            nama like("%${model.namaSearch?:''}%")
+            if (model.membershipSearch.selectedItem != MembershipSearch.SEMUA) {
+                and()
+                corporate eq(model.membershipSearch.selectedItem == MembershipSearch.CORPORATE)
             }
+        }
+        execInsideUISync {
+            model.pelangganList.addAll(result)
+            model.searchMessage = app.getMessage("simplejpa.search.result.message", ['Nama', model.namaSearch])
         }
     }
 
     def save = {
-        Pelanggan pelanggan = new Pelanggan('nama': model.nama, 'alamat': model.alamat, 'nomorTelepon': model.nomorTelepon)
+        Pelanggan pelanggan = new Pelanggan(nama: model.nama, alamat: model.alamat,
+            nomorTelepon: model.nomorTelepon, corporate: model.corporate)
 
         if (!validate(pelanggan)) return
 
@@ -68,6 +58,7 @@ class PelangganController {
             selectedPelanggan.nama = model.nama
             selectedPelanggan.alamat = model.alamat
             selectedPelanggan.nomorTelepon = model.nomorTelepon
+            selectedPelanggan.corporate = model.corporate
 
             selectedPelanggan = merge(selectedPelanggan)
             execInsideUISync { view.table.selectionModel.selected[0] = selectedPelanggan }
@@ -91,6 +82,8 @@ class PelangganController {
             model.nama = null
             model.alamat = null
             model.nomorTelepon = null
+            model.corporate = true
+            model.outsider = false
 
             model.errors.clear()
             view.table.selectionModel.clearSelection()
@@ -109,6 +102,8 @@ class PelangganController {
                 model.nama = selected.nama
                 model.alamat = selected.alamat
                 model.nomorTelepon = selected.nomorTelepon
+                model.corporate = selected.corporate
+                model.outsider = !selected.corporate
             }
         }
     }

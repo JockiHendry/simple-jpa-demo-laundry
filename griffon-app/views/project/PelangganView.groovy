@@ -44,8 +44,9 @@ application(title: 'Pelanggan',
                         actionPerformed: controller.search, keyPressed: { KeyEvent k ->
                     if (k.keyCode==KeyEvent.VK_DOWN) table.requestFocusInWindow()
                 })
+                label("Membership")
+                comboBox(id: 'membershipSearch', model: model.membershipSearch)
                 button(app.getMessage('simplejpa.search.label'), actionPerformed: controller.search)
-                button(app.getMessage('simplejpa.search.all.label'), actionPerformed: controller.listAll)
             }
         }
 
@@ -59,6 +60,7 @@ application(title: 'Pelanggan',
                     glazedColumn(name: 'Nama', property: 'nama')
                     glazedColumn(name: 'Alamat', property: 'alamat')
                     glazedColumn(name: 'Nomor Telepon', property: 'nomorTelepon')
+                    glazedColumn(name: 'Membership', expression: {it.corporate? 'Corporate': 'Outsider'})
                     keyStrokeAction(actionKey: 'pilih', condition: JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT,
                         keyStroke: KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, 0), action: pilih)
                 }
@@ -75,7 +77,13 @@ application(title: 'Pelanggan',
             label('Nomor Telepon:')
             textField(id: 'nomorTelepon', columns: 15, text: bind('nomorTelepon', target: model, mutual: true), errorPath: 'nomorTelepon')
             errorLabel(path: 'nomorTelepon', constraints: 'wrap')
-
+            label('Membership:')
+            panel {
+                membershipGroup = buttonGroup()
+                radioButton(id: 'corporate', text: 'Corporate', selected: bind('corporate', target: model, mutual: true), buttonGroup: membershipGroup)
+                radioButton(id: 'outsider', text: 'Outsider', selected: bind('outsider', target: model, mutual: true), buttonGroup: membershipGroup)
+            }
+            errorLabel(path: 'corporate', constraints: 'wrap')
 
             panel(constraints: 'span, growx, wrap') {
                 flowLayout(alignment: FlowLayout.LEADING)

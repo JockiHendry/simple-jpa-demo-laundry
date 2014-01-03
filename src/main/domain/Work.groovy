@@ -14,8 +14,6 @@
  * limitations under the License.
  */
 
-
-
 package domain
 
 import groovy.transform.*
@@ -26,7 +24,7 @@ import javax.validation.constraints.*
 import org.hibernate.validator.constraints.*
 import org.joda.time.*
 
-@DomainClass @Entity @Canonical(excludes = 'harga')
+@DomainClass @Entity @Canonical(excludes = 'hargaOutsider,hargaCorporate')
 class Work implements Comparable {
 
     @NotNull @ManyToOne
@@ -36,7 +34,18 @@ class Work implements Comparable {
     JenisWork jenisWork
 
     @NotNull
-    BigDecimal harga
+    BigDecimal hargaOutsider
+
+    @NotNull
+    BigDecimal hargaCorporate
+
+    BigDecimal getHarga(Pelanggan pelanggan) {
+        if (pelanggan==null || pelanggan.corporate) {
+            return hargaCorporate
+        } else {
+            return hargaOutsider
+        }
+    }
 
     @Override
     int compareTo(Object o) {

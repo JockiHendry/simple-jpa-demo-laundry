@@ -4,6 +4,7 @@ import domain.EventPekerjaan
 import domain.ItemPakaian
 import domain.ItemWorkOrder
 import domain.JenisWork
+import domain.Pelanggan
 import domain.PembayaranCash
 import domain.StatusPekerjaan
 import domain.Work
@@ -24,21 +25,41 @@ class WorkOrderTests extends GriffonUnitTestCase {
     }
 
     void testTambahItem() {
-        WorkOrder wo = new WorkOrder()
+        Pelanggan pelangganCorporate = new Pelanggan(corporate: true)
+        Pelanggan pelangganOutsider = new Pelanggan()
+
         Work w1 = new Work(new ItemPakaian('Long Coat'),  new JenisWork('Laundry'))
-        w1.harga = 22500.0
+        w1.hargaOutsider = 22500.0
+        w1.hargaCorporate = 20500.0
         Work w2 = new Work(new ItemPakaian('Kebaya Suits'), new JenisWork('Dry Cleaning'))
-        w2.harga = 19500.0
+        w2.hargaOutsider = 19500.0
+        w2.hargaCorporate = 19000.0
 
-        ItemWorkOrder item1 = new ItemWorkOrder(w1, w1.harga)
-        wo.tambahItem(item1)
-        assertEquals(true, wo.itemWorkOrders.contains(item1))
-        assertEquals(1, wo.itemWorkOrders.size())
+        WorkOrder woCorporate = new WorkOrder(pelanggan: pelangganCorporate)
 
-        ItemWorkOrder item2 = new ItemWorkOrder(w2, w2.harga)
-        wo.tambahItem(w2, w2.harga)
-        assertEquals(true, wo.itemWorkOrders.contains(item1))
-        assertEquals(2, wo.itemWorkOrders.size())
+        ItemWorkOrder item1 = new ItemWorkOrder(w1, w1.hargaCorporate)
+        woCorporate.tambahItem(item1)
+        assertTrue(woCorporate.itemWorkOrders.contains(item1))
+        assertEquals(1, woCorporate.itemWorkOrders.size())
+
+        woCorporate.tambahItem(w2)
+        assertEquals(w2, woCorporate.itemWorkOrders[1].work)
+        assertEquals(1, woCorporate.itemWorkOrders[1].jumlah)
+        assertEquals(w2.hargaCorporate, woCorporate.itemWorkOrders[1].harga)
+        assertEquals(2, woCorporate.itemWorkOrders.size())
+
+        WorkOrder woOutsider = new WorkOrder(pelanggan: pelangganOutsider)
+
+        item1 = new ItemWorkOrder(w1, w1.hargaOutsider)
+        woOutsider.tambahItem(item1)
+        assertTrue(woOutsider.itemWorkOrders.contains(item1))
+        assertEquals(1, woOutsider.itemWorkOrders.size())
+
+        woOutsider.tambahItem(w2)
+        assertEquals(w2, woOutsider.itemWorkOrders[1].work)
+        assertEquals(1, woOutsider.itemWorkOrders[1].jumlah)
+        assertEquals(w2.hargaOutsider, woOutsider.itemWorkOrders[1].harga)
+        assertEquals(2, woOutsider.itemWorkOrders.size())
     }
 
     void testEvents() {
@@ -77,23 +98,33 @@ class WorkOrderTests extends GriffonUnitTestCase {
 //        assertEquals(StatusPekerjaan.DIAMBIL, wo.statusTerakhir)
 
         wo.hapusEvent(e4)
-        assertEquals(3, wo.eventPekerjaans.size())
+        assertEquals(2, wo.eventPekerjaans.size())
         assertEquals(false, wo.eventPekerjaans.contains(e4))
         assertEquals(StatusPekerjaan.DISELESAIKAN, wo.statusTerakhir)
     }
 
     void testTotal() {
-        WorkOrder wo = new WorkOrder()
         Work w1 = new Work(new ItemPakaian('Long Coat'),  new JenisWork('Laundry'))
-        w1.harga = 22500
+        w1.hargaCorporate = 22500
+        w1.hargaOutsider = 21000
         Work w2 = new Work(new ItemPakaian('Kebaya Suits'), new JenisWork('Dry Cleaning'))
-        w2.harga = 19500
+        w2.hargaCorporate = 19500
+        w2.hargaOutsider = 18000
         Work w3 = new Work(new ItemPakaian('Long Coat'), new JenisWork('Pressing'))
-        w3.harga = 17500
-        wo.tambahItem(w1)
-        wo.tambahItem(w2)
-        wo.tambahItem(w3)
-        assertEquals(59500, wo.total())
+        w3.hargaCorporate = 17500
+        w3.hargaOutsider = 17000
+
+        WorkOrder woCorporate = new WorkOrder(pelanggan: new Pelanggan(corporate: true))
+        woCorporate.tambahItem(w1)
+        woCorporate.tambahItem(w2)
+        woCorporate.tambahItem(w3)
+        assertEquals(59500, woCorporate.total())
+
+        WorkOrder woOutsider = new WorkOrder(pelanggan: new Pelanggan())
+        woOutsider.tambahItem(w1)
+        woOutsider.tambahItem(w2)
+        woOutsider.tambahItem(w3)
+        assertEquals(56000, woOutsider.total())
     }
 
 }

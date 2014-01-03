@@ -54,11 +54,11 @@ class WorkOrder {
     LocalDate estimasiSelesai
 
     void tambahItem(Work work) {
-        tambahItem(work, work.harga)
+        tambahItem(work, pelanggan.corporate? work.hargaCorporate: work.hargaOutsider)
     }
 
     void tambahItem(Work work, BigDecimal harga) {
-        tambahItem(new ItemWorkOrder(work, harga))
+        tambahItem(new ItemWorkOrder(work, harga, 1))
     }
 
     void tambahItem(ItemWorkOrder itemWorkOrder) {

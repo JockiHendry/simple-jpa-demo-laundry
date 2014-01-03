@@ -59,8 +59,11 @@ application(title: 'Work',
                 glazedTable(id: 'table', list: model.workList, sortingStrategy: SINGLE_COLUMN, onValueChanged: controller.tableSelectionChanged) {
                     glazedColumn(name: 'Item Pakaian', property: 'itemPakaian')
                     glazedColumn(name: 'Jenis Work', property: 'jenisWork')
-                    glazedColumn(name: 'Harga', property: 'harga', columnClass: Integer) {
-                        templateRenderer('${currencyFormat(it)}', horizontalAlignment: RIGHT)
+                    glazedColumn(name: 'Harga Outsider (Rp)', property: 'hargaOutsider', columnClass: Integer) {
+                        templateRenderer('${numberFormat(it)}', horizontalAlignment: RIGHT)
+                    }
+                    glazedColumn(name: 'Harga Corporate (Rp)', property: 'hargaCorporate', columnClass: Integer) {
+                        templateRenderer('${numberFormat(it)}', horizontalAlignment: RIGHT)
                     }
                     keyStrokeAction(actionKey: 'pilih', condition: JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT,
                         keyStroke: KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, 0), action: pilih)
@@ -69,17 +72,20 @@ application(title: 'Work',
         }
 
         taskPane(id: "form", layout: new MigLayout('', '[right][left][left,grow]', ''), constraints: PAGE_END) {
-            label('Harga:')
-            numberTextField(id: 'harga', columns: 20, bindTo: 'harga', nfParseBigDecimal: true, errorPath: 'harga')
-            errorLabel(path: 'harga', constraints: 'wrap')
+            label('Harga Outsider:')
+            numberTextField(id: 'hargaOutsider', columns: 20, bindTo: 'hargaOutsider', nfParseBigDecimal: true, errorPath: 'hargaOutsider')
+            errorLabel(path: 'hargaOutsider', constraints: 'wrap')
 
+            label('Harga Corporate:')
+            numberTextField(id: 'hargaCorporate', columns: 20, bindTo: 'hargaCorporate', nfParseBigDecimal: true, errorPath: 'hargaCorporate')
+            errorLabel(path: 'hargaCorporate', constraints: 'wrap')
 
             panel(constraints: 'span, growx, wrap') {
                 flowLayout(alignment: FlowLayout.LEADING)
                 button('Pilih', visible: bind('isRowSelected', source: table, converter: {it && model.popupMode}), action: pilih)
                 button(app.getMessage("simplejpa.dialog.save.button"), visible: bind('isRowSelected', source: table, converter: {it && !model.popupMode}), actionPerformed: {
                     controller.save()
-                    harga.requestFocusInWindow()
+                    hargaOutsider.requestFocusInWindow()
                 }, mnemonic: KeyEvent.VK_S)
                 button(app.getMessage("simplejpa.dialog.delete.button"), visible: bind('isRowSelected', source: table, converter: {it && !model.popupMode}), actionPerformed: {
                     if (JOptionPane.showConfirmDialog(mainPanel, app.getMessage("simplejpa.dialog.delete.message"),

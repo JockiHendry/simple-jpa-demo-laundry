@@ -1,6 +1,7 @@
 package project
 
 import domain.*
+import griffon.transform.Threading
 import simplejpa.transaction.Transaction
 import validation.Pengisian
 
@@ -17,6 +18,7 @@ class ItemWorkOrderAsChildController {
     void mvcGroupInit(Map args) {
         args.'parentList'.each { model.itemWorkOrderList << it }
         model.parentWorkOrder =  args.'parentWorkOrder'
+        model.parentPelanggan = args.'parentPelanggan'
         model.isUpdateMode = (model.parentWorkOrder?.id != null)
         refreshInformasi()
     }
@@ -66,6 +68,17 @@ class ItemWorkOrderAsChildController {
             model.itemWorkOrderList.remove(itemWorkOrder)
             clear()
             refreshInformasi()
+        }
+    }
+
+    @Threading(Threading.Policy.SKIP)
+    def prosesWork = { m, v, c ->
+        if (v.table.selectionModel.isSelectionEmpty()) {
+            JOptionPane.showMessageDialog(view.mainPanel, 'Tidak ada item pekerjaan yang dipilih!', 'Cari Item Pekerjaan',
+                    JOptionPane.ERROR_MESSAGE)
+        } else {
+            model.selectedWork = findWorkById(v.view.table.selectionModel.selected[0].id)
+            model.harga = model.selectedWork.getHarga(model.parentPelanggan)
         }
     }
 

@@ -57,7 +57,8 @@ class WorkController {
             for (JenisWork jenisWork: jenisWorkResult) {
                 if (!workResult.find {it.itemPakaian == itemPakaian && it.jenisWork == jenisWork}) {
                     Work work = new Work(itemPakaian, jenisWork)
-                    work.harga = 0
+                    work.hargaOutsider = 0
+                    work.hargaCorporate = 0
                     persist(work)
                     workResult << work
                 }
@@ -118,7 +119,8 @@ class WorkController {
     def save = {
         if (model.id != null) {
             Work selectedWork = view.table.selectionModel.selected[0]
-            selectedWork.harga = model.harga
+            selectedWork.hargaOutsider = model.hargaOutsider
+            selectedWork.hargaCorporate = model.hargaCorporate
             if (!validate(selectedWork)) return
             selectedWork = merge(selectedWork)
             execInsideUISync { view.table.selectionModel.selected[0] = selectedWork }
@@ -139,7 +141,8 @@ class WorkController {
     def clear = {
         execInsideUISync {
             model.id = null
-            model.harga = null
+            model.hargaOutsider = null
+            model.hargaCorporate = null
 
             model.errors.clear()
             view.table.selectionModel.clearSelection()
@@ -155,7 +158,8 @@ class WorkController {
                 Work selected = view.table.selectionModel.selected[0]
                 model.errors.clear()
                 model.id = selected.id
-                model.harga = selected.harga
+                model.hargaOutsider = selected.hargaOutsider
+                model.hargaCorporate = selected.hargaCorporate
             }
         }
     }

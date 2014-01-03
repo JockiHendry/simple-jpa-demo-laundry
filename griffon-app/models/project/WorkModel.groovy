@@ -28,7 +28,8 @@ import org.jdesktop.swingx.combobox.EnumComboBoxModel
 class WorkModel {
 
     @Bindable Long id
-    @Bindable BigDecimal harga
+    @Bindable BigDecimal hargaOutsider
+    @Bindable BigDecimal hargaCorporate
 
     @Bindable String searchMessage
 

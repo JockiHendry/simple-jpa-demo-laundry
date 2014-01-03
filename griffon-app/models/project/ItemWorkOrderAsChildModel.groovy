@@ -21,5 +21,7 @@ class ItemWorkOrderAsChildModel {
 
     @Bindable String informasi
     WorkOrder parentWorkOrder
+    Pelanggan parentPelanggan
+
     boolean isUpdateMode
 }

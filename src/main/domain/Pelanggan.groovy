@@ -36,6 +36,9 @@ class Pelanggan implements Comparable {
     @Size(max=50)
     String nomorTelepon
 
+    @NotNull
+    Boolean corporate = Boolean.FALSE;
+
     @Override
     int compareTo(Object o) {
         if (!o instanceof Pelanggan) return -1
