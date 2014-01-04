@@ -39,8 +39,8 @@ class WorkOrderController {
         execInsideUISync {
             model.workOrderList.addAll(workOrderResult)
             model.nomorSearch = null
-            model.searchMessage = app.getMessage("simplejpa.search.all.message")
-            view.statusSearch.selectedItem = null
+            model.pelangganSearch = null
+            view.jenisJadwalSearch.selectedItem = JenisJadwalSearch.SEMUA
         }
     }
 

@@ -20,6 +20,7 @@ class ItemWorkOrderAsChildController {
         model.parentWorkOrder =  args.'parentWorkOrder'
         model.parentPelanggan = args.'parentPelanggan'
         model.isUpdateMode = (model.parentWorkOrder?.id != null)
+        model.editable = args.'editable'!=null? args.'editable': true
         refreshInformasi()
     }
 

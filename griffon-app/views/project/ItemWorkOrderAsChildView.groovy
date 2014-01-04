@@ -38,7 +38,7 @@ application(title: 'Item Work Order',
                 border: BorderFactory.createRaisedSoftBevelBorder(), text: bind{model.informasi})
         }
 
-        taskPane(id: "form", layout: new MigLayout('', '[right][left][left,grow]', ''), constraints: PAGE_END) {
+        taskPane(id: "form", layout: new MigLayout('', '[right][left][left,grow]', ''), visible: bind { model.editable }, constraints: PAGE_END) {
             label('Item Pekerjaan:')
             panel {
                 label(text: bind {model.selectedWork?: '- kosong -'})

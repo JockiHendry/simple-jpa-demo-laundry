@@ -24,4 +24,5 @@ class ItemWorkOrderAsChildModel {
     Pelanggan parentPelanggan
 
     boolean isUpdateMode
+    @Bindable boolean editable
 }

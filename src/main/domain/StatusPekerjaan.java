@@ -17,7 +17,7 @@
 package domain;
 
 public enum StatusPekerjaan{
-    DITERIMA("Sudah Diterima"), DISELESAIKAN("Selesai Dicuci"), DIAMBIL("Sudah Diambil");
+    DITERIMA("Sudah Diterima"), DICUCI("Sedang Dikerjakan"), DISELESAIKAN("Selesai Dicuci"), DIAMBIL("Sudah Diambil");
 
     String description;
 

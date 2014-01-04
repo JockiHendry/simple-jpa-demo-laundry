@@ -28,7 +28,7 @@ application(title: 'Work Order',
             label("Cari")
             textField(id: 'nomorSearch', columns: 10, text: bind('nomorSearch', target: model, mutual: true), actionPerformed: controller.search)
             textField(id: 'pelangganSearch', columns: 10, text: bind('pelangganSearch', target: model, mutual: true), actionPerformed: controller.search)
-            comboBox(id: 'statusSearch', model: model.jenisJadwalSearch)
+            comboBox(id: 'jenisJadwalSearch', model: model.jenisJadwalSearch)
             label("Tanggal")
             dateTimePicker(id: 'tanggalMulaiSearch', localDate: bind('tanggalMulaiSearch', target: model, mutual: true), errorPath: 'tanggalMulaiSearch', dateVisible: true, timeVisible: false)
             label(" s/d ")
@@ -56,13 +56,14 @@ application(title: 'Work Order',
                     glazedColumn(name: 'Lunas?', expression: {it.pembayaran?.isLunas()}, width: 60) {
                         templateRenderer(templateExpression: { it?'Y':'-'})
                     }
-                    glazedColumn(name: 'Total', expression: {it.total()}, columnClass: Integer) {
-                        templateRenderer('${currencyFormat(it)}', horizontalAlignment: RIGHT)
-                    }
                     glazedColumn(name: 'Express?', property: 'express', width: 70) {
                         templateRenderer(templateExpression: {it?'Y': 'N'})
                     }
                     glazedColumn(name: 'Keterangan', property: 'keterangan')
+                    glazedColumn(name: 'Total', expression: {it.total()}, columnClass: Integer) {
+                        templateRenderer('${currencyFormat(it)}', horizontalAlignment: RIGHT)
+                    }
+
                 }
             }
         }

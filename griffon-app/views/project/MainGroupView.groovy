@@ -17,9 +17,9 @@ actions {
         smallIcon: imageIcon('/menu_workorder.png'), closure: controller.switchPage)
     action(id: 'pembayaranSignedBill', name: 'Tagihan', actionCommandKey: 'pembayaranSignedBill', mnemonic: KeyEvent.VK_T,
         smallIcon: imageIcon('/menu_tagihan.png'), closure: controller.switchPage)
-    action(id: 'antrianCuci', name: 'Antrian Cuci', actionCommandKey: 'antrianCuci', mnemonic: KeyEvent.VK_A,
+    action(id: 'antrianCuci', name: 'Pengerjaan', actionCommandKey: 'antrianCuci', mnemonic: KeyEvent.VK_A,
         smallIcon: imageIcon('/menu_antriancuci.png'), closure: controller.switchPage)
-    action(id: 'pencucian', name: 'Pencucian', actionCommandKey: 'pencucian', mnemonic: KeyEvent.VK_C,
+    action(id: 'pencucian', name: 'Cucian Selesai', actionCommandKey: 'pencucian', mnemonic: KeyEvent.VK_C,
         smallIcon: imageIcon('/menu_pencucian.png'), closure: controller.switchPage)
     action(id: 'pengambilan', name: 'Pengambilan', actionCommandKey: 'pengambilan', mnemonic: KeyEvent.VK_B,
         smallIcon: imageIcon('/menu_pengambilan.png'), closure: controller.switchPage)
@@ -64,9 +64,9 @@ application(id: 'mainFrame',
         buttonGroup(id: 'buttons')
 		toggleButton(buttonGroup: buttons, action: pelanggan, verticalTextPosition: SwingConstants.BOTTOM, horizontalTextPosition: SwingConstants.CENTER)
 		toggleButton(buttonGroup: buttons, action: workOrder, verticalTextPosition: SwingConstants.BOTTOM, horizontalTextPosition: SwingConstants.CENTER)
-        toggleButton(buttonGroup: buttons, action: pembayaranSignedBill, verticalTextPosition: SwingConstants.BOTTOM, horizontalTextPosition: SwingConstants.CENTER)
+        //toggleButton(buttonGroup: buttons, action: pembayaranSignedBill, verticalTextPosition: SwingConstants.BOTTOM, horizontalTextPosition: SwingConstants.CENTER)
         toggleButton(buttonGroup: buttons, action: antrianCuci, verticalTextPosition: SwingConstants.BOTTOM, horizontalTextPosition: SwingConstants.CENTER)
-        //toggleButton(buttonGroup: buttons, action: pencucian, verticalTextPosition: SwingConstants.BOTTOM, horizontalTextPosition: SwingConstants.CENTER)
+        toggleButton(buttonGroup: buttons, action: pencucian, verticalTextPosition: SwingConstants.BOTTOM, horizontalTextPosition: SwingConstants.CENTER)
         toggleButton(buttonGroup: buttons, action: pengambilan, verticalTextPosition: SwingConstants.BOTTOM, horizontalTextPosition: SwingConstants.CENTER)
         toggleButton(buttonGroup: buttons, action: laporan, verticalTextPosition: SwingConstants.BOTTOM, horizontalTextPosition: SwingConstants.CENTER)
         toggleButton(buttonGroup: buttons, action: maintenance, id: 'maintenanceButton', verticalTextPosition: SwingConstants.BOTTOM, horizontalTextPosition: SwingConstants.CENTER)
