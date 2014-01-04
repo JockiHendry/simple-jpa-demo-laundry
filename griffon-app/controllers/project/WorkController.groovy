@@ -43,16 +43,17 @@ class WorkController {
         execInsideUISync {
             model.workList.clear()
             model.kategoriSearchList.clear()
-            model.itemPakaianSearchList.clear()
+            model.bahanSearchList.clear()
             model.jenisWorkSearchList.clear()
         }
 
         List kategoriResult = findAllKategori([orderBy: 'nama'])
-        List itemPakaianResult = findAllItemPakaian([orderBy: 'nama'])
+        List bahanResult = findAllBahan([orderBy: 'nama'])
         List jenisWorkResult = findAllJenisWork([orderBy: 'nama'])
         List workResult = findAllWork()
 
         // Menambah Work baru bila belum terdaftar
+        List itemPakaianResult = findAllItemPakaian([orderBy: 'nama'])
         for (ItemPakaian itemPakaian: itemPakaianResult) {
             for (JenisWork jenisWork: jenisWorkResult) {
                 if (!workResult.find {it.itemPakaian == itemPakaian && it.jenisWork == jenisWork}) {
@@ -73,41 +74,38 @@ class WorkController {
             model.kategoriSearchList.addAll(kategoriResult)
             model.kategoriSearch.selectedItem = SEMUA
 
-            model.itemPakaianSearchList << SEMUA
-            model.itemPakaianSearchList.addAll(itemPakaianResult)
-            model.itemPakaianSearch.selectedItem = SEMUA
+            model.bahanSearchList << SEMUA
+            model.bahanSearchList.addAll(bahanResult)
+            model.bahanSearch.selectedItem = SEMUA
 
             model.jenisWorkSearchList << SEMUA
             model.jenisWorkSearchList.addAll(jenisWorkResult)
             model.jenisWorkSearch.selectedItem = SEMUA
 
-            if (workResult.size() > 0) {
-                view.table.requestFocusInWindow()
-            }
+            view.itemPakaianSearch.requestFocusInWindow()
         }
     }
 
     @Transaction
     def search = {
         execInsideUISync { model.workList.clear() }
-        List result
-        if (model.kategoriSearch.selectedItem==SEMUA && model.itemPakaianSearch.selectedItem==SEMUA && model.jenisWorkSearch.selectedItem==SEMUA) {
-            result = findAllWork().sort()
-        } else {
-            result = findAllWorkByDsl() {
-                if (model.kategoriSearch.selectedItem!=SEMUA) {
-                    itemPakaian__kategori eq(model.kategoriSearch.selectedItem)
-                }
-                if (model.itemPakaianSearch.selectedItem!=SEMUA) {
-                    and()
-                    itemPakaian eq(model.itemPakaianSearch.selectedItem)
-                }
-                if (model.jenisWorkSearch.selectedItem!=SEMUA) {
-                    and()
-                    jenisWork eq(model.jenisWorkSearch.selectedItem)
-                }
-            }.sort()
-        }
+
+        List result = findAllWorkByDsl() {
+            itemPakaian__nama like("%${model.itemPakaianSearch}%")
+            if (model.kategoriSearch.selectedItem!=SEMUA) {
+                and()
+                itemPakaian__kategori eq(model.kategoriSearch.selectedItem)
+            }
+            if (model.bahanSearch.selectedItem!=SEMUA) {
+                and()
+                itemPakaian__bahan eq(model.bahanSearch.selectedItem)
+            }
+            if (model.jenisWorkSearch.selectedItem!=SEMUA) {
+                and()
+                jenisWork eq(model.jenisWorkSearch.selectedItem)
+            }
+        }.sort()
+
         execInsideUISync {
             model.workList.addAll(result)
             if (result.size() > 0) {

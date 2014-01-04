@@ -39,14 +39,16 @@ application(title: 'Work',
                 visible: bind{model.popupMode}, horizontalAlignment: SwingConstants.CENTER, constraints: PAGE_START)
             panel(constraints: CENTER) {
                 flowLayout(alignment: FlowLayout.LEADING)
+                label("Jenis Pakaian")
+                textField(id: 'itemPakaianSearch', columns: 20, text: bind('itemPakaianSearch', target: model, mutual: true),
+                    actionPerformed: controller.search)
                 label("Kategori")
                 comboBox(id: 'kategoriSearch', model: model.kategoriSearch)
-                label("Item Pakaian")
-                comboBox(id: 'itemPakaianSearch', model: model.itemPakaianSearch)
+                label("Bahan")
+                comboBox(id: 'bahanSearch', model: model.bahanSearch)
                 label("Jenis Pekerjaan")
                 comboBox(id: 'jenisWorkSearch', model: model.jenisWorkSearch)
                 button(app.getMessage('simplejpa.search.label'), action: cari)
-                button(app.getMessage('simplejpa.search.all.label'), action: lihatSemua)
             }
         }
 
@@ -59,6 +61,8 @@ application(title: 'Work',
                 glazedTable(id: 'table', list: model.workList, sortingStrategy: SINGLE_COLUMN, onValueChanged: controller.tableSelectionChanged) {
                     glazedColumn(name: 'Item Pakaian', property: 'itemPakaian')
                     glazedColumn(name: 'Jenis Work', property: 'jenisWork')
+                    glazedColumn(name: 'Kategori', expression: { it.itemPakaian.kategori?: '-' })
+                    glazedColumn(name: 'Bahan', expression: { it.itemPakaian.bahan?: '-' })
                     glazedColumn(name: 'Harga Outsider (Rp)', property: 'hargaOutsider', columnClass: Integer) {
                         templateRenderer('${numberFormat(it)}', horizontalAlignment: RIGHT)
                     }
@@ -71,7 +75,7 @@ application(title: 'Work',
             }
         }
 
-        taskPane(id: "form", layout: new MigLayout('', '[right][left][left,grow]', ''), constraints: PAGE_END) {
+        taskPane(id: "form", layout: new MigLayout('', '[right][left][left,grow]', ''), visible: bind {!model.popupMode}, constraints: PAGE_END) {
             label('Harga Outsider:')
             numberTextField(id: 'hargaOutsider', columns: 20, bindTo: 'hargaOutsider', nfParseBigDecimal: true, errorPath: 'hargaOutsider')
             errorLabel(path: 'hargaOutsider', constraints: 'wrap')
