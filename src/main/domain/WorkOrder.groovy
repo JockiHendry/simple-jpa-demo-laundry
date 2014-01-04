@@ -132,5 +132,9 @@ class WorkOrder {
         return hasil
     }
 
+    LocalDate getEvent(StatusPekerjaan statusPekerjaan) {
+        eventPekerjaans.find { it.status == statusPekerjaan}
+    }
+
 }
 
