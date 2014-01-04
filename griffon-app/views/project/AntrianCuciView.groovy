@@ -69,6 +69,10 @@ application(title: 'Work Order',
 
         taskPane(id: "form", layout: new MigLayout('hidemode 2', '[right][left][left,grow]', ''), visible: bind { table.isRowSelected }, constraints: PAGE_END) {
 
+            label('Tanggal Mulai Dikerjakan:')
+            dateTimePicker(id: 'tanggal', localDate: bind('tanggal', target: model, mutual: true), errorPath: 'tanggal', dateVisible: true, timeVisible: false)
+            errorLabel(path: 'tanggal', constraints: 'wrap')
+
             label('Tanggal Estimasi Selesai:')
             dateTimePicker(id: 'estimasiSelesai', localDate: bind('estimasiSelesai', target: model, mutual: true), errorPath: 'estimasiSelesai', dateVisible: true, timeVisible: false)
             errorLabel(path: 'estimasiSelesai', constraints: 'wrap')

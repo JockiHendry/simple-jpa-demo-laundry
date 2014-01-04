@@ -15,6 +15,7 @@ class AntrianCuciModel {
     @Bindable LocalDate tanggalSelesaiSearch
     EnumComboBoxModel<JenisJadwalSearch> jenisJadwalSearch = new EnumComboBoxModel<JenisJadwalSearch>(JenisJadwalSearch.class)
 
+    @Bindable LocalDate tanggal
     @Bindable LocalDate estimasiSelesai
     @Bindable String keterangan
 
