@@ -1,5 +1,5 @@
 /*
- * Copyright 2013 Jocki Hendry.
+ * Copyright 2014 Jocki Hendry.
  *
  * Licensed under the Apache License, Version 2.0 (the 'License');
  * you may not use this file except in compliance with the License.
@@ -24,36 +24,22 @@ import javax.validation.constraints.*
 import org.hibernate.validator.constraints.*
 import org.joda.time.*
 
-@DomainClass @Entity @Canonical(excludes='works')
-class ItemPakaian implements Comparable {
+@DomainClass @Entity @Canonical(excludes='items')
+class Bahan {
 
     @NotBlank @Size(min=2, max=50)
     String nama
 
-    @ManyToOne
-    Kategori kategori
+    @Size(max=100)
+    String keterangan
 
-    @ManyToOne
-    Bahan bahan
-
-    @OneToMany(cascade=CascadeType.ALL, orphanRemoval=true, mappedBy="itemPakaian")
-    List<Work> works = []
+    @OneToMany(cascade=CascadeType.ALL, orphanRemoval=true, mappedBy="bahan")
+    List<ItemPakaian> items = []
 
     @Override
     String toString() {
         nama
     }
 
-    @Override
-    int compareTo(Object o) {
-        if (!o instanceof ItemPakaian) return -1
-        if (!o.nama && !nama) {
-            return 0
-        } else if (!o.nama) {
-            return 1
-        } else {
-            return nama.compareToIgnoreCase(o.nama)
-        }
-    }
 }
 

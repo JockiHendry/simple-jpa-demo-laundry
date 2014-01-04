@@ -9,6 +9,7 @@ import javax.swing.event.ListSelectionEvent
 class ItemPakaianController {
 
     final static String SEMUA_KATEGORI = "- Semua Kategori -"
+    final static String SEMUA_BAHAN = "- Semua Bahan -"
 
     def model
     def view
@@ -24,47 +25,52 @@ class ItemPakaianController {
     @Transaction(newSession = true)
     def listAll = {
         execInsideUISync {
-            model.itemPakaianList.clear()
             model.kategoriList.clear()
+            model.bahanList.clear()
             model.kategoriSearchList.clear()
+            model.bahanSearchList.clear()
         }
 
-        List itemPakaianResult = findAllItemPakaian()
         List kategoriResult = findAllKategori()
+        List bahanResult = findAllBahan()
 
         execInsideUISync {
-            model.itemPakaianList.addAll(itemPakaianResult)
             model.namaSearch = null
-            model.searchMessage = app.getMessage("simplejpa.search.all.message")
+
             model.kategoriSearchList << SEMUA_KATEGORI
             model.kategoriSearchList.addAll(kategoriResult)
             model.kategoriSearch.selectedItem = SEMUA_KATEGORI
-            model.kategoriList.addAll(kategoriResult)
 
+            model.bahanSearchList << SEMUA_BAHAN
+            model.bahanSearchList.addAll(bahanResult)
+            model.bahanSearch.selectedItem = SEMUA_BAHAN
+
+            model.kategoriList.addAll(kategoriResult)
+            model.bahanList.addAll(bahanResult)
         }
     }
 
     @Transaction(newSession = true)
     def search = {
         execInsideUISync { model.itemPakaianList.clear() }
-        List result
-        if (model.kategoriSearch.selectedItem==SEMUA_KATEGORI) {
-            result = findAllItemPakaianByNamaLike("%${model.namaSearch}%")
-        } else {
-            result = findAllItemPakaianByDsl {
-                nama like("%${model.namaSearch ?: ''}%")
+        List result = findAllItemPakaianByDsl {
+            nama like("%${model.namaSearch ?: ''}%")
+            if (model.kategoriSearch.selectedItem!=SEMUA_KATEGORI) {
                 and()
                 kategori eq(model.kategoriSearch.selectedItem)
+            }
+            if (model.bahanSearch.selectedItem!=SEMUA_BAHAN) {
+                and()
+                bahan eq(model.bahanSearch.selectedItem)
             }
         }
         execInsideUISync {
             model.itemPakaianList.addAll(result)
-            model.searchMessage = "Menampilkan hasil pencarian nama ${model.namaSearch?:''} dan kategori ${model.kategoriSearch.selectedItem}"
         }
     }
 
     def save = {
-        ItemPakaian itemPakaian = new ItemPakaian('nama': model.nama, 'kategori': model.kategori.selectedItem)
+        ItemPakaian itemPakaian = new ItemPakaian('nama': model.nama, 'kategori': model.kategori.selectedItem, 'bahan': model.bahan.selectedItem)
 
         if (!validate(itemPakaian)) return
 
@@ -84,6 +90,7 @@ class ItemPakaianController {
             ItemPakaian selectedItemPakaian = view.table.selectionModel.selected[0]
             selectedItemPakaian.nama = model.nama
             selectedItemPakaian.kategori = model.kategori.selectedItem
+            selectedItemPakaian.bahan = model.bahan.selectedItem
             selectedItemPakaian = merge(selectedItemPakaian)
             execInsideUISync { view.table.selectionModel.selected[0] = selectedItemPakaian }
         }
@@ -105,6 +112,7 @@ class ItemPakaianController {
             model.id = null
             model.nama = null
             model.kategori.selectedItem = null
+            model.bahan.selectedItem = null
             model.errors.clear()
             view.table.selectionModel.clearSelection()
         }
@@ -121,6 +129,7 @@ class ItemPakaianController {
                 model.id = selected.id
                 model.nama = selected.nama
                 model.kategori.selectedItem = selected.kategori
+                model.bahan.selectedItem = selected.bahan
             }
         }
     }

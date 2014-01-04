@@ -7,7 +7,7 @@ import org.joda.time.*
 import java.awt.*
 import org.jdesktop.swingx.prompt.PromptSupport
 
-application(title: 'Item Pakaian',
+application(title: 'Bahan',
         preferredSize: [520, 340],
         pack: true,
         locationByPlatform: true,
@@ -23,11 +23,8 @@ application(title: 'Item Pakaian',
             flowLayout(alignment: FlowLayout.LEADING)
             label("Nama")
             textField(id: 'namaSearch', columns: 20, text: bind('namaSearch', target: model, mutual: true), actionPerformed: controller.search)
-            label("Kategori")
-            comboBox(id: 'kategoriSearch', model: model.kategoriSearch)
-            label("Bahan")
-            comboBox(id: 'bahanSearch', model: model.bahanSearch)
             button(app.getMessage('simplejpa.search.label'), actionPerformed: controller.search)
+            button(app.getMessage('simplejpa.search.all.label'), actionPerformed: controller.listAll)
         }
 
         panel(constraints: CENTER) {
@@ -36,27 +33,20 @@ application(title: 'Item Pakaian',
                 label(text: bind('searchMessage', source: model))
             }
             scrollPane(constraints: CENTER) {
-                glazedTable(id: 'table', list: model.itemPakaianList, sortingStrategy: SINGLE_COLUMN, onValueChanged: controller.tableSelectionChanged) {
+                glazedTable(id: 'table', list: model.bahanList, sortingStrategy: SINGLE_COLUMN, onValueChanged: controller.tableSelectionChanged) {
                     glazedColumn(name: 'Nama', property: 'nama')
-                    glazedColumn(name: 'Kategori', expression: {it.kategori?: '-'})
-                    glazedColumn(name: 'Bahan', expression: { it.bahan?: '-'})
+                    glazedColumn(name: 'Keterangan', property: 'keterangan')
                 }
             }
         }
 
         taskPane(id: "form", layout: new MigLayout('', '[right][left][left,grow]', ''), constraints: PAGE_END) {
-
             label('Nama:')
             textField(id: 'nama', columns: 20, text: bind('nama', target: model, mutual: true), errorPath: 'nama')
             errorLabel(path: 'nama', constraints: 'wrap')
-
-            label('Kategori:')
-            comboBox(id: 'kategori', model: model.kategori, templateRenderer: '${value}', errorPath: 'kategori')
-            errorLabel(path: 'kategori', constraints: 'wrap')
-
-            label('Bahan:')
-            comboBox(id: 'bahan', model: model.bahan, templateRenderer: '${value}', errorPath: 'bahan')
-            errorLabel(path: 'bahan', constraints: 'wrap')
+            label('Keterangan:')
+            textField(id: 'keterangan', columns: 20, text: bind('keterangan', target: model, mutual: true), errorPath: 'keterangan')
+            errorLabel(path: 'keterangan', constraints: 'wrap')
 
             panel(constraints: 'span, growx, wrap') {
                 flowLayout(alignment: FlowLayout.LEADING)
@@ -70,8 +60,12 @@ application(title: 'Item Pakaian',
                     controller.save()
                     nama.requestFocusInWindow()
                 })
-                button(app.getMessage("simplejpa.dialog.cancel.button"), visible: bind { table.isRowSelected }, actionPerformed: controller.clear)
-                button(app.getMessage("simplejpa.dialog.delete.button"), visible: bind { table.isRowSelected }, actionPerformed: {
+                button(app.getMessage("simplejpa.dialog.cancel.button"), visible: bind {
+                    table.isRowSelected
+                }, actionPerformed: controller.clear)
+                button(app.getMessage("simplejpa.dialog.delete.button"), visible: bind {
+                    table.isRowSelected
+                }, actionPerformed: {
                     if (JOptionPane.showConfirmDialog(mainPanel, app.getMessage("simplejpa.dialog.delete.message"),
                             app.getMessage("simplejpa.dialog.delete.title"), JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE) == JOptionPane.YES_OPTION) {
                         controller.delete()

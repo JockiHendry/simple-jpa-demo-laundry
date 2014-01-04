@@ -21,6 +21,7 @@ application {
     locale = 'id_ID'
 }
 mvcGroups {
+
     // MVC Group for "laporan"
     'laporan' {
         model      = 'laundry.LaporanModel'
@@ -118,6 +119,13 @@ mvcGroups {
         model      = 'project.KategoriModel'
         view       = 'project.KategoriView'
         controller = 'project.KategoriController'
+    }
+
+    // MVC Group for "bahan"
+    'bahan' {
+        model      = 'project.BahanModel'
+        view       = 'project.BahanView'
+        controller = 'project.BahanController'
     }
 
     // MVC Group for "mainGroup"
