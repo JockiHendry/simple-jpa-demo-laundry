@@ -31,7 +31,8 @@ class WorkOrderController {
 
         model.tanggalMulaiSearch = LocalDate.now().minusMonths(1)
         model.tanggalSelesaiSearch = LocalDate.now()
-        List workOrderResult = findAllWorkOrderByTanggalBetween(model.tanggalMulaiSearch, model.tanggalSelesaiSearch, [orderBy: 'nomor,tanggal'])
+        List workOrderResult = findAllWorkOrderByTanggalBetweenAndStatusTerakhir(model.tanggalMulaiSearch,
+            model.tanggalSelesaiSearch, StatusPekerjaan.DITERIMA, [orderBy: 'nomor,tanggal'])
         buatNomorWO()
         refreshInformasi()
 
@@ -47,14 +48,16 @@ class WorkOrderController {
     def search = {
         execInsideUISync { model.workOrderList.clear() }
         List result = findAllWorkOrderByDsl([orderBy: 'nomor,tanggal']) {
-            if (model.nomorSearch?.trim()?.length() > 0) {
-                nomor like("%${model.nomorSearch}%")
-            } else {
-                if (model.statusSearch.selectedItem) {
-                    statusTerakhir eq(model.statusSearch.selectedItem)
-                }
+            tanggal between(model.tanggalMulaiSearch, model.tanggalSelesaiSearch)
+            and()
+            nomor like("%${model.nomorSearch?:''}%")
+            and()
+            pelanggan__nama like("%${model.pelangganSearch?:''}%")
+            and()
+            statusTerakhir eq(StatusPekerjaan.DITERIMA)
+            if (model.jenisJadwalSearch.selectedItem && model.jenisJadwalSearch.selectedItem!=JenisJadwalSearch.SEMUA) {
                 and()
-                tanggal between(model.tanggalMulaiSearch, model.tanggalSelesaiSearch)
+                express eq(model.jenisJadwalSearch.selectedItem==JenisJadwalSearch.EXPRESS)
             }
         }
         refreshInformasi()

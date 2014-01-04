@@ -26,10 +26,11 @@ class WorkOrderModel {
     @Bindable String nomorKartu
 
     @Bindable String nomorSearch
+    @Bindable String pelangganSearch
     @Bindable String searchMessage
     @Bindable LocalDate tanggalMulaiSearch
     @Bindable LocalDate tanggalSelesaiSearch
-    EnumComboBoxModel<StatusPekerjaan> statusSearch = new EnumComboBoxModel<StatusPekerjaan>(StatusPekerjaan.class)
+    EnumComboBoxModel<JenisJadwalSearch> jenisJadwalSearch = new EnumComboBoxModel<JenisJadwalSearch>(JenisJadwalSearch.class)
 
     @Bindable Pelanggan selectedPelanggan
     @Bindable StatusPekerjaan statusTerakhir
@@ -42,4 +43,19 @@ class WorkOrderModel {
 
     @Bindable String informasi
 
+}
+
+public enum JenisJadwalSearch {
+    SEMUA("Semua"), EXPRESS("Express"), NORMAL("Normal")
+
+    String text
+
+    public JenisJadwalSearch(String text) {
+        this.text = text
+    }
+
+    @Override
+    String toString() {
+        text
+    }
 }

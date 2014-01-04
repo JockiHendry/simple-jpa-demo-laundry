@@ -1,5 +1,7 @@
 package project
 
+import simplejpa.swing.WrapLayout
+
 import javax.swing.JOptionPane
 import java.awt.event.KeyEvent
 
@@ -22,24 +24,22 @@ application(title: 'Work Order',
     panel(id: 'mainPanel') {
         borderLayout()
 
-        panel(constraints: PAGE_START) {
-            flowLayout(alignment: FlowLayout.LEADING)
-            label("Nomor")
-            textField(id: 'nomorSearch', columns: 20, text: bind('nomorSearch', target: model, mutual: true), actionPerformed: controller.search)
-            label('Status')
-            comboBox(id: 'statusSearch', model: model.statusSearch)
+        panel(constraints: PAGE_START, layout: new WrapLayout(WrapLayout.LEADING)) {
+            label("Cari")
+            textField(id: 'nomorSearch', columns: 10, text: bind('nomorSearch', target: model, mutual: true), actionPerformed: controller.search)
+            textField(id: 'pelangganSearch', columns: 10, text: bind('pelangganSearch', target: model, mutual: true), actionPerformed: controller.search)
+            comboBox(id: 'statusSearch', model: model.jenisJadwalSearch)
             label("Tanggal")
             dateTimePicker(id: 'tanggalMulaiSearch', localDate: bind('tanggalMulaiSearch', target: model, mutual: true), errorPath: 'tanggalMulaiSearch', dateVisible: true, timeVisible: false)
             label(" s/d ")
             dateTimePicker(id: 'tanggalSelesaiSearch', localDate: bind('tanggalSelesaiSearch', target: model, mutual: true), errorPath: 'tanggalMulaiSearch', dateVisible: true, timeVisible: false)
             button(app.getMessage('simplejpa.search.label'), actionPerformed: controller.search, mnemonic: KeyEvent.VK_C)
-            button(app.getMessage('simplejpa.search.all.label'), actionPerformed: controller.listAll, mnemonic: KeyEvent.VK_L)
         }
 
         panel(constraints: CENTER) {
             borderLayout()
             panel(constraints: PAGE_START, layout: new FlowLayout(FlowLayout.LEADING)) {
-                label(text: bind('searchMessage', source: model))
+                label('Menampilkan work order yang telah diterima dan belum dikerjakan')
             }
             scrollPane(constraints: CENTER) {
                 glazedTable(id: 'table', list: model.workOrderList, sortingStrategy: SINGLE_COLUMN, onValueChanged: controller.tableSelectionChanged) {
@@ -50,7 +50,6 @@ application(title: 'Work Order',
                     glazedColumn(name: 'Pelanggan', property: 'pelanggan') {
                         templateRenderer('${it.nama}')
                     }
-                    glazedColumn(name: 'Status', property: 'statusTerakhir', width: 150)
                     glazedColumn(name: 'Pembayaran', property: 'pembayaran', width: 200) {
                         templateRenderer(templateExpression: { it?.getNamaDeskripsi()?: '-'})
                     }
@@ -60,8 +59,8 @@ application(title: 'Work Order',
                     glazedColumn(name: 'Total', expression: {it.total()}, columnClass: Integer) {
                         templateRenderer('${currencyFormat(it)}', horizontalAlignment: RIGHT)
                     }
-                    glazedColumn(name: 'Jadwal', property: 'express', width: 120) {
-                        templateRenderer(templateExpression: {it?'Express': 'Normal'})
+                    glazedColumn(name: 'Express?', property: 'express', width: 70) {
+                        templateRenderer(templateExpression: {it?'Y': 'N'})
                     }
                     glazedColumn(name: 'Keterangan', property: 'keterangan')
                 }
@@ -166,4 +165,5 @@ application(title: 'Work Order',
         }
     }
 }
-PromptSupport.setPrompt("Ketik kata kunci pencarian disini!", nomorSearch)
+PromptSupport.setPrompt("Nomor WO", nomorSearch)
+PromptSupport.setPrompt("Pelanggan", pelangganSearch)
