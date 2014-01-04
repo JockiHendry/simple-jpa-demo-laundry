@@ -67,7 +67,7 @@ application(title: 'Pelanggan',
             }
         }
 
-        taskPane(id: "form", layout: new MigLayout('', '[right][left][left,grow]', ''), constraints: PAGE_END) {
+        taskPane(id: "form", layout: new MigLayout('', '[right][left][left,grow]', ''), visible: bind {!model.popupMode}, constraints: PAGE_END) {
             label('Nama:')
             textField(id: 'nama', columns: 20, text: bind('nama', target: model, mutual: true), errorPath: 'nama')
             errorLabel(path: 'nama', constraints: 'wrap')
