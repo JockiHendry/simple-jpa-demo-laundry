@@ -13,7 +13,7 @@ def popupMaintenance = {
 actions {
     action(id: 'pelanggan', name: 'Pelanggan', actionCommandKey: 'pelanggan', mnemonic: KeyEvent.VK_P,
         smallIcon: imageIcon('/menu_pelanggan.png'), closure: controller.switchPage)
-    action(id: 'workOrder', name: 'Order', actionCommandKey: 'workOrder', mnemonic: KeyEvent.VK_O,
+    action(id: 'workOrder', name: 'Penerimaan', actionCommandKey: 'workOrder', mnemonic: KeyEvent.VK_O,
         smallIcon: imageIcon('/menu_workorder.png'), closure: controller.switchPage)
     action(id: 'pembayaranSignedBill', name: 'Tagihan', actionCommandKey: 'pembayaranSignedBill', mnemonic: KeyEvent.VK_T,
         smallIcon: imageIcon('/menu_tagihan.png'), closure: controller.switchPage)

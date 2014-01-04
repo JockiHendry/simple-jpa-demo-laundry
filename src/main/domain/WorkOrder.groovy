@@ -53,6 +53,9 @@ class WorkOrder {
     @Type(type="org.jadira.usertype.dateandtime.joda.PersistentLocalDate")
     LocalDate estimasiSelesai
 
+    @NotNull
+    Boolean express = Boolean.FALSE
+
     void tambahItem(Work work) {
         tambahItem(work, pelanggan.corporate? work.hargaCorporate: work.hargaOutsider)
     }
@@ -113,6 +116,20 @@ class WorkOrder {
 
     BigDecimal total() {
         itemWorkOrders.sum { it.harga }
+    }
+
+    LocalDate getEstimasiSelesaiSementara() {
+        LocalDate hasil
+        if (estimasiSelesai) {
+            hasil = estimasiSelesai
+        } else {
+            if (express) {
+                hasil = LocalDate.now()
+            } else {
+                hasil = LocalDate.now().plusDays(3)
+            }
+        }
+        return hasil
     }
 
 }

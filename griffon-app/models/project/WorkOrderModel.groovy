@@ -15,7 +15,7 @@ class WorkOrderModel {
     @Bindable String nomor
     @Bindable LocalDate tanggal
     @Bindable String keterangan
-    @Bindable LocalDate estimasiSelesai
+    @Bindable Boolean express
 
     @Bindable boolean pembayaranCash
     @Bindable boolean pembayaranSignedBill

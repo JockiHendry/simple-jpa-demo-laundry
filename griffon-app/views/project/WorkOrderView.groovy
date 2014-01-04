@@ -60,8 +60,8 @@ application(title: 'Work Order',
                     glazedColumn(name: 'Total', expression: {it.total()}, columnClass: Integer) {
                         templateRenderer('${currencyFormat(it)}', horizontalAlignment: RIGHT)
                     }
-                    glazedColumn(name: 'Estimasi Selesai', property: 'estimasiSelesai', width: 120) {
-                        templateRenderer("\${it? it.toString('dd-MM-yyyy'): '-'}")
+                    glazedColumn(name: 'Jadwal', property: 'express', width: 120) {
+                        templateRenderer(templateExpression: {it?'Express': 'Normal'})
                     }
                     glazedColumn(name: 'Keterangan', property: 'keterangan')
                 }
@@ -108,9 +108,9 @@ application(title: 'Work Order',
             textField(id: 'keterangan', columns: 50, text: bind('keterangan', target: model, mutual: true), errorPath: 'keterangan')
             errorLabel(path: 'keterangan', constraints: 'wrap')
 
-            label('Estimasi Selesai:')
-            dateTimePicker(id: 'estimasiSelesai', localDate: bind('estimasiSelesai', target: model, mutual: true), errorPath: 'estimasiSelesai', dateVisible: true, timeVisible: false)
-            errorLabel(path: 'estimasiSelesai', constraints: 'wrap')
+            label('Express:')
+            checkBox(id: 'express', selected: bind('express', target: model, mutual: true), errorPath: 'express')
+            errorLabel(path: 'express', constraints: 'wrap')
 
             label('Pembayaran:')
             pembayaranGroup = buttonGroup()
@@ -121,7 +121,7 @@ application(title: 'Work Order',
                     selected: bind('pembayaranSignedBill', target: model, mutual: true))
                 radioButton('Kartu Debit', id: 'pembayaranKartuDebit', buttonGroup: pembayaranGroup, actionPerformed: { mainPanel.revalidate() },
                     selected: bind('pembayaranKartuDebit', target: model, mutual: true))
-                radioButton('Compliant', id: 'pembayaranCompliant', buttonGroup: pembayaranGroup, actionPerformed: { mainPanel.revalidate() },
+                radioButton('Compliment', id: 'pembayaranCompliant', buttonGroup: pembayaranGroup, actionPerformed: { mainPanel.revalidate() },
                     selected: bind('pembayaranCompliant', target: model, mutual: true))
             }
             errorLabel(path: 'pembayaran', constraints: 'wrap')

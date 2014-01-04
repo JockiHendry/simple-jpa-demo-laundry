@@ -74,7 +74,7 @@ class WorkOrderController {
     def save = {
         WorkOrder workOrder = new WorkOrder('nomor': model.nomor, 'tanggal': model.tanggal, 'pelanggan': model.selectedPelanggan,
             'itemWorkOrders': new ArrayList(model.itemWorkOrders), 'statusTerakhir': model.statusTerakhir, 'keterangan': model.keterangan,
-            'estimasiSelesai': model.estimasiSelesai)
+            'express': model.express)
         workOrder.itemWorkOrders.each { ItemWorkOrder itemWorkOrder ->
             itemWorkOrder.workOrder = workOrder
         }
@@ -132,7 +132,7 @@ class WorkOrderController {
             selectedWorkOrder.tanggal = model.tanggal
             selectedWorkOrder.pelanggan = model.selectedPelanggan
             selectedWorkOrder.keterangan = model.keterangan
-            selectedWorkOrder.estimasiSelesai = model.estimasiSelesai
+            selectedWorkOrder.express = model.express
             selectedWorkOrder.itemWorkOrders.clear()
             selectedWorkOrder.itemWorkOrders.addAll(model.itemWorkOrders)
             selectedWorkOrder.itemWorkOrders.each { ItemWorkOrder itemWorkOrder ->
@@ -172,7 +172,7 @@ class WorkOrderController {
             model.tanggal = null
             model.selectedPelanggan = null
             model.keterangan = null
-            model.estimasiSelesai = null
+            model.express = false
             model.statusTerakhir = null
             model.itemWorkOrders.clear()
             model.pembayaran = null
@@ -204,7 +204,7 @@ class WorkOrderController {
                 model.selectedPelanggan = selected.pelanggan
                 model.statusTerakhir = selected.statusTerakhir
                 model.keterangan = selected.keterangan
-                model.estimasiSelesai = selected.estimasiSelesai
+                model.express = selected.express
                 model.itemWorkOrders.clear()
                 model.itemWorkOrders.addAll(selected.itemWorkOrders)
                 refreshInformasi()
