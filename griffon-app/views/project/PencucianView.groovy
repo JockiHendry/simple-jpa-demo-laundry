@@ -24,10 +24,15 @@ application(title: 'Work Order',
 
         panel(constraints: PAGE_START) {
             flowLayout(alignment: FlowLayout.LEADING)
-            label("Nomor")
-            textField(id: 'nomorSearch', columns: 20, text: bind('nomorSearch', target: model, mutual: true), actionPerformed: controller.search)
+            label("Cari")
+            textField(id: 'nomorSearch', columns: 10, text: bind('nomorSearch', target: model, mutual: true), actionPerformed: controller.search)
+            textField(id: 'pelangganSearch', columns: 10, text: bind('pelangganSearch', target: model, mutual: true), actionPerformed: controller.search)
+            comboBox(id: 'jenisJadwalSearch', model: model.jenisJadwalSearch)
+            label("Tanggal")
+            dateTimePicker(id: 'tanggalMulaiSearch', localDate: bind('tanggalMulaiSearch', target: model, mutual: true), errorPath: 'tanggalMulaiSearch', dateVisible: true, timeVisible: false)
+            label(" s/d ")
+            dateTimePicker(id: 'tanggalSelesaiSearch', localDate: bind('tanggalSelesaiSearch', target: model, mutual: true), errorPath: 'tanggalMulaiSearch', dateVisible: true, timeVisible: false)
             button(app.getMessage('simplejpa.search.label'), actionPerformed: controller.search, mnemonic: KeyEvent.VK_C)
-            button(app.getMessage('simplejpa.search.all.label'), actionPerformed: controller.listAll, mnemonic: KeyEvent.VK_L)
         }
 
         panel(constraints: CENTER) {
@@ -50,21 +55,24 @@ application(title: 'Work Order',
                     glazedColumn(name: 'Lunas?', expression: {it.pembayaran?.isLunas()}, width: 60) {
                         templateRenderer(templateExpression: { it?'Y':'-'})
                     }
-                    glazedColumn(name: 'Total', expression: {it.total()}, columnClass: Integer) {
-                        templateRenderer('${currencyFormat(it)}', horizontalAlignment: RIGHT)
+                    glazedColumn(name: 'Express?', property: 'express', width: 70) {
+                        templateRenderer(templateExpression: {it?'Y': 'N'})
                     }
                     glazedColumn(name: 'Estimasi Selesai', property: 'estimasiSelesai', width: 120) {
                         templateRenderer("\${it? it.toString('dd-MM-yyyy'): '-'}")
                     }
                     glazedColumn(name: 'Jumlah Pakaian', expression: {it.itemWorkOrders.size()}, columnClass: Integer)
                     glazedColumn(name: 'Keterangan', property: 'keterangan')
+                    glazedColumn(name: 'Total', expression: {it.total()}, columnClass: Integer) {
+                        templateRenderer('${currencyFormat(it)}', horizontalAlignment: RIGHT)
+                    }
                 }
             }
         }
 
         taskPane(id: "form", layout: new MigLayout('hidemode 2', '[right][left][left,grow]', ''), constraints: PAGE_END) {
 
-            label('Tanggal:')
+            label('Tanggal Selesai Dikerjakan:')
             dateTimePicker(id: 'tanggal', localDate: bind('tanggal', target: model, mutual: true), errorPath: 'tanggal', dateVisible: true, timeVisible: false)
             errorLabel(path: 'tanggal', constraints: 'wrap')
             label('Keterangan:')
@@ -75,22 +83,29 @@ application(title: 'Work Order',
             label('Isi:')
             mvcPopupButton(id: 'itemWorkOrders', text: 'Klik Disini Untuk Melihat Rincian Order...',
                     errorPath: 'itemWorkOrders', mvcGroup: 'itemWorkOrderAsChild',
-                    args: { [parentList: view.table.selectionModel.selected[0].itemWorkOrders, parentWorkOrder: view.table.selectionModel.selected[0]] },
+                    args: { [parentList: view.table.selectionModel.selected[0].itemWorkOrders, parentWorkOrder: view.table.selectionModel.selected[0], editable: false] },
                     dialogProperties: [title: 'Item Work Orders', size: new Dimension(900,420)])
             errorLabel(path: 'itemWorkOrders', constraints: 'wrap')
 
             panel(constraints: 'span, growx, wrap') {
                 flowLayout(alignment: FlowLayout.LEADING)
-                button('Order Telah Selesai Dicuci...', actionPerformed: {
-                    if (JOptionPane.showConfirmDialog(mainPanel, "Apakah Anda yakin order ini sudah selesai dicuci pada tanggal ${model.tanggal.toString('dd-MM-yyyy')}?",
+                button('Proses Order Ini Menjadi Telah Selesai Dicuci...', actionPerformed: {
+                    if (JOptionPane.showConfirmDialog(mainPanel, "Apakah Anda yakin order ini telah selesai dicuci?",
                             'Konfirmasi Selesai Dicuci', JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE) != JOptionPane.YES_OPTION) {
                         return
                     }
                     controller.prosesSelesaiCuci()
+                })
+                mvcPopupButton(id: 'detailStatus', text: 'Detail Status...', mvcGroup: 'eventPekerjaanAsChild',
+                        args: {[parentWorkOrder: view.table.selectionModel.selected[0]]}, dialogProperties: [title: 'Detail Status'],
+                        visible: bind {table.isRowSelected}, onFinish: { m, v, c ->
+                    view.table.selectionModel.selected[0] = controller.findWorkOrderById(view.table.selectionModel.selected[0].id)
                 })
                 button(app.getMessage("simplejpa.dialog.cancel.button"), visible: bind { table.isRowSelected }, actionPerformed: controller.clear)
             }
         }
     }
 }
-PromptSupport.setPrompt("Ketik kata kunci pencarian disini!", nomorSearch)
+
+PromptSupport.setPrompt("Nomor WO", nomorSearch)
+PromptSupport.setPrompt("Pelanggan", pelangganSearch)
