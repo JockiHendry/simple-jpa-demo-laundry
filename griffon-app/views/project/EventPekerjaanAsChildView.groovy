@@ -22,7 +22,9 @@ application(title: 'Event Pekerjaan',
             borderLayout()
             scrollPane(constraints: CENTER) {
                 glazedTable(id: 'table', list: model.eventPekerjaanList, sortingStrategy: SINGLE_COLUMN, onValueChanged: controller.tableSelectionChanged) {
-                    glazedColumn(name: 'Tanggal', property: 'tanggal')
+                    glazedColumn(name: 'Tanggal', property: 'tanggal') {
+                        templateRenderer("\${it.toString('dd-MM-yyyy HH:mm')}")
+                    }
                     glazedColumn(name: 'Status', property: 'status')
                 }
             }

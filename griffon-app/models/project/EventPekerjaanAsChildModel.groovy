@@ -14,7 +14,7 @@ class EventPekerjaanAsChildModel {
     WorkOrder parentWorkOrder
 
     @Bindable Long id
-    @Bindable LocalDate tanggal
+    @Bindable LocalDateTime tanggal
     EnumComboBoxModel<StatusPekerjaan> status = new EnumComboBoxModel<StatusPekerjaan>(StatusPekerjaan.class)
 
     BasicEventList<EventPekerjaan> eventPekerjaanList = new BasicEventList<>()

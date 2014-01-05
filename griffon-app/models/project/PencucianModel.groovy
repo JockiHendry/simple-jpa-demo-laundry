@@ -5,6 +5,7 @@ import domain.WorkOrder
 import groovy.beans.Bindable
 import org.jdesktop.swingx.combobox.EnumComboBoxModel
 import org.joda.time.LocalDate
+import org.joda.time.LocalDateTime
 
 class PencucianModel {
 
@@ -15,7 +16,7 @@ class PencucianModel {
     @Bindable LocalDate tanggalSelesaiSearch
     EnumComboBoxModel<JenisJadwalSearch> jenisJadwalSearch = new EnumComboBoxModel<JenisJadwalSearch>(JenisJadwalSearch.class)
 
-    @Bindable LocalDate tanggal
+    @Bindable LocalDateTime tanggal
     @Bindable String keterangan
 
     BasicEventList<WorkOrder> workOrderList = new BasicEventList<>()

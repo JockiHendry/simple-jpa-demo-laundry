@@ -27,8 +27,8 @@ import org.joda.time.*
 @DomainClass @Entity @Canonical
 class EventPekerjaan {
 
-    @NotNull @Type(type="org.jadira.usertype.dateandtime.joda.PersistentLocalDate")
-    LocalDate tanggal
+    @NotNull @Type(type="org.jadira.usertype.dateandtime.joda.PersistentLocalDateTime")
+    LocalDateTime tanggal
 
     @NotNull @Enumerated
     StatusPekerjaan status

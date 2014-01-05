@@ -56,6 +56,8 @@ class WorkOrder {
     @NotNull
     Boolean express = Boolean.FALSE
 
+    String namaPenerima
+
     void tambahItem(Work work) {
         tambahItem(work, pelanggan.corporate? work.hargaCorporate: work.hargaOutsider)
     }
@@ -69,7 +71,7 @@ class WorkOrder {
         itemWorkOrders << itemWorkOrder
     }
 
-    void tambahEvent(LocalDate tanggal, StatusPekerjaan status) {
+    void tambahEvent(LocalDateTime tanggal, StatusPekerjaan status) {
         tambahEvent(new EventPekerjaan(tanggal, status))
     }
 
@@ -88,19 +90,22 @@ class WorkOrder {
         }
     }
 
-    void diterima(LocalDate tanggal = LocalDate.now()) {
+    void diterima(LocalDateTime tanggal = LocalDateTime.now()) {
         tambahEvent(tanggal, StatusPekerjaan.DITERIMA)
     }
 
-    void dicuci(LocalDate tanggal = LocalDate.now()) {
+    void dicuci(LocalDateTime tanggal = LocalDateTime.now()) {
         tambahEvent(tanggal, StatusPekerjaan.DICUCI)
     }
 
-    void diselesaikan(LocalDate tanggal = LocalDate.now()) {
+    void diselesaikan(LocalDateTime tanggal = LocalDateTime.now()) {
         tambahEvent(tanggal, StatusPekerjaan.DISELESAIKAN)
     }
 
-    void diambil(LocalDate tanggal = LocalDate.now()) {
+    void diambil(String namaPenerima, LocalDateTime tanggal = LocalDateTime.now()) {
+        if (namaPenerima && namaPenerima.trim().length() > 0) {
+            this.namaPenerima = namaPenerima
+        }
         tambahEvent(tanggal, StatusPekerjaan.DIAMBIL)
     }
 

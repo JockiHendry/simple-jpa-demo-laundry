@@ -70,10 +70,10 @@ application(title: 'Work Order',
             }
         }
 
-        taskPane(id: "form", layout: new MigLayout('hidemode 2', '[right][left][left,grow]', ''), constraints: PAGE_END) {
+        taskPane(id: "form", layout: new MigLayout('hidemode 2', '[right][left][left,grow]', ''), visible: bind { table.isRowSelected }, constraints: PAGE_END) {
 
             label('Tanggal Selesai Dikerjakan:')
-            dateTimePicker(id: 'tanggal', localDate: bind('tanggal', target: model, mutual: true), errorPath: 'tanggal', dateVisible: true, timeVisible: false)
+            dateTimePicker(id: 'tanggal', localDateTime: bind('tanggal', target: model, mutual: true), errorPath: 'tanggal')
             errorLabel(path: 'tanggal', constraints: 'wrap')
             label('Keterangan:')
             textField(id: 'keterangan', columns: 60, text: bind('keterangan', target: model, mutual: true), errorPath: 'keterangan')
