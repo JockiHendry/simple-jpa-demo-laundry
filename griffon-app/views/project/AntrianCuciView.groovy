@@ -100,6 +100,11 @@ application(title: 'Work Order',
                     }
                     controller.prosesCuci()
                 })
+                mvcPopupButton(id: 'detailStatus', text: 'Detail Status...', mvcGroup: 'eventPekerjaanAsChild',
+                        args: {[parentWorkOrder: view.table.selectionModel.selected[0]]}, dialogProperties: [title: 'Detail Status'],
+                        visible: bind {table.isRowSelected}, onFinish: { m, v, c ->
+                    view.table.selectionModel.selected[0] = controller.findWorkOrderById(view.table.selectionModel.selected[0].id)
+                })
                 button(app.getMessage("simplejpa.dialog.cancel.button"), visible: bind { table.isRowSelected }, actionPerformed: controller.clear)
             }
         }
