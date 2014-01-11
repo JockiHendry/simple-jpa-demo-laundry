@@ -334,7 +334,7 @@ VALUES
 (3,'Jl. Siantan',False,'2013-11-16 00:00:00','N',null,'Bram',null),
 (4,'Jl. Sungai Raya Dalam',False,'2013-11-16 00:00:00','N',null,'Edi Yi Wei',null),
 (5,'Jl. Purnama',False,'2013-11-16 00:00:00','N',null,'Sandi Kosasi',null),
-(6,'Jl. Pahlawan',False,'2013-11-16 00:00:00','N',null,'Yip Man',null),
-(7,'Jl. Tenaga Baru',False,'2013-11-16 00:00:00','N',null,'Bruce Lee',null),
+(6,'Jl. Pahlawan',False,'2013-11-16 00:00:00','N',null,'Furry Bon',null),
+(7,'Jl. Tenaga Baru',False,'2013-11-16 00:00:00','N',null,'Beck Seith',null),
 (8,'Jl. Merdeka',True,'2013-11-16 00:00:00','N',null,'PT. ABC',null),
 (9,'Jl. Teuku Umar',True,'2013-11-16 00:00:00','N',null,'PT. SMIK',null);
