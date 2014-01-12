@@ -3,6 +3,7 @@ package project
 import javax.swing.BorderFactory
 import javax.swing.SwingConstants
 import java.awt.event.KeyEvent
+import java.text.NumberFormat
 
 import static ca.odell.glazedlists.gui.AbstractTableComparatorChooser.*
 import static javax.swing.SwingConstants.*
@@ -53,7 +54,7 @@ application(title: 'Item Work Order',
             numberTextField(id: 'jumlah', columns: 10, bindTo: 'jumlah', errorPath: 'jumlah')
             errorLabel(path: 'jumlah', constraints: 'wrap')
             label('Harga:')
-            numberTextField(id: 'harga', columns: 20, bindTo: 'harga', nfParseBigDecimal: true, errorPath: 'harga')
+            label(text: bind('harga', source: model, converter: {it? NumberFormat.getCurrencyInstance().format(it): ''}))
             errorLabel(path: 'harga', constraints: 'wrap')
             label('Keterangan:')
             textField(id: 'keterangan', columns: 50, text: bind('keterangan', target: model, mutual: true), errorPath: 'keterangan')
