@@ -11,6 +11,7 @@ import domain.Work
 import domain.WorkOrder
 import griffon.test.*
 import org.joda.time.LocalDate
+import org.joda.time.LocalDateTime
 import org.joda.time.format.DateTimeFormat
 import org.joda.time.format.DateTimeFormatter
 
@@ -64,38 +65,37 @@ class WorkOrderTests extends GriffonUnitTestCase {
 
     void testEvents() {
         WorkOrder wo = new WorkOrder()
-        DateTimeFormatter formatter = DateTimeFormat.forPattern('dd-MM-yyyy')
+        DateTimeFormatter formatter = DateTimeFormat.forPattern('dd-MM-yyyy HH:mm')
 
-        EventPekerjaan e1 = new EventPekerjaan(LocalDate.parse('01-11-2013', formatter), StatusPekerjaan.DITERIMA, wo)
-        wo.diterima(LocalDate.parse('01-11-2013', formatter))
+        EventPekerjaan e1 = new EventPekerjaan(LocalDateTime.parse('01-11-2013 10:00', formatter), StatusPekerjaan.DITERIMA, wo)
+        wo.diterima(LocalDateTime.parse('01-11-2013 10:00', formatter))
         assertEquals(1, wo.eventPekerjaans.size())
         assertEquals(true, wo.eventPekerjaans.contains(e1))
         assertEquals(StatusPekerjaan.DITERIMA, wo.statusTerakhir)
 
-//        EventPekerjaan e2 = new EventPekerjaan(LocalDate.parse('03-11-2013', formatter), StatusPekerjaan.DICUCI, wo)
-//        wo.dicuci(LocalDate.parse('03-11-2013', formatter))
-//        assertEquals(2, wo.eventPekerjaans.size())
-//        assertEquals(true, wo.eventPekerjaans.contains(e2))
-//        assertEquals(StatusPekerjaan.DICUCI, wo.statusTerakhir)
-
-        EventPekerjaan e3 = new EventPekerjaan(LocalDate.parse('04-11-2013', formatter), StatusPekerjaan.DISELESAIKAN, wo)
-        wo.diselesaikan(LocalDate.parse('04-11-2013', formatter))
+        EventPekerjaan e2 = new EventPekerjaan(LocalDateTime.parse('03-11-2013 08:00', formatter), StatusPekerjaan.DICUCI, wo)
+        wo.dicuci(LocalDateTime.parse('03-11-2013 08:00', formatter))
         assertEquals(2, wo.eventPekerjaans.size())
+        assertEquals(true, wo.eventPekerjaans.contains(e2))
+        assertEquals(StatusPekerjaan.DICUCI, wo.statusTerakhir)
+
+        EventPekerjaan e3 = new EventPekerjaan(LocalDateTime.parse('04-11-2013 12:00', formatter), StatusPekerjaan.DISELESAIKAN, wo)
+        wo.diselesaikan(LocalDateTime.parse('04-11-2013 12:00', formatter))
+        assertEquals(3, wo.eventPekerjaans.size())
         assertEquals(true, wo.eventPekerjaans.contains(e3))
         assertEquals(StatusPekerjaan.DISELESAIKAN, wo.statusTerakhir)
 
-        EventPekerjaan e4 = new EventPekerjaan(LocalDate.parse('05-11-2013', formatter), StatusPekerjaan.DIAMBIL, wo)
-        wo.bayar(new PembayaranCash(tanggal: LocalDate.parse('05-11-2013', formatter)))
-        assertEquals(3, wo.eventPekerjaans.size())
+        EventPekerjaan e4 = new EventPekerjaan(LocalDateTime.parse('05-11-2013 09:00', formatter), StatusPekerjaan.DIAMBIL, wo)
+        wo.diambil("the solid snake", LocalDateTime.parse('05-11-2013 09:00', formatter))
+        assertEquals(4, wo.eventPekerjaans.size())
         assertEquals(true, wo.eventPekerjaans.contains(e4))
-        assertEquals(wo.total(), wo.pembayaran.total())
         assertEquals(StatusPekerjaan.DIAMBIL, wo.statusTerakhir)
 
         // test untuk penghapusan
-//        wo.hapusEvent(e2)
-//        assertEquals(3, wo.eventPekerjaans.size())
-//        assertEquals(false, wo.eventPekerjaans.contains(e2))
-//        assertEquals(StatusPekerjaan.DIAMBIL, wo.statusTerakhir)
+        wo.hapusEvent(e2)
+        assertEquals(3, wo.eventPekerjaans.size())
+        assertEquals(false, wo.eventPekerjaans.contains(e2))
+        assertEquals(StatusPekerjaan.DIAMBIL, wo.statusTerakhir)
 
         wo.hapusEvent(e4)
         assertEquals(2, wo.eventPekerjaans.size())
@@ -125,6 +125,30 @@ class WorkOrderTests extends GriffonUnitTestCase {
         woOutsider.tambahItem(w2)
         woOutsider.tambahItem(w3)
         assertEquals(56000, woOutsider.total())
+    }
+
+    void testTotalExpress() {
+        Work w1 = new Work(new ItemPakaian('Long Coat'),  new JenisWork('Laundry'))
+        w1.hargaCorporate = 22500
+        w1.hargaOutsider = 21000
+        Work w2 = new Work(new ItemPakaian('Kebaya Suits'), new JenisWork('Dry Cleaning'))
+        w2.hargaCorporate = 19500
+        w2.hargaOutsider = 18000
+        Work w3 = new Work(new ItemPakaian('Long Coat'), new JenisWork('Pressing'))
+        w3.hargaCorporate = 17500
+        w3.hargaOutsider = 17000
+
+        WorkOrder woCorporate = new WorkOrder(pelanggan: new Pelanggan(corporate: true), express: true)
+        woCorporate.tambahItem(w1)
+        woCorporate.tambahItem(w2)
+        woCorporate.tambahItem(w3)
+        assertEquals(59500 * 2, woCorporate.total())
+
+        WorkOrder woOutsider = new WorkOrder(pelanggan: new Pelanggan(), express: true)
+        woOutsider.tambahItem(w1)
+        woOutsider.tambahItem(w2)
+        woOutsider.tambahItem(w3)
+        assertEquals(56000 * 2, woOutsider.total())
     }
 
 }
