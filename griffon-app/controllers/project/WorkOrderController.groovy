@@ -91,6 +91,11 @@ class WorkOrderController {
         if (model.pembayaranCash) {
             pembayaran = new PembayaranCash(tanggal: workOrder.tanggal, tagihan: workOrder.total(), keterangan: model.keteranganPembayaran)
         } else if (model.pembayaranSignedBill) {
+            if (model.jumlahBayarDimuka >= workOrder.total()) {
+                JOptionPane.showMessageDialog(view.mainPanel, 'Jumlah downpayment (pembayaran di muka) harus kurang dari harga total',
+                    'Kesalahan Validasi', JOptionPane.ERROR_MESSAGE)
+                return
+            }
             pembayaran = new PembayaranSignedBill(tanggal: workOrder.tanggal, tagihan: workOrder.total(),
                 keterangan: model.keteranganPembayaran, jumlahBayarDimuka: model.jumlahBayarDimuka)
         } else if (model.pembayaranKartuDebit) {
