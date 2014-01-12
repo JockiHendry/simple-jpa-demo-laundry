@@ -25,17 +25,20 @@ class ItemPakaianController {
     @Transaction(newSession = true)
     def listAll = {
         execInsideUISync {
+            model.itemPakaianList.clear()
             model.kategoriList.clear()
             model.bahanList.clear()
             model.kategoriSearchList.clear()
             model.bahanSearchList.clear()
         }
 
+        List itemPakaianResult = findAllItemPakaian()
         List kategoriResult = findAllKategori()
         List bahanResult = findAllBahan()
 
         execInsideUISync {
             model.namaSearch = null
+            model.itemPakaianList.addAll(itemPakaianResult)
 
             model.kategoriSearchList << SEMUA_KATEGORI
             model.kategoriSearchList.addAll(kategoriResult)
@@ -73,6 +76,14 @@ class ItemPakaianController {
         ItemPakaian itemPakaian = new ItemPakaian('nama': model.nama, 'kategori': model.kategori.selectedItem, 'bahan': model.bahan.selectedItem)
 
         if (!validate(itemPakaian)) return
+
+        // Sebuah `ItemPakaian` yang memiliki `kategori` tidak boleh memiliki `bahan` (dan sebaliknya).
+        // Strange?
+        if (itemPakaian.kategori && itemPakaian.bahan) {
+            JOptionPane.showMessageDialog(view.mainPanel, 'Item tidak boleh memiliki kategori dan bahan.  Silahkan pilih salah satu.',
+                'Kesalahan Validasi', JOptionPane.ERROR_MESSAGE)
+            return
+        }
 
         if (model.id == null) {
             // Insert operation

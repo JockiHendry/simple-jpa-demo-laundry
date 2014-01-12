@@ -1,5 +1,8 @@
 package project
 
+import javax.swing.JOptionPane
+import java.awt.event.ItemEvent
+
 import static ca.odell.glazedlists.gui.AbstractTableComparatorChooser.*
 import static javax.swing.SwingConstants.*
 import net.miginfocom.swing.MigLayout
@@ -24,9 +27,21 @@ application(title: 'Item Pakaian',
             label("Nama")
             textField(id: 'namaSearch', columns: 20, text: bind('namaSearch', target: model, mutual: true), actionPerformed: controller.search)
             label("Kategori")
-            comboBox(id: 'kategoriSearch', model: model.kategoriSearch)
+            comboBox(id: 'kategoriSearch', model: model.kategoriSearch, itemStateChanged: { ItemEvent e ->
+                if (e.stateChange == ItemEvent.SELECTED) {
+                    if (e.item != controller.SEMUA_KATEGORI) {
+                        model.bahanSearch.selectedItem = controller.SEMUA_BAHAN
+                    }
+                }
+            })
             label("Bahan")
-            comboBox(id: 'bahanSearch', model: model.bahanSearch)
+            comboBox(id: 'bahanSearch', model: model.bahanSearch, itemStateChanged: { ItemEvent e ->
+                if (e.stateChange == ItemEvent.SELECTED) {
+                    if (e.item != controller.SEMUA_BAHAN) {
+                        model.kategoriSearch.selectedItem = controller.SEMUA_KATEGORI
+                    }
+                }
+            })
             button(app.getMessage('simplejpa.search.label'), actionPerformed: controller.search)
         }
 

@@ -4,6 +4,7 @@ import javax.swing.JComponent
 import javax.swing.KeyStroke
 import javax.swing.SwingConstants
 import javax.swing.SwingUtilities
+import java.awt.event.ItemEvent
 import java.awt.event.KeyEvent
 
 import static ca.odell.glazedlists.gui.AbstractTableComparatorChooser.*
@@ -43,9 +44,21 @@ application(title: 'Work',
                 textField(id: 'itemPakaianSearch', columns: 20, text: bind('itemPakaianSearch', target: model, mutual: true),
                     actionPerformed: controller.search)
                 label("Kategori")
-                comboBox(id: 'kategoriSearch', model: model.kategoriSearch)
+                comboBox(id: 'kategoriSearch', model: model.kategoriSearch, itemStateChanged: { ItemEvent e ->
+                    if (e.stateChange == ItemEvent.SELECTED) {
+                        if (e.item != controller.SEMUA) {
+                            model.bahanSearch.selectedItem = controller.SEMUA
+                        }
+                    }
+                })
                 label("Bahan")
-                comboBox(id: 'bahanSearch', model: model.bahanSearch)
+                comboBox(id: 'bahanSearch', model: model.bahanSearch, itemStateChanged: { ItemEvent e ->
+                    if (e.stateChange == ItemEvent.SELECTED) {
+                        if (e.item != controller.SEMUA) {
+                            model.kategoriSearch.selectedItem = controller.SEMUA
+                        }
+                    }
+                })
                 label("Jenis Pekerjaan")
                 comboBox(id: 'jenisWorkSearch', model: model.jenisWorkSearch)
                 button(app.getMessage('simplejpa.search.label'), action: cari)
