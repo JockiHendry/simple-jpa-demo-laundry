@@ -70,7 +70,11 @@ class WorkOrderController {
     def refreshInformasi = {
         def jumlahItem = model.itemWorkOrders.sum { it.jumlah }?: 0
         def total = model.itemWorkOrders.sum { it.harga }?: 0
-        model.informasi = "Jumlah Pakaian ${jumlahItem}   Total ${NumberFormat.currencyInstance.format(total)}"
+        if (model.express) {
+            model.informasi = "Jumlah Pakaian ${jumlahItem}   Subtotal ${NumberFormat.currencyInstance.format(total)}    Total (Express) ${NumberFormat.currencyInstance.format(total*2)}"
+        } else {
+            model.informasi = "Jumlah Pakaian ${jumlahItem}   Total ${NumberFormat.currencyInstance.format(total)}"
+        }
     }
 
 

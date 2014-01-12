@@ -11,12 +11,17 @@ import org.jdesktop.swingx.combobox.EnumComboBoxModel
 
 class WorkOrderModel {
 
+    def controller
+
+    public WorkOrderModel() {
+        addPropertyChangeListener('express', { controller.refreshInformasi() } as PropertyChangeListener)
+    }
+
     @Bindable Long id
     @Bindable String nomor
     @Bindable LocalDate tanggal
     @Bindable String keterangan
     @Bindable Boolean express
-
     @Bindable boolean pembayaranCash
     @Bindable boolean pembayaranSignedBill
     @Bindable boolean pembayaranKartuDebit

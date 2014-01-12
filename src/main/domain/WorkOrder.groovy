@@ -120,7 +120,11 @@ class WorkOrder {
     }
 
     BigDecimal total() {
-        itemWorkOrders.sum { it.harga }
+        BigDecimal total = itemWorkOrders.sum { it.harga }
+        if (express) {
+            total *= 2;
+        }
+        total;
     }
 
     LocalDate getEstimasiSelesaiSementara() {
