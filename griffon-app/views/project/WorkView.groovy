@@ -74,8 +74,12 @@ application(title: 'Work',
                 glazedTable(id: 'table', list: model.workList, sortingStrategy: SINGLE_COLUMN, onValueChanged: controller.tableSelectionChanged) {
                     glazedColumn(name: 'Item Pakaian', property: 'itemPakaian')
                     glazedColumn(name: 'Jenis Work', property: 'jenisWork')
-                    glazedColumn(name: 'Kategori', expression: { it.itemPakaian.kategori?: '-' })
-                    glazedColumn(name: 'Bahan', expression: { it.itemPakaian.bahan?: '-' })
+                    glazedColumn(name: 'Kategori', expression: {it.itemPakaian.kategori}) {
+                        templateRenderer("\${it?:'-'}")
+                    }
+                    glazedColumn(name: 'Bahan', expression: {it.itemPakaian.bahan}) {
+                        templateRenderer("\${it?:'-'}")
+                    }
                     glazedColumn(name: 'Harga Outsider (Rp)', property: 'hargaOutsider', columnClass: Integer) {
                         templateRenderer('${numberFormat(it)}', horizontalAlignment: RIGHT)
                     }

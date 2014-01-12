@@ -53,8 +53,12 @@ application(title: 'Item Pakaian',
             scrollPane(constraints: CENTER) {
                 glazedTable(id: 'table', list: model.itemPakaianList, sortingStrategy: SINGLE_COLUMN, onValueChanged: controller.tableSelectionChanged) {
                     glazedColumn(name: 'Nama', property: 'nama')
-                    glazedColumn(name: 'Kategori', expression: {it.kategori?: '-'})
-                    glazedColumn(name: 'Bahan', expression: { it.bahan?: '-'})
+                    glazedColumn(name: 'Kategori', expression: {it.kategori}) {
+                        templateRenderer("\${it?:'-'}")
+                    }
+                    glazedColumn(name: 'Bahan', expression: {it.bahan}) {
+                        templateRenderer("\${it?:'-'}")
+                    }
                 }
             }
         }

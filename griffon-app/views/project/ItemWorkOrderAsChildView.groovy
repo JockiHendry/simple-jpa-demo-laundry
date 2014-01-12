@@ -54,7 +54,7 @@ application(title: 'Item Work Order',
             numberTextField(id: 'jumlah', columns: 10, bindTo: 'jumlah', errorPath: 'jumlah')
             errorLabel(path: 'jumlah', constraints: 'wrap')
             label('Harga:')
-            label(text: bind('harga', source: model, converter: {it? NumberFormat.getCurrencyInstance().format(it): ''}))
+            label(text: bind('harga', source: model, converter: {it? NumberFormat.getCurrencyInstance().format(it): ''}), errorPath: 'harga')
             errorLabel(path: 'harga', constraints: 'wrap')
             label('Keterangan:')
             textField(id: 'keterangan', columns: 50, text: bind('keterangan', target: model, mutual: true), errorPath: 'keterangan')

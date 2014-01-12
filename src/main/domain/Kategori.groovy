@@ -25,7 +25,7 @@ import org.hibernate.validator.constraints.*
 import org.joda.time.*
 
 @DomainClass @Entity @Canonical(excludes='items')
-class Kategori {
+class Kategori implements Comparable {
 
     @NotBlank @Size(min=2, max=50)
     String nama
@@ -39,6 +39,18 @@ class Kategori {
     @Override
     String toString() {
         nama
+    }
+
+    @Override
+    int compareTo(Object o) {
+        if (!(o instanceof Kategori)) return -1
+        if (!nama && !o.nama) {
+            return 0
+        } else if (!nama) {
+            return 1
+        } else {
+            return nama.compareToIgnoreCase(o.nama)
+        }
     }
 }
 
