@@ -62,7 +62,7 @@ class PencucianController {
 
     def prosesSelesaiCuci = {
         WorkOrder workOrder = merge(view.table.selectionModel.selected[0])
-        if (model.keterangan && model.keterangan.isEmpty()) {
+        if (model.keterangan && !model.keterangan.isEmpty()) {
             workOrder.keterangan = model.keterangan
         }
         workOrder.diselesaikan(model.tanggal)

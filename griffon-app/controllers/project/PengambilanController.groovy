@@ -71,7 +71,7 @@ class PengambilanController {
 
     def prosesPengambilan = {
         WorkOrder workOrder = merge(view.table.selectionModel.selected[0])
-        if (model.keterangan && model.keterangan.isEmpty()) {
+        if (model.keterangan && !model.keterangan.isEmpty()) {
             workOrder.keterangan = model.keterangan
         }
         workOrder.diambil(model.namaPenerima, model.tanggal)
@@ -93,6 +93,7 @@ class PengambilanController {
     @Transaction(Transaction.Policy.SKIP)
     def clear = {
         execInsideUISync {
+            model.namaPenerima = null
             model.keterangan = null
             model.tanggal = null
             model.adaSisaPembayaran = Boolean.FALSE
@@ -111,6 +112,7 @@ class PengambilanController {
             } else {
                 WorkOrder selected = view.table.selectionModel.selected[0]
                 model.errors.clear()
+                model.namaPenerima = selected.namaPenerima
                 model.keterangan = selected.keterangan
                 if (selected.pembayaran instanceof PembayaranSignedBill) {
                     PembayaranSignedBill p = (PembayaranSignedBill) selected.pembayaran
