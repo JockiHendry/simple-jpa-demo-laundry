@@ -29,7 +29,11 @@
  */
 
 import groovy.swing.SwingBuilder
+import simplejpa.swing.DialogUtils
+import util.BusyLayerUI
 
+import javax.swing.JLayer
+import javax.swing.JPanel
 import java.awt.Color
 import java.awt.Graphics2D
 import java.awt.SplashScreen
@@ -45,3 +49,7 @@ if (splash) {
 }
 
 SwingBuilder.lookAndFeel((isMacOSX ? 'system' : 'nimbus'), 'gtk', ['metal', [boldFonts: false]])
+
+DialogUtils.defaultContentDecorator = { panel ->
+    new JLayer<JPanel>(panel, BusyLayerUI.instance)
+}

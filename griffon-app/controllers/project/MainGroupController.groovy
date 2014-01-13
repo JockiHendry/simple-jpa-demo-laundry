@@ -1,5 +1,8 @@
 package project
 
+import org.jdesktop.swingx.plaf.BusyLabelUI
+import util.BusyLayerUI
+
 import javax.swing.*
 import java.awt.*
 import java.awt.event.*
@@ -17,8 +20,7 @@ class MainGroupController {
             app.mvcGroupManager.destroyMVCGroup(groupId)
         }
 
-        execInsideUISync { view.busyLabel.visible = true }
-
+        BusyLayerUI.instance.show()
         groupId = event.actionCommand
 
         // destroying current MVCGroup if it was not destroyed properly before
@@ -29,10 +31,11 @@ class MainGroupController {
         def (m,v,c) = app.mvcGroupManager.createMVCGroup(groupId, groupId)
 
         execInsideUIAsync {
+            v.mainPanel.visible = false
             view.mainPanel.add(v.mainPanel, groupId)
             view.cardLayout.show(view.mainPanel, groupId)
-            view.mainFrame.title = "${app.config.application.title}: ${GriffonNameUtils.getNaturalName(groupId)}"
-            view.busyLabel.visible = false
+            view.mainFrame.title = "${app.config.application.title} ${app.metadata.getApplicationVersion()}: ${GriffonNameUtils.getNaturalName(groupId)}"
+            BusyLayerUI.instance.hide()
         }
     }
 

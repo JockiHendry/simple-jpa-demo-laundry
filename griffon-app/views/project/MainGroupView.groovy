@@ -1,6 +1,8 @@
 package project
 
 import org.jdesktop.swingx.JXStatusBar
+import util.BusyLayerUI
+
 import javax.swing.*
 import javax.swing.border.*
 import java.awt.*
@@ -59,24 +61,29 @@ application(id: 'mainFrame',
     }
 
     borderLayout()
+    jxlayer(UI: BusyLayerUI.instance, constraints: BorderLayout.CENTER) {
+        panel() {
+            borderLayout()
 
-    toolBar(constraints: BorderLayout.PAGE_START, floatable: false) {
-        buttonGroup(id: 'buttons')
-		toggleButton(buttonGroup: buttons, action: pelanggan, verticalTextPosition: SwingConstants.BOTTOM, horizontalTextPosition: SwingConstants.CENTER)
-		toggleButton(buttonGroup: buttons, action: workOrder, verticalTextPosition: SwingConstants.BOTTOM, horizontalTextPosition: SwingConstants.CENTER)
-        //toggleButton(buttonGroup: buttons, action: pembayaranSignedBill, verticalTextPosition: SwingConstants.BOTTOM, horizontalTextPosition: SwingConstants.CENTER)
-        toggleButton(buttonGroup: buttons, action: antrianCuci, verticalTextPosition: SwingConstants.BOTTOM, horizontalTextPosition: SwingConstants.CENTER)
-        toggleButton(buttonGroup: buttons, action: pencucian, verticalTextPosition: SwingConstants.BOTTOM, horizontalTextPosition: SwingConstants.CENTER)
-        toggleButton(buttonGroup: buttons, action: pengambilan, verticalTextPosition: SwingConstants.BOTTOM, horizontalTextPosition: SwingConstants.CENTER)
-        toggleButton(buttonGroup: buttons, action: laporan, verticalTextPosition: SwingConstants.BOTTOM, horizontalTextPosition: SwingConstants.CENTER)
-        toggleButton(buttonGroup: buttons, action: maintenance, id: 'maintenanceButton', verticalTextPosition: SwingConstants.BOTTOM, horizontalTextPosition: SwingConstants.CENTER)
-    }
+            toolBar(constraints: BorderLayout.PAGE_START, floatable: false) {
+                buttonGroup(id: 'buttons')
+                toggleButton(buttonGroup: buttons, action: pelanggan, verticalTextPosition: SwingConstants.BOTTOM, horizontalTextPosition: SwingConstants.CENTER)
+                toggleButton(buttonGroup: buttons, action: workOrder, verticalTextPosition: SwingConstants.BOTTOM, horizontalTextPosition: SwingConstants.CENTER)
+                //toggleButton(buttonGroup: buttons, action: pembayaranSignedBill, verticalTextPosition: SwingConstants.BOTTOM, horizontalTextPosition: SwingConstants.CENTER)
+                toggleButton(buttonGroup: buttons, action: antrianCuci, verticalTextPosition: SwingConstants.BOTTOM, horizontalTextPosition: SwingConstants.CENTER)
+                toggleButton(buttonGroup: buttons, action: pencucian, verticalTextPosition: SwingConstants.BOTTOM, horizontalTextPosition: SwingConstants.CENTER)
+                toggleButton(buttonGroup: buttons, action: pengambilan, verticalTextPosition: SwingConstants.BOTTOM, horizontalTextPosition: SwingConstants.CENTER)
+                toggleButton(buttonGroup: buttons, action: laporan, verticalTextPosition: SwingConstants.BOTTOM, horizontalTextPosition: SwingConstants.CENTER)
+                toggleButton(buttonGroup: buttons, action: maintenance, id: 'maintenanceButton', verticalTextPosition: SwingConstants.BOTTOM, horizontalTextPosition: SwingConstants.CENTER)
+            }
 
-    panel(id: "mainPanel", constraints: BorderLayout.CENTER) {
-        cardLayout(id: "cardLayout")
-    }
+            panel(id: "mainPanel", constraints: BorderLayout.CENTER) {
+                cardLayout(id: "cardLayout")
+            }
 
-    statusBar(constraints: BorderLayout.PAGE_END, border: BorderFactory.createBevelBorder(BevelBorder.LOWERED)) {
-        busyLabel(id: "busyLabel", busy: true, visible: false)
+            statusBar(constraints: BorderLayout.PAGE_END, border: BorderFactory.createBevelBorder(BevelBorder.LOWERED)) {
+                label("Aplikasi demo laundry ini adalah sebuah sebuah prototype yang tidak boleh dipakai secara komersial.")
+            }
+        }
     }
 }
