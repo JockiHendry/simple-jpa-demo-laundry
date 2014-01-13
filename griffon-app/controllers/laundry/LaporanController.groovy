@@ -4,7 +4,6 @@ import domain.ItemPakaian
 import net.sf.jasperreports.engine.JRDataSource
 import net.sf.jasperreports.engine.JasperFillManager
 import net.sf.jasperreports.engine.JasperPrint
-import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource
 import net.sf.jasperreports.engine.data.JRMapCollectionDataSource
 import net.sf.jasperreports.swing.JRViewer
 import org.joda.time.LocalDate
@@ -42,7 +41,7 @@ class LaporanController {
         List source = []
 
         switch(jenisLaporan) {
-            case JenisLaporan.LAPORAN_BULANAN:
+            case JenisLaporan.LAPORAN_HARIAN:
                 queryResult.each {
                     source << ['tanggal': it[0], 'jumlah': it[1], 'nama': it[2]]
                 }
@@ -51,6 +50,13 @@ class LaporanController {
                     (1..31).each { source << ['tanggal': it, 'jumlah': 0, 'nama': itemPakaian.nama]}
                 }
                 break
+
+            case JenisLaporan.LAPORAN_PELANGGAN:
+                queryResult.each {
+                    source << ['pelanggan': it[0], 'jumlah': it[1], 'nama': it[2]]
+                }
+                break
+
             case JenisLaporan.LAPORAN_PEMASUKAN:
                 queryResult.each {
                     source << ['nama': it[0], 'total': it[1]]

@@ -41,6 +41,12 @@ import javax.validation.groups.Default
         WHERE wo.tanggal BETWEEN :tanggalMulaiCari AND :tanggalSelesaiCari
         GROUP BY nama
         ORDER BY nama
+    '''),
+    @NamedQuery(name='ItemWorkOrder.LaporanPelanggan', query='''
+        SELECT wo.pelanggan.nama AS pelanggan, i.jumlah, i.work.itemPakaian.nama AS nama
+        FROM WorkOrder wo JOIN wo.itemWorkOrders i
+        WHERE wo.tanggal BETWEEN :tanggalMulaiCari AND :tanggalSelesaiCari
+        ORDER BY tanggal, nama
     ''')
 ])
 @DomainClass @Entity @Canonical
