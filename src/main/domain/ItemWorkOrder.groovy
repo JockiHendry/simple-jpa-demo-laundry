@@ -59,6 +59,10 @@ class ItemWorkOrder {
 
     @NotNull @ManyToOne
     WorkOrder workOrder
+
+    BigDecimal total() {
+        jumlah * harga
+    }
 }
 
 

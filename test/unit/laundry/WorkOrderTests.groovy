@@ -118,13 +118,26 @@ class WorkOrderTests extends GriffonUnitTestCase {
         woCorporate.tambahItem(w1)
         woCorporate.tambahItem(w2)
         woCorporate.tambahItem(w3)
-        assertEquals(59500, woCorporate.total())
+        assertEquals(59500, woCorporate.hitungSubtotal())
+        assertEquals(0, woCorporate.hitungSurcharge())
+        assertEquals(59500, woCorporate.total)
 
         WorkOrder woOutsider = new WorkOrder(pelanggan: new Pelanggan())
         woOutsider.tambahItem(w1)
         woOutsider.tambahItem(w2)
         woOutsider.tambahItem(w3)
-        assertEquals(56000, woOutsider.total())
+        assertEquals(56000, woOutsider.hitungSubtotal())
+        assertEquals(0, woOutsider.hitungSurcharge())
+        assertEquals(56000, woOutsider.total)
+
+        WorkOrder woCorporateExpress = new WorkOrder(pelanggan: new Pelanggan(corporate: true), express: true)
+        woCorporateExpress.tambahItem(w1)
+        woCorporateExpress.tambahItem(w2)
+        woCorporateExpress.tambahItem(w3)
+        assertEquals(59500, woCorporateExpress.hitungSubtotal())
+        assertEquals(59500, woCorporateExpress.hitungSurcharge())
+        assertEquals(59500 * 2, woCorporateExpress.total)
+
     }
 
     void testTotalExpress() {
@@ -142,13 +155,13 @@ class WorkOrderTests extends GriffonUnitTestCase {
         woCorporate.tambahItem(w1)
         woCorporate.tambahItem(w2)
         woCorporate.tambahItem(w3)
-        assertEquals(59500 * 2, woCorporate.total())
+        assertEquals(59500 * 2, woCorporate.total)
 
         WorkOrder woOutsider = new WorkOrder(pelanggan: new Pelanggan(), express: true)
         woOutsider.tambahItem(w1)
         woOutsider.tambahItem(w2)
         woOutsider.tambahItem(w3)
-        assertEquals(56000 * 2, woOutsider.total())
+        assertEquals(56000 * 2, woOutsider.total)
     }
 
 }

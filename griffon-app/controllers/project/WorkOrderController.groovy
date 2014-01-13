@@ -69,7 +69,7 @@ class WorkOrderController {
     @Transaction(Transaction.Policy.SKIP)
     def refreshInformasi = {
         def jumlahItem = model.itemWorkOrders.sum { it.jumlah }?: 0
-        def total = model.itemWorkOrders.sum { it.harga }?: 0
+        def total = model.itemWorkOrders.sum { it.total() }?: 0
         if (model.express) {
             model.informasi = "Jumlah Pakaian ${jumlahItem}   Subtotal ${NumberFormat.currencyInstance.format(total)}    Total (Express) ${NumberFormat.currencyInstance.format(total*2)}"
         } else {
@@ -89,20 +89,20 @@ class WorkOrderController {
 
         Pembayaran pembayaran
         if (model.pembayaranCash) {
-            pembayaran = new PembayaranCash(tanggal: workOrder.tanggal, tagihan: workOrder.total(), keterangan: model.keteranganPembayaran)
+            pembayaran = new PembayaranCash(tanggal: workOrder.tanggal, tagihan: workOrder.total, keterangan: model.keteranganPembayaran)
         } else if (model.pembayaranSignedBill) {
-            if (model.jumlahBayarDimuka >= workOrder.total()) {
+            if (model.jumlahBayarDimuka >= workOrder.total) {
                 JOptionPane.showMessageDialog(view.mainPanel, 'Jumlah downpayment (pembayaran di muka) harus kurang dari harga total',
                     'Kesalahan Validasi', JOptionPane.ERROR_MESSAGE)
                 return
             }
-            pembayaran = new PembayaranSignedBill(tanggal: workOrder.tanggal, tagihan: workOrder.total(),
+            pembayaran = new PembayaranSignedBill(tanggal: workOrder.tanggal, tagihan: workOrder.total,
                 keterangan: model.keteranganPembayaran, jumlahBayarDimuka: model.jumlahBayarDimuka)
         } else if (model.pembayaranKartuDebit) {
-            pembayaran = new PembayaranKartuDebit(tanggal: workOrder.tanggal, tagihan: workOrder.total(),
+            pembayaran = new PembayaranKartuDebit(tanggal: workOrder.tanggal, tagihan: workOrder.total,
                 keterangan: model.keteranganPembayaran, nomorKartu: model.nomorKartu)
         } else if (model.pembayaranCompliant) {
-            pembayaran = new PembayaranCompliant(tanggal: workOrder.tanggal, tagihan: workOrder.total(),
+            pembayaran = new PembayaranCompliant(tanggal: workOrder.tanggal, tagihan: workOrder.total,
                 keterangan: model.keteranganPembayaran)
         }
         if (!pembayaran) {
@@ -124,7 +124,7 @@ class WorkOrderController {
             }
 
             // Konfirmasi
-            if (JOptionPane.showConfirmDialog(view.mainPanel, "Total order adalah ${NumberFormat.currencyInstance.format(workOrder.total())}.\n" +
+            if (JOptionPane.showConfirmDialog(view.mainPanel, "Total order adalah ${NumberFormat.currencyInstance.format(workOrder.total)}.\n" +
                     "Anda yakin akan menyimpan order ini?", "Konfirmasi Simpan", JOptionPane.YES_NO_OPTION) == JOptionPane.NO_OPTION) {
                 return
             }

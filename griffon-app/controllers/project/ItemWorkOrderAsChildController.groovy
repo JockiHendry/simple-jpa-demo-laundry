@@ -31,7 +31,7 @@ class ItemWorkOrderAsChildController {
     @Transaction(Transaction.Policy.SKIP)
     def refreshInformasi = {
         def jumlahItem = model.itemWorkOrderList.sum { it.jumlah }?: 0
-        def total = model.itemWorkOrderList.sum { it.harga }?: 0
+        def total = model.itemWorkOrderList.sum { it.total() }?: 0
         model.informasi = "Jumlah Pakaian ${jumlahItem}   Total ${NumberFormat.currencyInstance.format(total)}"
     }
 

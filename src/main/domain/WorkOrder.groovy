@@ -58,6 +58,8 @@ class WorkOrder {
 
     String namaPenerima
 
+    BigDecimal total
+
     void tambahItem(Work work) {
         tambahItem(work, pelanggan.corporate? work.hargaCorporate: work.hargaOutsider)
     }
@@ -119,12 +121,8 @@ class WorkOrder {
         statusTerakhir == StatusPekerjaan.DISELESAIKAN
     }
 
-    BigDecimal total() {
-        BigDecimal total = itemWorkOrders.sum { it.harga }
-        if (express) {
-            total *= 2;
-        }
-        total;
+    BigDecimal getTotal() {
+        this.total = hitungSubtotal() + hitungSurcharge()
     }
 
     LocalDate getEstimasiSelesaiSementara() {
@@ -143,6 +141,18 @@ class WorkOrder {
 
     LocalDate getEvent(StatusPekerjaan statusPekerjaan) {
         eventPekerjaans.find { it.status == statusPekerjaan}
+    }
+
+    BigDecimal hitungSubtotal() {
+        itemWorkOrders.sum { it.total() }
+    }
+
+    BigDecimal hitungSurcharge() {
+        if (express==Boolean.TRUE) {
+            return hitungSubtotal()
+        } else {
+            return 0
+        }
     }
 
 }

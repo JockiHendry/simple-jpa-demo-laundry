@@ -55,7 +55,7 @@ application(title: 'Pembayaran',
                     glazedColumn(name: 'Downpayment', property: 'jumlahBayarDimuka', columnClass: Integer) {
                         templateRenderer(templateExpression: {it? currencyFormat(it): '-'}, horizontalAlignment: RIGHT)
                     }
-                    glazedColumn(name: 'Tagihan', expression: {it.total()}, columnClass: Integer) {
+                    glazedColumn(name: 'Tagihan', expression: {it.total}, columnClass: Integer) {
                         templateRenderer('${currencyFormat(it)}', horizontalAlignment: RIGHT)
                     }
                     glazedColumn(name: 'Keterangan', property: 'keterangan')
@@ -74,7 +74,7 @@ application(title: 'Pembayaran',
                         JOptionPane.showMessageDialog(mainPanel, 'Tidak dapat memproses pembayaran untuk tagihan yang sudah lunas!',
                             'Kesalahan Proses Pembayaran', JOptionPane.ERROR_MESSAGE)
                         return
-                    } else if (JOptionPane.showConfirmDialog(mainPanel, "Anda yakin pembayaran sebesar ${NumberFormat.currencyInstance.format(view.table.selectionModel.selected[0].total())} untuk tagihan ini telah diterima?",
+                    } else if (JOptionPane.showConfirmDialog(mainPanel, "Anda yakin pembayaran sebesar ${NumberFormat.currencyInstance.format(view.table.selectionModel.selected[0].total)} untuk tagihan ini telah diterima?",
                             'Konfirmasi Proses Pembayaran', JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE) != JOptionPane.YES_OPTION) {
                         return
                     }

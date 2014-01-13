@@ -52,7 +52,7 @@ application(title: 'Work Order',
                     glazedColumn(name: 'Lunas?', expression: {it.pembayaran?.isLunas()}, width: 60) {
                         templateRenderer(templateExpression: { it?'Y':'-'})
                     }
-                    glazedColumn(name: 'Total', expression: {it.total()}, columnClass: Integer) {
+                    glazedColumn(name: 'Total', expression: {it.total}, columnClass: Integer) {
                         templateRenderer('${currencyFormat(it)}', horizontalAlignment: RIGHT)
                     }
                 }
