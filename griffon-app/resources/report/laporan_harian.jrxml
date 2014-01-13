@@ -48,128 +48,178 @@ FROM
 	</pageHeader>
 	<summary>
 		<band height="220" splitType="Stretch">
-			<crosstab columnBreakOffset="1000" ignoreWidth="false">
-				<reportElement uuid="73c76a2e-1920-4ec8-84cf-00085b1ba723" x="0" y="0" width="752" height="220"/>
+			<crosstab columnBreakOffset="1000">
+				<reportElement uuid="3b3898bf-9fa9-43f1-89ca-521ad2e7d5eb" x="0" y="0" width="752" height="220"/>
 				<crosstabHeaderCell>
 					<cellContents>
 						<staticText>
-							<reportElement uuid="2705dca8-139f-48d1-88f0-d0604fd6ab9c" style="Crosstab Data Text" x="0" y="0" width="70" height="49"/>
-							<box>
+							<reportElement uuid="2705dca8-139f-48d1-88f0-d0604fd6ab9c" style="Crosstab Data Text" x="0" y="0" width="106" height="30"/>
+							<box leftPadding="3" rightPadding="3">
 								<pen lineWidth="0.5"/>
 								<topPen lineWidth="0.5"/>
 								<leftPen lineWidth="0.5"/>
 								<bottomPen lineWidth="0.5"/>
 								<rightPen lineWidth="0.5"/>
 							</box>
-							<textElement verticalAlignment="Middle"/>
-							<text><![CDATA[Tanggal]]></text>
+							<textElement textAlignment="Left" verticalAlignment="Middle"/>
+							<text><![CDATA[Item \  Tanggal]]></text>
 						</staticText>
 					</cellContents>
 				</crosstabHeaderCell>
-				<rowGroup name="tanggal" width="70" totalPosition="End">
-					<bucket class="java.lang.Integer">
-						<bucketExpression><![CDATA[$F{tanggal}]]></bucketExpression>
+				<rowGroup name="nama" width="106" totalPosition="End">
+					<bucket class="java.lang.String">
+						<bucketExpression><![CDATA[$F{nama}]]></bucketExpression>
 					</bucket>
 					<crosstabRowHeader>
-						<cellContents backcolor="#F5F5F5" mode="Opaque">
+						<cellContents backcolor="#FFDEAD" mode="Opaque">
 							<box>
 								<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
 							</box>
 							<textField>
-								<reportElement uuid="c91b265c-536b-4c3b-8609-fedd19329cce" style="Crosstab Data Text" x="0" y="0" width="70" height="25"/>
-								<textElement verticalAlignment="Middle"/>
-								<textFieldExpression><![CDATA[$V{tanggal}]]></textFieldExpression>
+								<reportElement uuid="40cd5d76-80f7-453d-9b66-c073d73103a8" style="Crosstab Data Text" mode="Opaque" x="0" y="0" width="106" height="25" backcolor="#F5F5F5"/>
+								<box leftPadding="3" rightPadding="3">
+									<pen lineWidth="0.5"/>
+									<topPen lineWidth="0.5"/>
+									<leftPen lineWidth="0.5"/>
+									<bottomPen lineWidth="0.5"/>
+									<rightPen lineWidth="0.5"/>
+								</box>
+								<textElement textAlignment="Left" verticalAlignment="Middle"/>
+								<textFieldExpression><![CDATA[$V{nama}]]></textFieldExpression>
 							</textField>
 						</cellContents>
 					</crosstabRowHeader>
 					<crosstabTotalRowHeader>
-						<cellContents backcolor="#FFBFBF" mode="Opaque">
+						<cellContents backcolor="#FFE5BF" mode="Opaque">
 							<box>
 								<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
 							</box>
 							<staticText>
-								<reportElement uuid="659c83de-0d26-43e6-bd19-60584873ad8e" x="0" y="0" width="70" height="25"/>
-								<textElement textAlignment="Center" verticalAlignment="Middle"/>
+								<reportElement uuid="4feaf1fa-e5af-486d-be44-b921a9fd711e" mode="Opaque" x="0" y="0" width="106" height="25" backcolor="#F5F5F5"/>
+								<box rightPadding="3">
+									<pen lineWidth="0.5"/>
+									<topPen lineWidth="0.5"/>
+									<leftPen lineWidth="0.5"/>
+									<bottomPen lineWidth="0.5"/>
+									<rightPen lineWidth="0.5"/>
+								</box>
+								<textElement textAlignment="Right" verticalAlignment="Middle"/>
 								<text><![CDATA[Total]]></text>
 							</staticText>
 						</cellContents>
 					</crosstabTotalRowHeader>
 				</rowGroup>
-				<columnGroup name="nama" height="49" totalPosition="End">
-					<bucket class="java.lang.String">
-						<bucketExpression><![CDATA[$F{nama}]]></bucketExpression>
+				<columnGroup name="tanggal" height="30" totalPosition="End">
+					<bucket class="java.lang.Long">
+						<bucketExpression><![CDATA[$F{tanggal}]]></bucketExpression>
 					</bucket>
 					<crosstabColumnHeader>
-						<cellContents backcolor="#F5F5F5" mode="Opaque">
+						<cellContents backcolor="#FFDEAD" mode="Opaque">
 							<box>
 								<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
 							</box>
 							<textField>
-								<reportElement uuid="10dc4aeb-3099-4c31-94b4-6c695b056909" style="Crosstab Data Text" x="0" y="0" width="50" height="49"/>
-								<textElement verticalAlignment="Middle"/>
-								<textFieldExpression><![CDATA[$V{nama}]]></textFieldExpression>
+								<reportElement uuid="c508b605-8157-4a77-99a8-6f8c158dd836" style="Crosstab Data Text" mode="Opaque" x="0" y="0" width="36" height="30" backcolor="#F5F5F5"/>
+								<box rightPadding="3">
+									<pen lineWidth="0.5"/>
+									<topPen lineWidth="0.5"/>
+									<leftPen lineWidth="0.5"/>
+									<bottomPen lineWidth="0.5"/>
+									<rightPen lineWidth="0.5"/>
+								</box>
+								<textElement textAlignment="Right" verticalAlignment="Middle"/>
+								<textFieldExpression><![CDATA[$V{tanggal}]]></textFieldExpression>
 							</textField>
 						</cellContents>
 					</crosstabColumnHeader>
 					<crosstabTotalColumnHeader>
-						<cellContents backcolor="#FFBFBF" mode="Opaque">
+						<cellContents backcolor="#FFE5BF" mode="Opaque">
 							<box>
 								<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
 							</box>
 							<staticText>
-								<reportElement uuid="0c870daa-aa83-46ce-8e0c-9aad7c6e876e" x="0" y="0" width="50" height="49"/>
-								<textElement textAlignment="Center" verticalAlignment="Middle"/>
+								<reportElement uuid="c8684549-9777-449f-bff9-7a533ee4f8ce" mode="Opaque" x="0" y="0" width="50" height="30" backcolor="#F5F5F5"/>
+								<box rightPadding="3">
+									<pen lineWidth="0.5"/>
+									<topPen lineWidth="0.5"/>
+									<leftPen lineWidth="0.5"/>
+									<bottomPen lineWidth="0.5"/>
+									<rightPen lineWidth="0.5"/>
+								</box>
+								<textElement textAlignment="Right" verticalAlignment="Middle"/>
 								<text><![CDATA[Total]]></text>
 							</staticText>
 						</cellContents>
 					</crosstabTotalColumnHeader>
 				</columnGroup>
-				<measure name="jumlahMeasure" class="java.lang.Integer" calculation="Sum">
+				<measure name="jumlahMeasure" class="java.lang.Long" calculation="Sum">
 					<measureExpression><![CDATA[$F{jumlah}]]></measureExpression>
 				</measure>
-				<crosstabCell width="50" height="26">
+				<crosstabCell width="36" height="25">
 					<cellContents>
 						<box>
 							<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
 						</box>
 						<textField>
-							<reportElement uuid="0727336a-b429-449c-867d-beb73c6d48ba" style="Crosstab Data Text" x="0" y="0" width="40" height="25"/>
+							<reportElement uuid="7d5d7b46-93f7-442f-a1ce-6ae0956b84d6" style="Crosstab Data Text" x="0" y="0" width="36" height="25"/>
+							<box rightPadding="3"/>
 							<textElement textAlignment="Right" verticalAlignment="Middle"/>
 							<textFieldExpression><![CDATA[$V{jumlahMeasure}!=0?$V{jumlahMeasure}:'']]></textFieldExpression>
 						</textField>
 					</cellContents>
 				</crosstabCell>
-				<crosstabCell height="25" rowTotalGroup="tanggal">
-					<cellContents backcolor="#FFBFBF" mode="Opaque">
+				<crosstabCell width="36" height="25" rowTotalGroup="nama">
+					<cellContents backcolor="#FFE5BF" mode="Opaque">
 						<box>
 							<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
 						</box>
 						<textField>
-							<reportElement uuid="9ebe2059-9d7d-41ca-af99-23d2d16c84c4" style="Crosstab Data Text" x="0" y="0" width="40" height="25"/>
+							<reportElement uuid="e4c8f840-8ec2-49d6-b78c-f3a314a8757c" style="Crosstab Data Text" mode="Opaque" x="0" y="0" width="36" height="25" backcolor="#F5F5F5"/>
+							<box rightPadding="3">
+								<pen lineWidth="0.5"/>
+								<topPen lineWidth="0.5"/>
+								<leftPen lineWidth="0.5"/>
+								<bottomPen lineWidth="0.5"/>
+								<rightPen lineWidth="0.5"/>
+							</box>
 							<textElement textAlignment="Right" verticalAlignment="Middle"/>
 							<textFieldExpression><![CDATA[$V{jumlahMeasure}]]></textFieldExpression>
 						</textField>
 					</cellContents>
 				</crosstabCell>
-				<crosstabCell width="50" height="26" columnTotalGroup="nama">
-					<cellContents backcolor="#FFBFBF" mode="Opaque">
+				<crosstabCell width="50" height="25" columnTotalGroup="tanggal">
+					<cellContents backcolor="#FFE5BF" mode="Opaque">
 						<box>
 							<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
 						</box>
 						<textField>
-							<reportElement uuid="3579ff90-fe69-449c-86f3-c47a8c024934" style="Crosstab Data Text" x="0" y="0" width="39" height="25"/>
+							<reportElement uuid="5ca5a50d-dbcd-44d2-92f2-a52e87433676" style="Crosstab Data Text" mode="Opaque" x="0" y="0" width="50" height="25" backcolor="#F5F5F5"/>
+							<box rightPadding="3">
+								<pen lineWidth="0.5"/>
+								<topPen lineWidth="0.5"/>
+								<leftPen lineWidth="0.5"/>
+								<bottomPen lineWidth="0.5"/>
+								<rightPen lineWidth="0.5"/>
+							</box>
 							<textElement textAlignment="Right" verticalAlignment="Middle"/>
 							<textFieldExpression><![CDATA[$V{jumlahMeasure}]]></textFieldExpression>
 						</textField>
 					</cellContents>
 				</crosstabCell>
-				<crosstabCell rowTotalGroup="tanggal" columnTotalGroup="nama">
-					<cellContents backcolor="#FFBFBF" mode="Opaque">
+				<crosstabCell height="25" rowTotalGroup="nama" columnTotalGroup="tanggal">
+					<cellContents backcolor="#FFE5BF" mode="Opaque">
 						<box>
 							<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
 						</box>
 						<textField>
-							<reportElement uuid="bada3e23-aa1e-4264-b39c-e9408bcdacc7" style="Crosstab Data Text" x="0" y="0" width="39" height="25"/>
+							<reportElement uuid="cd5b2865-2a1f-481b-afed-a38407fef1aa" style="Crosstab Data Text" mode="Opaque" x="0" y="0" width="50" height="25" backcolor="#F5F5F5"/>
+							<box rightPadding="3">
+								<pen lineWidth="0.5"/>
+								<topPen lineWidth="0.5"/>
+								<leftPen lineWidth="0.5"/>
+								<bottomPen lineWidth="0.5"/>
+								<rightPen lineWidth="0.5"/>
+							</box>
 							<textElement textAlignment="Right" verticalAlignment="Middle"/>
 							<textFieldExpression><![CDATA[$V{jumlahMeasure}]]></textFieldExpression>
 						</textField>
