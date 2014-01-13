@@ -46,10 +46,10 @@ application(id: 'mainFrame',
   extendedState: JFrame.MAXIMIZED_BOTH,
   preferredSize: new Dimension(500,500),
   pack: true,
-  iconImage:   imageIcon('/griffon-icon-48x48.png').image,
-  iconImages: [imageIcon('/griffon-icon-48x48.png').image,
-        imageIcon('/griffon-icon-32x32.png').image,
-        imageIcon('/griffon-icon-16x16.png').image],
+  iconImage:   imageIcon('/icon-48x48.png').image,
+  iconImages: [imageIcon('/icon-48x48.png').image,
+        imageIcon('/icon-32x32.png').image,
+        imageIcon('/icon-16x16.png').image],
   locationByPlatform: true) {
 
     popupMenu(id: "maintenancePopup") {
