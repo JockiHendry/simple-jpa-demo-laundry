@@ -150,6 +150,14 @@ application(title: 'Work Order',
                     controller.save()
                     nomor.requestFocusInWindow()
                 })
+
+                mvcPopupButton('Cetak Bukti Penerimaan', mvcGroup: 'previewFaktur', args: {[
+                        workOrder: view.table.selectionModel.selected[0],
+                        fileReport: 'bukti_terima'
+                    ]}, dialogProperties: [
+                        title: 'Preview Bukti Penerimaan', size: new Dimension(840,600)
+                    ], visible: bind { table.isRowSelected } )
+
                 mvcPopupButton(id: 'detailStatus', text: 'Detail Status...', mvcGroup: 'eventPekerjaanAsChild',
                         args: {[parentWorkOrder: view.table.selectionModel.selected[0]]}, dialogProperties: [title: 'Detail Status'],
                         visible: bind {table.isRowSelected}, onFinish: { m, v, c ->

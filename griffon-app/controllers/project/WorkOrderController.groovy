@@ -2,11 +2,13 @@ package project
 
 import domain.*
 import org.joda.time.LocalDate
+import simplejpa.swing.DialogUtils
 import simplejpa.transaction.Transaction
 
 import javax.persistence.FlushModeType
 import javax.swing.*
 import javax.swing.event.ListSelectionEvent
+import java.awt.Dimension
 import java.text.NumberFormat
 
 @Transaction
@@ -132,11 +134,17 @@ class WorkOrderController {
             pembayaran.workOrder = workOrder
             persist(workOrder)
 
+            execInsideUIAsync {
+                DialogUtils.showMVCGroup('previewFaktur', [workOrder: workOrder, fileReport: 'bukti_terima'], app, view,
+                        [title: 'Preview Bukti Penerimaan', size: new Dimension(840,600)])
+            }
+
             execInsideUISync {
                 model.workOrderList << workOrder
                 view.table.changeSelection(model.workOrderList.size() - 1, 0, false, false)
                 clear()
             }
+
         } else {
             // Update operation
             WorkOrder selectedWorkOrder = view.table.selectionModel.selected[0]

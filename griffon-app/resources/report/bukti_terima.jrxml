@@ -1,0 +1,530 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="bukti_terima" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="ad762834-2100-420f-bfd2-e354d4e480e5">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="95"/>
+	<style name="expressChecked" mode="Opaque" backcolor="#FFFFFF">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$F{express}==true]]></conditionExpression>
+			<style mode="Opaque" backcolor="#000000"/>
+		</conditionalStyle>
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$F{express}==false]]></conditionExpression>
+			<style mode="Opaque" backcolor="#FFFFFF"/>
+		</conditionalStyle>
+	</style>
+	<style name="regularChecked">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$F{express}==true]]></conditionExpression>
+			<style mode="Opaque" forecolor="#000000" backcolor="#FFFFFF"/>
+		</conditionalStyle>
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$F{express}==false]]></conditionExpression>
+			<style mode="Opaque" backcolor="#000000"/>
+		</conditionalStyle>
+	</style>
+	<subDataset name="ItemWorkOrder" uuid="b56f9d3a-4681-44f9-8a31-dc004a352d77">
+		<queryString>
+			<![CDATA[]]>
+		</queryString>
+		<field name="jumlah" class="java.lang.Integer">
+			<fieldDescription><![CDATA[jumlah]]></fieldDescription>
+		</field>
+		<field name="work" class="domain.Work">
+			<fieldDescription><![CDATA[work]]></fieldDescription>
+		</field>
+		<field name="harga" class="java.math.BigDecimal">
+			<fieldDescription><![CDATA[harga]]></fieldDescription>
+		</field>
+		<field name="keterangan" class="java.lang.String">
+			<fieldDescription><![CDATA[keterangan]]></fieldDescription>
+		</field>
+		<field name="_THIS" class="java.lang.Object">
+			<fieldDescription><![CDATA[_THIS]]></fieldDescription>
+		</field>
+		<field name="workOrder" class="domain.WorkOrder">
+			<fieldDescription><![CDATA[workOrder]]></fieldDescription>
+		</field>
+		<variable name="total" class="java.math.BigDecimal" calculation="Sum">
+			<variableExpression><![CDATA[$F{jumlah} * $F{harga}]]></variableExpression>
+			<initialValueExpression><![CDATA[0]]></initialValueExpression>
+		</variable>
+	</subDataset>
+	<parameter name="logo" class="java.lang.Object" isForPrompting="false"/>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<field name="itemWorkOrders" class="java.util.List">
+		<fieldDescription><![CDATA[itemWorkOrders]]></fieldDescription>
+	</field>
+	<field name="keterangan" class="java.lang.String">
+		<fieldDescription><![CDATA[keterangan]]></fieldDescription>
+	</field>
+	<field name="nomor" class="java.lang.String">
+		<fieldDescription><![CDATA[nomor]]></fieldDescription>
+	</field>
+	<field name="pelanggan" class="domain.Pelanggan">
+		<fieldDescription><![CDATA[pelanggan]]></fieldDescription>
+	</field>
+	<field name="pembayaran" class="domain.Pembayaran">
+		<fieldDescription><![CDATA[pembayaran]]></fieldDescription>
+	</field>
+	<field name="tanggal" class="org.joda.time.LocalDate">
+		<fieldDescription><![CDATA[tanggal]]></fieldDescription>
+	</field>
+	<field name="express" class="java.lang.Boolean">
+		<fieldDescription><![CDATA[express]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<pageHeader>
+		<band height="78" splitType="Stretch">
+			<image>
+				<reportElement uuid="a1060103-fbbd-4d68-b1cf-1a64539c7f18" x="0" y="0" width="91" height="74"/>
+				<imageExpression><![CDATA[$P{logo}]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement uuid="c34edd9d-4930-45e5-bfd6-2eff5426e62d" x="102" y="36" width="453" height="38"/>
+				<textElement>
+					<font fontName="Arial" size="16" isBold="true"/>
+				</textElement>
+				<text><![CDATA[LAUNDRY, DRY CLEANING AND PRESSING SERVICE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="32820074-6f66-476b-b7d5-977fadb94008" x="415" y="0" width="30" height="20"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[No : ]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="053b1807-ddfe-460b-aba8-370725603789" x="445" y="0" width="110" height="20"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nomor}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<detail>
+		<band height="363" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="4a544fbf-8a2d-45c4-af22-ff71f2b63444" x="20" y="1" width="147" height="15"/>
+				<textElement>
+					<font size="9" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Regular Service / Layanan Biasa]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="4ccf4e78-fbb8-4aaf-8c8e-da138f02f3bf" x="202" y="1" width="137" height="15"/>
+				<textElement>
+					<font size="9" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Express Service / Layanan Kilat]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement uuid="db11343e-8485-48f7-b7b6-e41f7919f2e9" style="expressChecked" x="185" y="1" width="13" height="13"/>
+			</rectangle>
+			<rectangle>
+				<reportElement uuid="76d5f4e3-c031-4992-9e80-cbace58a2c3c" style="regularChecked" x="2" y="1" width="13" height="13"/>
+			</rectangle>
+			<staticText>
+				<reportElement uuid="51fd4867-5c9b-487b-8437-ddacc1e9a454" x="2" y="19" width="100" height="20"/>
+				<box leftPadding="5">
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement/>
+				<text><![CDATA[Name / Nama]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="4fbf1d43-17e4-4772-8ebf-c4cfa6229328" x="2" y="39" width="100" height="37"/>
+				<box leftPadding="5">
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{pelanggan}.nama]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="fa136305-6441-4427-90c0-3e58ce581dc2" x="102" y="19" width="100" height="20"/>
+				<box leftPadding="5">
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement/>
+				<text><![CDATA[Room / Kamar]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="b05e7bd1-84a2-49a4-877b-c216f34b0ed9" x="102" y="39" width="100" height="37"/>
+				<box leftPadding="5">
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement/>
+			</textField>
+			<staticText>
+				<reportElement uuid="e7ce9a99-80b1-4cef-a70d-9d98159afa5a" x="202" y="19" width="100" height="20"/>
+				<box leftPadding="5">
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement/>
+				<text><![CDATA[Date / Tanggal]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="3e05789f-5d46-435c-a0da-557f73a5f1fa" x="202" y="39" width="100" height="37"/>
+				<box leftPadding="5">
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{tanggal}.toString('dd-MM-YYYY')]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="17883962-43ff-442b-b303-0df7c2074bcb" x="302" y="19" width="130" height="20"/>
+				<box leftPadding="5">
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement/>
+				<text><![CDATA[Signature / Tandatangan]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="d884e417-9509-42ee-a021-e4524254399e" mode="Opaque" x="302" y="39" width="130" height="37"/>
+				<box leftPadding="5">
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement/>
+			</textField>
+			<staticText>
+				<reportElement uuid="0c45e6a8-be97-409c-af51-0fc5f1c228b2" x="442" y="19" width="113" height="57"/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
+				<text><![CDATA[Please Tick
+[  ] Starch / Dikanji
+[  ] On Hanger / Digantung
+[  ] Folded / Dilipat]]></text>
+			</staticText>
+			<componentElement>
+				<reportElement uuid="330a507d-a92f-4764-9d45-16d4934bbb51" key="table" x="2" y="86" width="553" height="263"/>
+				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+					<datasetRun subDataset="ItemWorkOrder" uuid="0b7f0b7f-6cc6-43ff-8a19-0ca618adc06f">
+						<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.
+JRBeanCollectionDataSource($F{itemWorkOrders})]]></dataSourceExpression>
+					</datasetRun>
+					<jr:column width="128" uuid="8bc4e296-ec7c-4b20-8ba7-623a8feb0b64">
+						<jr:tableFooter height="131" rowSpan="1">
+							<staticText>
+								<reportElement uuid="61ddbc5f-0be1-4357-8fbb-f99da75f582e" x="0" y="0" width="128" height="131"/>
+								<box>
+									<topPen lineWidth="1.0"/>
+								</box>
+								<textElement/>
+								<text><![CDATA[]]></text>
+							</staticText>
+						</jr:tableFooter>
+						<jr:columnHeader height="20" rowSpan="1">
+							<staticText>
+								<reportElement uuid="5ae6f7bb-d40f-4cbb-a0a0-692eac8e7cd0" x="0" y="0" width="128" height="15"/>
+								<box leftPadding="5" bottomPadding="1">
+									<bottomPen lineWidth="1.0"/>
+								</box>
+								<textElement verticalAlignment="Middle">
+									<font isBold="true"/>
+								</textElement>
+								<text><![CDATA[Item]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell height="18" rowSpan="1">
+							<textField>
+								<reportElement uuid="df334ec9-c076-400d-8d44-5a17f0527aa8" x="0" y="0" width="128" height="18"/>
+								<box leftPadding="5"/>
+								<textElement/>
+								<textFieldExpression><![CDATA[$F{work}.itemPakaian.nama]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="90" uuid="422c4f4a-a3b2-41b7-b52e-63c7c157a3ad">
+						<jr:tableFooter height="131" rowSpan="1">
+							<staticText>
+								<reportElement uuid="8b9b963c-d1ed-424a-a597-b8035e3fb0c7" x="0" y="0" width="90" height="131"/>
+								<box>
+									<topPen lineWidth="1.0"/>
+								</box>
+								<textElement/>
+								<text><![CDATA[]]></text>
+							</staticText>
+						</jr:tableFooter>
+						<jr:columnHeader height="20" rowSpan="1">
+							<staticText>
+								<reportElement uuid="8091802c-2160-4ef0-ae83-2debc26052f2" x="0" y="0" width="90" height="15"/>
+								<box leftPadding="5" bottomPadding="1">
+									<bottomPen lineWidth="1.0"/>
+								</box>
+								<textElement verticalAlignment="Middle">
+									<font isBold="true"/>
+								</textElement>
+								<text><![CDATA[Category]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell height="18" rowSpan="1">
+							<textField>
+								<reportElement uuid="30f483d9-0840-4c2a-849d-37a9c084d784" x="0" y="0" width="90" height="18"/>
+								<box leftPadding="5"/>
+								<textElement/>
+								<textFieldExpression><![CDATA[$F{work}.itemPakaian.kategori ?: $F{work}.itemPakaian.bahan]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="91" uuid="2f838dc8-8a42-482a-9451-7edf1a891949">
+						<jr:tableFooter height="131" rowSpan="1">
+							<staticText>
+								<reportElement uuid="851758d6-cba2-4c24-a52a-1d66cbc64e3f" x="0" y="0" width="91" height="131"/>
+								<box>
+									<topPen lineWidth="1.0"/>
+								</box>
+								<textElement/>
+								<text><![CDATA[]]></text>
+							</staticText>
+						</jr:tableFooter>
+						<jr:columnHeader height="20" rowSpan="1">
+							<staticText>
+								<reportElement uuid="87447d90-774d-4235-9aca-904f77fae617" x="0" y="0" width="91" height="15"/>
+								<box leftPadding="5" bottomPadding="1">
+									<bottomPen lineWidth="1.0"/>
+								</box>
+								<textElement verticalAlignment="Middle">
+									<font isBold="true"/>
+								</textElement>
+								<text><![CDATA[Service]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell height="18" rowSpan="1">
+							<textField>
+								<reportElement uuid="c32c1615-7a11-4c7f-89c3-c4a44ef513e8" x="0" y="0" width="91" height="18"/>
+								<box leftPadding="5"/>
+								<textElement/>
+								<textFieldExpression><![CDATA[$F{work}.jenisWork.nama]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="57" uuid="ae3b2625-43cb-4347-ab0c-ba4bc1d89c3d">
+						<jr:tableFooter height="131" rowSpan="1">
+							<staticText>
+								<reportElement uuid="6dfe081c-9c9d-4693-9547-d417669ed885" x="0" y="0" width="57" height="131"/>
+								<box>
+									<topPen lineWidth="1.0"/>
+								</box>
+								<textElement/>
+								<text><![CDATA[]]></text>
+							</staticText>
+						</jr:tableFooter>
+						<jr:columnHeader height="20" rowSpan="1">
+							<staticText>
+								<reportElement uuid="0175c09d-b86e-4c5f-af4c-f383ccf4253c" x="0" y="0" width="57" height="15"/>
+								<box leftPadding="5" bottomPadding="1">
+									<bottomPen lineWidth="1.0"/>
+								</box>
+								<textElement textAlignment="Right" verticalAlignment="Middle">
+									<font isBold="true"/>
+								</textElement>
+								<text><![CDATA[Quantity]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell height="18" rowSpan="1">
+							<textField pattern="#,##0">
+								<reportElement uuid="0cf05555-1516-4f44-83d0-7b7e210b5a85" x="0" y="0" width="57" height="18"/>
+								<box leftPadding="5"/>
+								<textElement textAlignment="Right"/>
+								<textFieldExpression><![CDATA[$F{jumlah}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="90" uuid="888fe434-3dad-4f38-a0ba-a5e9aec6c65a">
+						<jr:tableFooter height="131" rowSpan="1">
+							<staticText>
+								<reportElement uuid="aa967092-9d3d-46fa-b522-0cd9a1d2c968" x="0" y="0" width="90" height="25"/>
+								<box>
+									<topPen lineWidth="1.0"/>
+								</box>
+								<textElement textAlignment="Right" verticalAlignment="Bottom"/>
+								<text><![CDATA[Total:]]></text>
+							</staticText>
+							<staticText>
+								<reportElement uuid="19e84ed0-9e6d-4f69-872b-7d67686782ec" x="0" y="26" width="90" height="15"/>
+								<textElement textAlignment="Right" verticalAlignment="Middle"/>
+								<text><![CDATA[Subcharge:]]></text>
+							</staticText>
+							<staticText>
+								<reportElement uuid="27752fe7-1ab5-417b-87a5-defff3fed3be" x="0" y="41" width="90" height="15"/>
+								<textElement textAlignment="Right" verticalAlignment="Middle"/>
+								<text><![CDATA[Subtotal:]]></text>
+							</staticText>
+							<staticText>
+								<reportElement uuid="78a224df-71fb-4644-9d2a-646ead93dc4e" x="0" y="56" width="90" height="15"/>
+								<textElement textAlignment="Right" verticalAlignment="Middle"/>
+								<text><![CDATA[Discount:]]></text>
+							</staticText>
+							<staticText>
+								<reportElement uuid="5d84514b-2422-4461-82b3-2971c18021f9" x="0" y="71" width="90" height="15"/>
+								<textElement textAlignment="Right" verticalAlignment="Middle"/>
+								<text><![CDATA[Service & Tax:]]></text>
+							</staticText>
+							<staticText>
+								<reportElement uuid="fb249256-3090-4e0a-911d-b4bfbb36a446" x="0" y="86" width="90" height="15"/>
+								<textElement textAlignment="Right" verticalAlignment="Middle">
+									<font isBold="true"/>
+								</textElement>
+								<text><![CDATA[Grand Total:]]></text>
+							</staticText>
+							<staticText>
+								<reportElement uuid="fb249256-3090-4e0a-911d-b4bfbb36a447" x="0" y="101" width="90" height="15">
+									<printWhenExpression><![CDATA[$F{_THIS}.workOrder.pembayaran instanceof domain.PembayaranSignedBill]]></printWhenExpression>
+								</reportElement>
+								<textElement textAlignment="Right" verticalAlignment="Middle"/>
+								<text><![CDATA[Downpayment:]]></text>
+							</staticText>
+							<staticText>
+								<reportElement uuid="fb249256-3090-4e0a-911d-b4bfbb36a448" x="0" y="116" width="90" height="15">
+									<printWhenExpression><![CDATA[$F{_THIS}.workOrder.pembayaran instanceof domain.PembayaranSignedBill]]></printWhenExpression>
+								</reportElement>
+								<textElement textAlignment="Right" verticalAlignment="Middle"/>
+								<text><![CDATA[Sisa Pembayaran:]]></text>
+							</staticText>
+						</jr:tableFooter>
+						<jr:columnHeader height="20" rowSpan="1">
+							<staticText>
+								<reportElement uuid="f9ee6079-71ad-4887-8540-e6361abf0180" x="0" y="0" width="90" height="15"/>
+								<box leftPadding="5" bottomPadding="1">
+									<bottomPen lineWidth="1.0"/>
+								</box>
+								<textElement textAlignment="Right" verticalAlignment="Middle">
+									<font isBold="true"/>
+								</textElement>
+								<text><![CDATA[Price / Unit (IDR)]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell height="18" rowSpan="1">
+							<textField pattern="#,##0">
+								<reportElement uuid="b3e3dc09-6085-453b-a37d-c2d6aaf136fc" x="0" y="0" width="90" height="18"/>
+								<box leftPadding="5"/>
+								<textElement textAlignment="Right"/>
+								<textFieldExpression><![CDATA[$F{harga}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="96" uuid="1d8d8015-8671-4a53-8957-e84f6fd0d2bb">
+						<jr:tableFooter height="131" rowSpan="1">
+							<textField pattern="#,##0">
+								<reportElement uuid="0f091550-3a3c-4799-814a-54ac20d88266" x="0" y="0" width="96" height="26"/>
+								<box>
+									<topPen lineWidth="1.0"/>
+								</box>
+								<textElement textAlignment="Right" verticalAlignment="Bottom"/>
+								<textFieldExpression><![CDATA[$F{_THIS}.workOrder.hitungSubtotal()]]></textFieldExpression>
+							</textField>
+							<textField pattern="#,##0">
+								<reportElement uuid="4d7ce534-ecd5-4175-8888-4feed1b59504" x="0" y="26" width="96" height="15"/>
+								<textElement textAlignment="Right" verticalAlignment="Middle"/>
+								<textFieldExpression><![CDATA[$F{_THIS}.workOrder.hitungSurcharge()]]></textFieldExpression>
+							</textField>
+							<textField pattern="#,##0">
+								<reportElement uuid="3008bd5e-a0d6-461c-9c90-fff8d746af5c" x="0" y="41" width="96" height="15"/>
+								<textElement textAlignment="Right" verticalAlignment="Middle"/>
+								<textFieldExpression><![CDATA[$F{_THIS}.workOrder.hitungSubtotal() +
+$F{_THIS}.workOrder.hitungSurcharge()]]></textFieldExpression>
+							</textField>
+							<textField pattern="#,##0">
+								<reportElement uuid="e3dd9ba1-9680-410c-a354-fa42279e4604" x="0" y="86" width="96" height="15"/>
+								<textElement textAlignment="Right" verticalAlignment="Middle">
+									<font isBold="true"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{_THIS}.workOrder.total]]></textFieldExpression>
+							</textField>
+							<textField pattern="#,##0">
+								<reportElement uuid="e3dd9ba1-9680-410c-a354-fa42279e4605" x="0" y="101" width="96" height="15">
+									<printWhenExpression><![CDATA[$F{_THIS}.workOrder.pembayaran instanceof domain.PembayaranSignedBill]]></printWhenExpression>
+								</reportElement>
+								<textElement textAlignment="Right" verticalAlignment="Middle"/>
+								<textFieldExpression><![CDATA[$F{_THIS}.workOrder.pembayaran instanceof domain.PembayaranSignedBill?
+$F{_THIS}.workOrder.pembayaran.jumlahBayarDimuka: 0]]></textFieldExpression>
+							</textField>
+							<textField pattern="#,##0">
+								<reportElement uuid="e3dd9ba1-9680-410c-a354-fa42279e4606" x="0" y="116" width="96" height="15">
+									<printWhenExpression><![CDATA[$F{_THIS}.workOrder.pembayaran instanceof domain.PembayaranSignedBill]]></printWhenExpression>
+								</reportElement>
+								<textElement textAlignment="Right" verticalAlignment="Middle"/>
+								<textFieldExpression><![CDATA[$F{_THIS}.workOrder.pembayaran.total()]]></textFieldExpression>
+							</textField>
+						</jr:tableFooter>
+						<jr:columnHeader height="20" rowSpan="1">
+							<staticText>
+								<reportElement uuid="f36b99bc-7088-461b-85fa-a8074c120236" x="0" y="0" width="96" height="15"/>
+								<box leftPadding="5" bottomPadding="1">
+									<bottomPen lineWidth="1.0"/>
+								</box>
+								<textElement textAlignment="Right" verticalAlignment="Middle">
+									<font isBold="true"/>
+								</textElement>
+								<text><![CDATA[Amount (IDR)]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell height="18" rowSpan="1">
+							<textField pattern="#,##0">
+								<reportElement uuid="0e097956-eee9-4c06-ba94-d533e79680e3" x="0" y="0" width="96" height="18"/>
+								<box leftPadding="5"/>
+								<textElement textAlignment="Right"/>
+								<textFieldExpression><![CDATA[$F{_THIS}.total()]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+				</jr:table>
+			</componentElement>
+		</band>
+	</detail>
+	<lastPageFooter>
+		<band height="103">
+			<staticText>
+				<reportElement uuid="b346e532-edbc-44e8-b75c-128b5cfba13f" x="0" y="0" width="430" height="97"/>
+				<box topPadding="3" leftPadding="5">
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement>
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Special Instructions]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="8cd1b139-7796-49cd-b1a4-0f54fa4e773b" x="430" y="0" width="125" height="97"/>
+				<box topPadding="2" leftPadding="0">
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Top">
+					<font isBold="false" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[Counter Signature
+Tanda Tangan Petugas]]></text>
+			</staticText>
+		</band>
+	</lastPageFooter>
+</jasperReport>
