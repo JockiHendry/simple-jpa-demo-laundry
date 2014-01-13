@@ -46,7 +46,21 @@ import javax.validation.groups.Default
         SELECT wo.pelanggan.nama AS pelanggan, i.jumlah, i.work.itemPakaian.nama AS nama
         FROM WorkOrder wo JOIN wo.itemWorkOrders i
         WHERE wo.tanggal BETWEEN :tanggalMulaiCari AND :tanggalSelesaiCari
-        ORDER BY tanggal, nama
+        ORDER BY pelanggan, nama
+    '''),
+    @NamedQuery(name='ItemWorkOrder.LaporanPelangganCorporate', query='''
+        SELECT wo.pelanggan.nama AS pelanggan, i.jumlah, i.work.itemPakaian.nama AS nama
+        FROM WorkOrder wo JOIN wo.itemWorkOrders i
+        WHERE wo.tanggal BETWEEN :tanggalMulaiCari AND :tanggalSelesaiCari
+            AND wo.pelanggan.corporate = true
+        ORDER BY pelanggan, nama
+    '''),
+    @NamedQuery(name='ItemWorkOrder.LaporanPelangganOutsider', query='''
+        SELECT wo.pelanggan.nama AS pelanggan, i.jumlah, i.work.itemPakaian.nama AS nama
+        FROM WorkOrder wo JOIN wo.itemWorkOrders i
+        WHERE wo.tanggal BETWEEN :tanggalMulaiCari AND :tanggalSelesaiCari
+            AND wo.pelanggan.corporate = false
+        ORDER BY pelanggan, nama
     ''')
 ])
 @DomainClass @Entity @Canonical

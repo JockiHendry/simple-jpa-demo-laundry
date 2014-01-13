@@ -52,6 +52,8 @@ class LaporanController {
                 break
 
             case JenisLaporan.LAPORAN_PELANGGAN:
+            case JenisLaporan.LAPORAN_PELANGGAN_CORPORATE:
+            case JenisLaporan.LAPORAN_PELANGGAN_OUTSIDER:
                 queryResult.each {
                     source << ['pelanggan': it[0], 'jumlah': it[1], 'nama': it[2]]
                 }

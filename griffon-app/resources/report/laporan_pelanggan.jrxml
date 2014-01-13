@@ -150,7 +150,7 @@ FROM
 						</cellContents>
 					</crosstabTotalColumnHeader>
 				</columnGroup>
-				<measure name="jumlahMeasure" class="java.lang.Integer" calculation="Count">
+				<measure name="jumlahMeasure" class="java.lang.Integer" calculation="Sum">
 					<measureExpression><![CDATA[$F{jumlah}]]></measureExpression>
 				</measure>
 				<crosstabCell width="75" height="25">

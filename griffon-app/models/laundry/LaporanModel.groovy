@@ -17,6 +17,8 @@ enum JenisLaporan {
 
     LAPORAN_HARIAN('Laporan Harian', 'laporan_harian', 'ItemWorkOrder.LaporanBulanan'),
     LAPORAN_PELANGGAN('Laporan Transaksi Pelanggan', 'laporan_pelanggan', 'ItemWorkOrder.LaporanPelanggan'),
+    LAPORAN_PELANGGAN_CORPORATE('Laporan Transaksi Pelanggan (Corporate)', 'laporan_pelanggan', 'ItemWorkOrder.LaporanPelangganCorporate'),
+    LAPORAN_PELANGGAN_OUTSIDER('Laporan Transaksi Pelanggan (Outsider)', 'laporan_pelanggan', 'ItemWorkOrder.LaporanPelangganOutsider'),
     LAPORAN_PEMASUKAN('Laporan Pemasukan', 'laporan_pemasukan', 'ItemWorkOrder.LaporanPemasukan')
 
     String keterangan
