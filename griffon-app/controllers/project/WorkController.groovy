@@ -30,12 +30,45 @@ class WorkController {
     def view
 
     void mvcGroupInit(Map args) {
-        if (args.'popup') model.popupMode = true
-        listAll()
+        if (args.'popup') {
+            model.popupMode = true
+            listAllInPopup()
+        } else {
+            listAll()
+        }
     }
 
     void mvcGroupDestroy() {
         destroyEntityManager()
+    }
+
+    @Transaction
+    def listAllInPopup = {
+        execInsideUISync {
+            model.kategoriSearchList.clear()
+            model.bahanSearchList.clear()
+            model.jenisWorkSearchList.clear()
+        }
+
+        List kategoriResult = findAllKategori([orderBy: 'nama'])
+        List bahanResult = findAllBahan([orderBy: 'nama'])
+        List jenisWorkResult = findAllJenisWork([orderBy: 'nama'])
+
+        execInsideUISync {
+            model.kategoriSearchList << SEMUA
+            model.kategoriSearchList.addAll(kategoriResult)
+            model.kategoriSearch.selectedItem = SEMUA
+
+            model.bahanSearchList << SEMUA
+            model.bahanSearchList.addAll(bahanResult)
+            model.bahanSearch.selectedItem = SEMUA
+
+            model.jenisWorkSearchList << SEMUA
+            model.jenisWorkSearchList.addAll(jenisWorkResult)
+            model.jenisWorkSearch.selectedItem = SEMUA
+
+            view.itemPakaianSearch.requestFocusInWindow()
+        }
     }
 
     @Transaction

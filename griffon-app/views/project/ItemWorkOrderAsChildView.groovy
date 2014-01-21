@@ -43,10 +43,8 @@ application(title: 'Item Work Order',
             label('Item Pekerjaan:')
             panel {
                 label(text: bind {model.selectedWork?: '- kosong -'})
-                mvcPopupButton('Cari Di Daftar Pekerjaan...', id: 'cariPekerjaan', mvcGroup: 'work', errorPath: 'work', dialogProperties: [
-                    title: 'Cari Item Pekerjaan',
-                    size: new Dimension(1000, 420)
-                ], onFinish: controller.prosesWork, mnemonic: KeyEvent.VK_P, enabled: bind { model.parentPelanggan != null })
+                button('Cari Di Daftar Pekerjaan...', id: 'cariPekerjaan', errorPath: 'work', mnemonic: KeyEvent.VK_P,
+                    enabled: bind { model.parentPelanggan != null}, actionPerformed: controller.showDaftarPekerjaan)
                 label('Anda harus memilih pelanggan terlebih dahulu!', visible: bind { model.parentPelanggan == null})
             }
             errorLabel(path: 'work', constraints: 'wrap')

@@ -2,11 +2,15 @@ package project
 
 import domain.*
 import griffon.transform.Threading
+import simplejpa.swing.DialogUtils
 import simplejpa.transaction.Transaction
 import validation.Pengisian
 
 import javax.swing.*
 import javax.swing.event.ListSelectionEvent
+import java.awt.Dialog
+import java.awt.Dimension
+import java.awt.Window
 import java.text.NumberFormat
 
 @Transaction
@@ -14,6 +18,8 @@ class ItemWorkOrderAsChildController {
 
     ItemWorkOrderAsChildModel model
     def view
+
+    static MVCGroup workPopupMVC
 
     void mvcGroupInit(Map args) {
         args.'parentList'.each { model.itemWorkOrderList << it }
@@ -72,8 +78,30 @@ class ItemWorkOrderAsChildController {
         }
     }
 
-    @Threading(Threading.Policy.SKIP)
-    def prosesWork = { m, v, c ->
+    @Transaction(Transaction.Policy.SKIP)
+    def showDaftarPekerjaan = {
+        if (!workPopupMVC) {
+            workPopupMVC = app.mvcGroupManager.buildMVCGroup('work', 'workPopup', [popup: true])
+        }
+
+        def m = workPopupMVC.model
+        def v = workPopupMVC.view
+        def c = workPopupMVC.controller
+
+        Window thisWindow = SwingUtilities.getWindowAncestor(view.mainPanel)
+        JDialog dialog = new JDialog(thisWindow, Dialog.ModalityType.APPLICATION_MODAL)
+        if (DialogUtils.defaultContentDecorator) {
+            dialog.contentPane = DialogUtils.defaultContentDecorator(v.mainPanel)
+        } else {
+            dialog.contentPane = v.mainPanel
+        }
+        dialog.pack()
+        dialog.title = "Cari Item Pekerjaan"
+        dialog.size = new Dimension(1000, 420)
+        dialog.setLocationRelativeTo(thisWindow)
+        dialog.setVisible(true)
+
+        // Setelah dialog selesai ditampilkan
         if (v.table.selectionModel.isSelectionEmpty()) {
             JOptionPane.showMessageDialog(view.mainPanel, 'Tidak ada item pekerjaan yang dipilih!', 'Cari Item Pekerjaan',
                     JOptionPane.ERROR_MESSAGE)
