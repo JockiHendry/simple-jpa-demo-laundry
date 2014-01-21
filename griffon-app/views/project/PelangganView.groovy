@@ -35,7 +35,7 @@ application(title: 'Pelanggan',
 
         panel(constraints: PAGE_START) {
             borderLayout()
-            label('<html><b>Petunjuk:</b> <i>Cari dan pilih pelanggan di tabel, kemudian klik tombol Pilih untuk selesai!</i></html>',
+            label('<html><b>Petunjuk:</b> <i>Cari dan pilih pelanggan di tabel dan tekan Enter untuk selesai!</i></html>',
                 visible: bind {model.popupMode}, horizontalAlignment: CENTER, constraints: PAGE_START)
             panel(constraints: CENTER) {
                 flowLayout(alignment: FlowLayout.LEADING)
@@ -56,7 +56,8 @@ application(title: 'Pelanggan',
                 label(text: bind('searchMessage', source: model))
             }
             scrollPane(constraints: CENTER) {
-                glazedTable(id: 'table', list: model.pelangganList, sortingStrategy: SINGLE_COLUMN, onValueChanged: controller.tableSelectionChanged) {
+                glazedTable(id: 'table', list: model.pelangganList, sortingStrategy: SINGLE_COLUMN, onValueChanged: controller.tableSelectionChanged,
+                        mouseClicked: { e -> if (e.clickCount == 2) pilih.actionPerformed(null)}) {
                     glazedColumn(name: 'Nama', property: 'nama')
                     glazedColumn(name: 'Alamat', property: 'alamat')
                     glazedColumn(name: 'Nomor Telepon', property: 'nomorTelepon')
