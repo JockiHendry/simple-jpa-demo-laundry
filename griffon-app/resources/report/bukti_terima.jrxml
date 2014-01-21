@@ -363,9 +363,11 @@ JRBeanCollectionDataSource($F{itemWorkOrders})]]></dataSourceExpression>
 								<text><![CDATA[Total:]]></text>
 							</staticText>
 							<staticText>
-								<reportElement uuid="19e84ed0-9e6d-4f69-872b-7d67686782ec" x="0" y="26" width="90" height="15"/>
+								<reportElement uuid="19e84ed0-9e6d-4f69-872b-7d67686782ec" x="0" y="26" width="90" height="15" isRemoveLineWhenBlank="true">
+									<printWhenExpression><![CDATA[$F{_THIS}.workOrder.hitungSurcharge() > 0]]></printWhenExpression>
+								</reportElement>
 								<textElement textAlignment="Right" verticalAlignment="Middle"/>
-								<text><![CDATA[Subcharge:]]></text>
+								<text><![CDATA[Express:]]></text>
 							</staticText>
 							<staticText>
 								<reportElement uuid="27752fe7-1ab5-417b-87a5-defff3fed3be" x="0" y="41" width="90" height="15"/>
@@ -436,7 +438,9 @@ JRBeanCollectionDataSource($F{itemWorkOrders})]]></dataSourceExpression>
 								<textFieldExpression><![CDATA[$F{_THIS}.workOrder.hitungSubtotal()]]></textFieldExpression>
 							</textField>
 							<textField pattern="#,##0">
-								<reportElement uuid="4d7ce534-ecd5-4175-8888-4feed1b59504" x="0" y="26" width="96" height="15"/>
+								<reportElement uuid="4d7ce534-ecd5-4175-8888-4feed1b59504" x="0" y="26" width="96" height="15" isRemoveLineWhenBlank="true">
+									<printWhenExpression><![CDATA[$F{_THIS}.workOrder.hitungSurcharge() > 0]]></printWhenExpression>
+								</reportElement>
 								<textElement textAlignment="Right" verticalAlignment="Middle"/>
 								<textFieldExpression><![CDATA[$F{_THIS}.workOrder.hitungSurcharge()]]></textFieldExpression>
 							</textField>
