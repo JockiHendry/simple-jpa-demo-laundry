@@ -80,6 +80,7 @@ class ItemWorkOrderAsChildController {
         } else {
             model.selectedWork = findWorkById(v.view.table.selectionModel.selected[0].id)
             model.harga = model.selectedWork.getHarga(model.parentPelanggan)
+            view.jumlah.requestFocusInWindow()
         }
     }
 
