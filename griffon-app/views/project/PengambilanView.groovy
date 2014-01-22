@@ -70,7 +70,7 @@ application(title: 'Work Order',
                     glazedColumn(name: 'Total', expression: {it.total}, columnClass: Integer) {
                         templateRenderer('${currencyFormat(it)}', horizontalAlignment: RIGHT)
                     }
-                    glazedColumn(name: 'Sisa', expression: {it.pembayaran?.total()}, columnClass: Integer) {
+                    glazedColumn(name: 'Sisa', expression: {it.pembayaran.lunas? 0: it.pembayaran.total()}, columnClass: Integer) {
                         templateRenderer('${currencyFormat(it)}', horizontalAlignment: RIGHT)
                     }
                 }
