@@ -33,8 +33,8 @@ class WorkOrderController {
 
         model.tanggalMulaiSearch = LocalDate.now().minusMonths(1)
         model.tanggalSelesaiSearch = LocalDate.now()
-        List workOrderResult = findAllWorkOrderByTanggalBetweenAndStatusTerakhir(model.tanggalMulaiSearch,
-            model.tanggalSelesaiSearch, StatusPekerjaan.DITERIMA, [orderBy: 'nomor,tanggal'])
+        List workOrderResult = findAllWorkOrderByTanggalBetweenAndStatusTerakhirNe(model.tanggalMulaiSearch,
+            model.tanggalSelesaiSearch, StatusPekerjaan.DIAMBIL, [orderBy: 'nomor,tanggal'])
         buatNomorWO()
         refreshInformasi()
 
@@ -56,7 +56,7 @@ class WorkOrderController {
             and()
             pelanggan__nama like("%${model.pelangganSearch?:''}%")
             and()
-            statusTerakhir eq(StatusPekerjaan.DITERIMA)
+            statusTerakhir ne(StatusPekerjaan.DIAMBIL)
             if (model.jenisJadwalSearch.selectedItem && model.jenisJadwalSearch.selectedItem!=JenisJadwalSearch.SEMUA) {
                 and()
                 express eq(model.jenisJadwalSearch.selectedItem==JenisJadwalSearch.EXPRESS)

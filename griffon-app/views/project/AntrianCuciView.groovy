@@ -1,5 +1,7 @@
 package project
 
+import domain.StatusPekerjaan
+
 import javax.swing.JOptionPane
 import java.awt.event.KeyEvent
 
@@ -60,6 +62,12 @@ application(title: 'Work Order',
                     }
                     glazedColumn(name: 'Jumlah Pakaian', expression: {it.itemWorkOrders.size()}, columnClass: Integer)
                     glazedColumn(name: 'Keterangan', property: 'keterangan')
+                    glazedColumn(name: 'Status', property: 'statusTerakhir') {
+                        templateRenderer('${it}') {
+                            condition(if_: {it==StatusPekerjaan.DITERIMA}, then_property_: 'foreground', is_: Color.BLUE, else_is_: Color.GRAY)
+                            condition(if_: {isSelected}, then_property_: 'foreground', is_: Color.WHITE)
+                        }
+                    }
                     glazedColumn(name: 'Total', expression: {it.total}, columnClass: Integer) {
                         templateRenderer('${currencyFormat(it)}', horizontalAlignment: RIGHT)
                     }
@@ -94,6 +102,11 @@ application(title: 'Work Order',
             panel(constraints: 'span, growx, wrap') {
                 flowLayout(alignment: FlowLayout.LEADING)
                 button('Proses Order Ini Menjadi Sedang Dikerjakan...', actionPerformed: {
+                    if (model.statusTerakhir != StatusPekerjaan.DITERIMA) {
+                        JOptionPane.showMessageDialog(mainPanel, "Tidak dapat mengubah work order ini karena statusnya tidak memungkinkan untuk diproses!",
+                            "Update Tidak Diperbolehkan", JOptionPane.ERROR_MESSAGE)
+                        return
+                    }
                     if (JOptionPane.showConfirmDialog(mainPanel, "Apakah Anda yakin order ini sudah memasuki proses pencucian?",
                             'Konfirmasi Pencucian', JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE) != JOptionPane.YES_OPTION) {
                         return

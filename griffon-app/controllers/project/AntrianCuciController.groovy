@@ -31,8 +31,8 @@ class AntrianCuciController {
 
         model.tanggalMulaiSearch = LocalDate.now().minusMonths(1)
         model.tanggalSelesaiSearch = LocalDate.now()
-        List workOrderResult = findAllWorkOrderByTanggalBetweenAndStatusTerakhir(model.tanggalMulaiSearch,
-            model.tanggalSelesaiSearch, StatusPekerjaan.DITERIMA, [orderBy: 'nomor,tanggal'])
+        List workOrderResult = findAllWorkOrderByTanggalBetweenAndStatusTerakhirNe(model.tanggalMulaiSearch,
+            model.tanggalSelesaiSearch, StatusPekerjaan.DIAMBIL, [orderBy: 'nomor,tanggal'])
 
         execInsideUISync {
             model.workOrderList.addAll(workOrderResult)
@@ -54,7 +54,7 @@ class AntrianCuciController {
             and()
             pelanggan__nama like("%${model.pelangganSearch?:''}%")
             and()
-            statusTerakhir eq(StatusPekerjaan.DITERIMA)
+            statusTerakhir ne(StatusPekerjaan.DIAMBIL)
             if (model.jenisJadwalSearch.selectedItem && model.jenisJadwalSearch.selectedItem!=JenisJadwalSearch.SEMUA) {
                 and()
                 express eq(model.jenisJadwalSearch.selectedItem==JenisJadwalSearch.EXPRESS)
@@ -72,8 +72,8 @@ class AntrianCuciController {
         workOrder.dicuci(model.tanggal)
         workOrder.estimasiSelesai = model.estimasiSelesai
         execInsideUISync {
-            model.workOrderList.remove(view.table.selectionModel.selected[0])
-            clear()
+            view.table.selectionModel.selected[0] = workOrder
+            model.statusTerakhir = workOrder.statusTerakhir
         }
     }
 
@@ -82,6 +82,7 @@ class AntrianCuciController {
         execInsideUISync {
             model.keterangan = null
             model.estimasiSelesai = null
+            model.statusTerakhir = null
             model.errors.clear()
             view.table.selectionModel.clearSelection()
         }
@@ -96,6 +97,7 @@ class AntrianCuciController {
                 WorkOrder selected = view.table.selectionModel.selected[0]
                 model.errors.clear()
                 model.keterangan = selected.keterangan
+                model.statusTerakhir = selected.statusTerakhir
             }
         }
     }

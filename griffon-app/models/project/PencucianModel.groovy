@@ -1,6 +1,7 @@
 package project
 
 import ca.odell.glazedlists.BasicEventList
+import domain.StatusPekerjaan
 import domain.WorkOrder
 import groovy.beans.Bindable
 import org.jdesktop.swingx.combobox.EnumComboBoxModel
@@ -18,6 +19,7 @@ class PencucianModel {
 
     @Bindable LocalDateTime tanggal
     @Bindable String keterangan
+    @Bindable StatusPekerjaan statusTerakhir
 
     BasicEventList<WorkOrder> workOrderList = new BasicEventList<>()
 

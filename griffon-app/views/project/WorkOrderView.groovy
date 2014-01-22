@@ -1,5 +1,6 @@
 package project
 
+import domain.StatusPekerjaan
 import simplejpa.swing.WrapLayout
 
 import javax.swing.JOptionPane
@@ -60,6 +61,12 @@ application(title: 'Work Order',
                         templateRenderer(templateExpression: {it?'Y': 'N'})
                     }
                     glazedColumn(name: 'Keterangan', property: 'keterangan')
+                    glazedColumn(name: 'Status', property: 'statusTerakhir') {
+                        templateRenderer('${it}') {
+                            condition(if_: {it==StatusPekerjaan.DITERIMA}, then_property_: 'foreground', is_: Color.BLUE, else_is_: Color.GRAY)
+                            condition(if_: {isSelected}, then_property_: 'foreground', is_: Color.WHITE)
+                        }
+                    }
                     glazedColumn(name: 'Diskon', property: 'diskon', columnClass: Integer)
                     glazedColumn(name: 'Total', expression: {it.total}, columnClass: Integer) {
                         templateRenderer('${currencyFormat(it)}', horizontalAlignment: RIGHT)
@@ -151,6 +158,11 @@ application(title: 'Work Order',
                 flowLayout(alignment: FlowLayout.LEADING)
                 button(app.getMessage("simplejpa.dialog.save.button"), actionPerformed: {
                     if (model.id != null) {
+                        if (model.statusTerakhir != StatusPekerjaan.DITERIMA) {
+                            JOptionPane.showMessageDialog(mainPanel, "Tidak dapat mengubah work order ini karena work order telah diproses ke tahap berikutnya!",
+                                "Update Tidak Diperbolehkan", JOptionPane.ERROR_MESSAGE)
+                            return
+                        }
                         if (JOptionPane.showConfirmDialog(mainPanel, app.getMessage("simplejpa.dialog.update.message"),
                                 app.getMessage("simplejpa.dialog.update.title"), JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE) != JOptionPane.YES_OPTION) {
                             return
