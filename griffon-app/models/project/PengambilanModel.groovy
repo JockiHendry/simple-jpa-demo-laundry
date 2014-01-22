@@ -31,7 +31,7 @@ class PengambilanModel {
 }
 
 enum StatusPekerjaanPengambilanSearch {
-    SEMUA("Semua"), DITERIMA("Diterima"), DICUCI("Sedang Dikerjakan"), DISELESAIKAN("Selesai")
+    SEMUA("Semua"), DITERIMA("Diterima"), DICUCI("Sedang Dikerjakan"), DISELESAIKAN("Selesai"), DIAMBIL("Diambil")
 
     String description
 
@@ -46,6 +46,8 @@ enum StatusPekerjaanPengambilanSearch {
             return StatusPekerjaan.DICUCI
         } else if (this == StatusPekerjaanPengambilanSearch.DISELESAIKAN) {
             return StatusPekerjaan.DISELESAIKAN
+        } else if (this == StatusPekerjaanPengambilanSearch.DIAMBIL) {
+            return StatusPekerjaan.DIAMBIL
         }
         return null
     }
