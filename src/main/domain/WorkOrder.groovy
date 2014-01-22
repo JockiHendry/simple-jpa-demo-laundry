@@ -159,6 +159,10 @@ class WorkOrder {
         }
     }
 
+    Integer jumlahPakaian() {
+        itemWorkOrders.sum { ItemWorkOrder i -> i.jumlah }
+    }
+
     BigDecimal hitungDiskon() {
         diskon.jumlahDiskon(hitungSubtotal() + hitungSurcharge())
     }

@@ -63,7 +63,7 @@ application(title: 'Work Order',
                     glazedColumn(name: 'Estimasi Selesai', property: 'estimasiSelesai', width: 120) {
                         templateRenderer("\${it? it.toString('dd-MM-yyyy'): '-'}")
                     }
-                    glazedColumn(name: 'Jumlah Pakaian', expression: {it.itemWorkOrders.size()}, columnClass: Integer)
+                    glazedColumn(name: 'Jumlah Pakaian', expression: {it.jumlahPakaian()}, columnClass: Integer)
                     glazedColumn(name: 'Keterangan', property: 'keterangan')
                     glazedColumn(name: 'Status', property: 'statusTerakhir') {
                         templateRenderer('${it}') {
