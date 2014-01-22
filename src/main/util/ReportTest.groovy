@@ -16,7 +16,6 @@
 
 package util
 
-import domain.Bahan
 import domain.ItemPakaian
 import domain.ItemWorkOrder
 import domain.JenisWork
@@ -35,8 +34,8 @@ class ReportTest {
     static List getDataWorkOrder() {
         Pelanggan pelanggan = new Pelanggan("Edi Yi Wei", "Jl. Sungai Raya Dalam", "0813524455", false)
 
-        ItemPakaian itemPakaian1 = new ItemPakaian(nama: "Bath Towel", bahan: new Bahan("Linen - Cloth"))
-        ItemPakaian itemPakaian2 = new ItemPakaian(nama: "Napkin", bahan: new Bahan("F & B Linen"))
+        ItemPakaian itemPakaian1 = new ItemPakaian(nama: "Bath Towel", kategori: new Kategori("Linen - Cloth"))
+        ItemPakaian itemPakaian2 = new ItemPakaian(nama: "Napkin", kategori: new Kategori("F & B Linen"))
         ItemPakaian itemPakaian3 = new ItemPakaian(nama: "Pijamas", kategori: new Kategori("Gentlemen"))
         ItemPakaian itemPakaian4 = new ItemPakaian(nama: "Skirts", kategori: new Kategori("Ladies"))
 

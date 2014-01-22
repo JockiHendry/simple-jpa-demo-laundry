@@ -46,22 +46,16 @@ class WorkController {
     def listAllInPopup = {
         execInsideUISync {
             model.kategoriSearchList.clear()
-            model.bahanSearchList.clear()
             model.jenisWorkSearchList.clear()
         }
 
         List kategoriResult = findAllKategori([orderBy: 'nama'])
-        List bahanResult = findAllBahan([orderBy: 'nama'])
         List jenisWorkResult = findAllJenisWork([orderBy: 'nama'])
 
         execInsideUISync {
             model.kategoriSearchList << SEMUA
             model.kategoriSearchList.addAll(kategoriResult)
             model.kategoriSearch.selectedItem = SEMUA
-
-            model.bahanSearchList << SEMUA
-            model.bahanSearchList.addAll(bahanResult)
-            model.bahanSearch.selectedItem = SEMUA
 
             model.jenisWorkSearchList << SEMUA
             model.jenisWorkSearchList.addAll(jenisWorkResult)
@@ -76,12 +70,10 @@ class WorkController {
         execInsideUISync {
             model.workList.clear()
             model.kategoriSearchList.clear()
-            model.bahanSearchList.clear()
             model.jenisWorkSearchList.clear()
         }
 
         List kategoriResult = findAllKategori([orderBy: 'nama'])
-        List bahanResult = findAllBahan([orderBy: 'nama'])
         List jenisWorkResult = findAllJenisWork([orderBy: 'nama'])
         List workResult = findAllWork()
 
@@ -107,10 +99,6 @@ class WorkController {
             model.kategoriSearchList.addAll(kategoriResult)
             model.kategoriSearch.selectedItem = SEMUA
 
-            model.bahanSearchList << SEMUA
-            model.bahanSearchList.addAll(bahanResult)
-            model.bahanSearch.selectedItem = SEMUA
-
             model.jenisWorkSearchList << SEMUA
             model.jenisWorkSearchList.addAll(jenisWorkResult)
             model.jenisWorkSearch.selectedItem = SEMUA
@@ -128,10 +116,6 @@ class WorkController {
             if (model.kategoriSearch.selectedItem!=SEMUA) {
                 and()
                 itemPakaian__kategori eq(model.kategoriSearch.selectedItem)
-            }
-            if (model.bahanSearch.selectedItem!=SEMUA) {
-                and()
-                itemPakaian__bahan eq(model.bahanSearch.selectedItem)
             }
             if (model.jenisWorkSearch.selectedItem!=SEMUA) {
                 and()

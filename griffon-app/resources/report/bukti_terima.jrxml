@@ -287,7 +287,7 @@ JRBeanCollectionDataSource($F{itemWorkOrders})]]></dataSourceExpression>
 								<reportElement uuid="30f483d9-0840-4c2a-849d-37a9c084d784" x="0" y="0" width="72" height="18"/>
 								<box leftPadding="5"/>
 								<textElement/>
-								<textFieldExpression><![CDATA[$F{work}.itemPakaian.kategori ?: $F{work}.itemPakaian.bahan]]></textFieldExpression>
+								<textFieldExpression><![CDATA[$F{work}.itemPakaian.kategori]]></textFieldExpression>
 							</textField>
 						</jr:detailCell>
 					</jr:column>

@@ -45,21 +45,7 @@ application(title: 'Work',
                 textField(id: 'itemPakaianSearch', columns: 20, text: bind('itemPakaianSearch', target: model, mutual: true),
                     actionPerformed: controller.search)
                 label("Kategori")
-                comboBox(id: 'kategoriSearch', model: model.kategoriSearch, itemStateChanged: { ItemEvent e ->
-                    if (e.stateChange == ItemEvent.SELECTED) {
-                        if (e.item != controller.SEMUA) {
-                            model.bahanSearch.selectedItem = controller.SEMUA
-                        }
-                    }
-                })
-                label("Bahan")
-                comboBox(id: 'bahanSearch', model: model.bahanSearch, itemStateChanged: { ItemEvent e ->
-                    if (e.stateChange == ItemEvent.SELECTED) {
-                        if (e.item != controller.SEMUA) {
-                            model.kategoriSearch.selectedItem = controller.SEMUA
-                        }
-                    }
-                })
+                comboBox(id: 'kategoriSearch', model: model.kategoriSearch)
                 label("Jenis Pekerjaan")
                 comboBox(id: 'jenisWorkSearch', model: model.jenisWorkSearch)
                 button(app.getMessage('simplejpa.search.label'), action: cari)
@@ -77,9 +63,6 @@ application(title: 'Work',
                     glazedColumn(name: 'Item Pakaian', property: 'itemPakaian')
                     glazedColumn(name: 'Jenis Work', property: 'jenisWork')
                     glazedColumn(name: 'Kategori', expression: {it.itemPakaian.kategori}) {
-                        templateRenderer("\${it?:'-'}")
-                    }
-                    glazedColumn(name: 'Bahan', expression: {it.itemPakaian.bahan}) {
                         templateRenderer("\${it?:'-'}")
                     }
                     glazedColumn(name: 'Harga Outsider (Rp)', property: 'hargaOutsider', columnClass: Integer) {

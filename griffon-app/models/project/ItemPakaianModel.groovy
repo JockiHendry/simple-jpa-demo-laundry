@@ -19,16 +19,10 @@ class ItemPakaianModel {
     BasicEventList<Kategori> kategoriList = new BasicEventList<>()
     @Bindable DefaultEventComboBoxModel<Kategori> kategori =
         GlazedListsSwing.eventComboBoxModelWithThreadProxyList(kategoriList)
-    BasicEventList<Bahan> bahanList = new BasicEventList<>()
-    @Bindable DefaultEventComboBoxModel<Bahan> bahan =
-        GlazedListsSwing.eventComboBoxModelWithThreadProxyList(bahanList)
 
     BasicEventList kategoriSearchList = new BasicEventList()
     @Bindable DefaultEventComboBoxModel kategoriSearch =
         GlazedListsSwing.eventComboBoxModelWithThreadProxyList(kategoriSearchList)
-    BasicEventList bahanSearchList = new BasicEventList()
-    @Bindable DefaultEventComboBoxModel bahanSearch =
-        GlazedListsSwing.eventComboBoxModelWithThreadProxyList(bahanSearchList)
 
     BasicEventList<ItemPakaian> itemPakaianList = new BasicEventList<>()
 

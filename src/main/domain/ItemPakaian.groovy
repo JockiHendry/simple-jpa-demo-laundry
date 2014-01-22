@@ -33,9 +33,6 @@ class ItemPakaian implements Comparable {
     @ManyToOne
     Kategori kategori
 
-    @ManyToOne
-    Bahan bahan
-
     @OneToMany(cascade=CascadeType.ALL, orphanRemoval=true, mappedBy="itemPakaian")
     List<Work> works = []
 

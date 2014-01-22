@@ -9,7 +9,6 @@ import javax.swing.event.ListSelectionEvent
 class ItemPakaianController {
 
     final static String SEMUA_KATEGORI = "- Semua Kategori -"
-    final static String SEMUA_BAHAN = "- Semua Bahan -"
 
     def model
     def view
@@ -27,14 +26,11 @@ class ItemPakaianController {
         execInsideUISync {
             model.itemPakaianList.clear()
             model.kategoriList.clear()
-            model.bahanList.clear()
             model.kategoriSearchList.clear()
-            model.bahanSearchList.clear()
         }
 
         List itemPakaianResult = findAllItemPakaian()
         List kategoriResult = findAllKategori()
-        List bahanResult = findAllBahan()
 
         execInsideUISync {
             model.namaSearch = null
@@ -44,12 +40,7 @@ class ItemPakaianController {
             model.kategoriSearchList.addAll(kategoriResult)
             model.kategoriSearch.selectedItem = SEMUA_KATEGORI
 
-            model.bahanSearchList << SEMUA_BAHAN
-            model.bahanSearchList.addAll(bahanResult)
-            model.bahanSearch.selectedItem = SEMUA_BAHAN
-
             model.kategoriList.addAll(kategoriResult)
-            model.bahanList.addAll(bahanResult)
         }
     }
 
@@ -62,10 +53,6 @@ class ItemPakaianController {
                 and()
                 kategori eq(model.kategoriSearch.selectedItem)
             }
-            if (model.bahanSearch.selectedItem!=SEMUA_BAHAN) {
-                and()
-                bahan eq(model.bahanSearch.selectedItem)
-            }
         }
         execInsideUISync {
             model.itemPakaianList.addAll(result)
@@ -73,17 +60,9 @@ class ItemPakaianController {
     }
 
     def save = {
-        ItemPakaian itemPakaian = new ItemPakaian('nama': model.nama, 'kategori': model.kategori.selectedItem, 'bahan': model.bahan.selectedItem)
+        ItemPakaian itemPakaian = new ItemPakaian('nama': model.nama, 'kategori': model.kategori.selectedItem)
 
         if (!validate(itemPakaian)) return
-
-        // Sebuah `ItemPakaian` yang memiliki `kategori` tidak boleh memiliki `bahan` (dan sebaliknya).
-        // Strange?
-        if (itemPakaian.kategori && itemPakaian.bahan) {
-            JOptionPane.showMessageDialog(view.mainPanel, 'Item tidak boleh memiliki kategori dan bahan.  Silahkan pilih salah satu.',
-                'Kesalahan Validasi', JOptionPane.ERROR_MESSAGE)
-            return
-        }
 
         if (model.id == null) {
             // Insert operation
@@ -101,7 +80,6 @@ class ItemPakaianController {
             ItemPakaian selectedItemPakaian = view.table.selectionModel.selected[0]
             selectedItemPakaian.nama = model.nama
             selectedItemPakaian.kategori = model.kategori.selectedItem
-            selectedItemPakaian.bahan = model.bahan.selectedItem
             selectedItemPakaian = merge(selectedItemPakaian)
             execInsideUISync { view.table.selectionModel.selected[0] = selectedItemPakaian }
         }
@@ -123,7 +101,6 @@ class ItemPakaianController {
             model.id = null
             model.nama = null
             model.kategori.selectedItem = null
-            model.bahan.selectedItem = null
             model.errors.clear()
             view.table.selectionModel.clearSelection()
         }
@@ -140,7 +117,6 @@ class ItemPakaianController {
                 model.id = selected.id
                 model.nama = selected.nama
                 model.kategori.selectedItem = selected.kategori
-                model.bahan.selectedItem = selected.bahan
             }
         }
     }

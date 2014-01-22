@@ -128,13 +128,6 @@ mvcGroups {
         controller = 'project.KategoriController'
     }
 
-    // MVC Group for "bahan"
-    'bahan' {
-        model      = 'project.BahanModel'
-        view       = 'project.BahanView'
-        controller = 'project.BahanController'
-    }
-
     // MVC Group for "mainGroup"
     'mainGroup' {
         model      = 'project.MainGroupModel'

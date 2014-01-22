@@ -31,8 +31,6 @@ actions {
         smallIcon: imageIcon('/menu_maintenance.png'), closure: popupMaintenance)
     action(id: 'kategori', name: 'Kategori', actionCommandKey: 'kategori', mnemonic: KeyEvent.VK_K,
         smallIcon: imageIcon('/menu_maintenance_kategori.png'), closure: controller.switchPage)
-    action(id: 'bahan', name: 'Bahan', actionCommandKey: 'bahan', mnemonic: KeyEvent.VK_H,
-        smallIcon: imageIcon('/menu_maintenance_bahan.png'), closure: controller.switchPage)
     action(id: 'itemPakaian', name: 'Item Pakaian', actionCommandKey: 'itemPakaian', mnemonic: KeyEvent.VK_P,
         smallIcon: imageIcon('/menu_maintenance_itemPakaian.png'), closure: controller.switchPage)
     action(id: 'jenisWork', name: 'Jenis Pekerjaan', actionCommandKey: 'jenisWork', mnemonic: KeyEvent.VK_J,
@@ -56,7 +54,6 @@ application(id: 'mainFrame',
         menuItem(action: work)
         menuItem(action: itemPakaian)
         menuItem(action: kategori)
-        menuItem(action: bahan)
         menuItem(action: jenisWork)
     }
 

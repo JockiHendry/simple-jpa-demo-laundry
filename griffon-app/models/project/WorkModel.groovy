@@ -36,9 +36,6 @@ class WorkModel {
     BasicEventList kategoriSearchList = new BasicEventList()
     @Bindable DefaultEventComboBoxModel kategoriSearch =
         GlazedListsSwing.eventComboBoxModelWithThreadProxyList(kategoriSearchList)
-    BasicEventList bahanSearchList = new BasicEventList()
-    @Bindable DefaultEventComboBoxModel bahanSearch =
-        GlazedListsSwing.eventComboBoxModelWithThreadProxyList(bahanSearchList)
     BasicEventList jenisWorkSearchList = new BasicEventList()
     @Bindable DefaultEventComboBoxModel jenisWorkSearch =
         GlazedListsSwing.eventComboBoxModelWithThreadProxyList(jenisWorkSearchList)

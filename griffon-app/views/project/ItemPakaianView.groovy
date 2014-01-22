@@ -27,21 +27,7 @@ application(title: 'Item Pakaian',
             label("Nama")
             textField(id: 'namaSearch', columns: 20, text: bind('namaSearch', target: model, mutual: true), actionPerformed: controller.search)
             label("Kategori")
-            comboBox(id: 'kategoriSearch', model: model.kategoriSearch, itemStateChanged: { ItemEvent e ->
-                if (e.stateChange == ItemEvent.SELECTED) {
-                    if (e.item != controller.SEMUA_KATEGORI) {
-                        model.bahanSearch.selectedItem = controller.SEMUA_BAHAN
-                    }
-                }
-            })
-            label("Bahan")
-            comboBox(id: 'bahanSearch', model: model.bahanSearch, itemStateChanged: { ItemEvent e ->
-                if (e.stateChange == ItemEvent.SELECTED) {
-                    if (e.item != controller.SEMUA_BAHAN) {
-                        model.kategoriSearch.selectedItem = controller.SEMUA_KATEGORI
-                    }
-                }
-            })
+            comboBox(id: 'kategoriSearch', model: model.kategoriSearch)
             button(app.getMessage('simplejpa.search.label'), actionPerformed: controller.search)
         }
 
@@ -54,9 +40,6 @@ application(title: 'Item Pakaian',
                 glazedTable(id: 'table', list: model.itemPakaianList, sortingStrategy: SINGLE_COLUMN, onValueChanged: controller.tableSelectionChanged) {
                     glazedColumn(name: 'Nama', property: 'nama')
                     glazedColumn(name: 'Kategori', expression: {it.kategori}) {
-                        templateRenderer("\${it?:'-'}")
-                    }
-                    glazedColumn(name: 'Bahan', expression: {it.bahan}) {
                         templateRenderer("\${it?:'-'}")
                     }
                 }
@@ -72,10 +55,6 @@ application(title: 'Item Pakaian',
             label('Kategori:')
             comboBox(id: 'kategori', model: model.kategori, templateRenderer: '${value}', errorPath: 'kategori')
             errorLabel(path: 'kategori', constraints: 'wrap')
-
-            label('Bahan:')
-            comboBox(id: 'bahan', model: model.bahan, templateRenderer: '${value}', errorPath: 'bahan')
-            errorLabel(path: 'bahan', constraints: 'wrap')
 
             panel(constraints: 'span, growx, wrap') {
                 flowLayout(alignment: FlowLayout.LEADING)

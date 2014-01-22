@@ -14,7 +14,6 @@
     <class>domain.PembayaranCompliant</class>
     <class>domain.Kategori</class>
     <class>domain.JenisWork</class>
-    <class>domain.Bahan</class>
     <properties>
       <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver"/>
       <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost/laundry"/>
