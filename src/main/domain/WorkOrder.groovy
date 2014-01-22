@@ -48,6 +48,9 @@ class WorkOrder {
     @OneToOne(cascade = [CascadeType.PERSIST, CascadeType.MERGE])
     Pembayaran pembayaran
 
+    @Embedded
+    Diskon diskon
+
     String keterangan
 
     @Type(type="org.jadira.usertype.dateandtime.joda.PersistentLocalDate")
@@ -122,7 +125,8 @@ class WorkOrder {
     }
 
     BigDecimal getTotal() {
-        this.total = hitungSubtotal() + hitungSurcharge()
+        BigDecimal total = hitungSubtotal() + hitungSurcharge()
+        this.total = diskon ? diskon.hasilDiskon(total): total
     }
 
     LocalDate getEstimasiSelesaiSementara() {
@@ -153,6 +157,10 @@ class WorkOrder {
         } else {
             return 0
         }
+    }
+
+    BigDecimal hitungDiskon() {
+        diskon.jumlahDiskon(hitungSubtotal() + hitungSurcharge())
     }
 
 }

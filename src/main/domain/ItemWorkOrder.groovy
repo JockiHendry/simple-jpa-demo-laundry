@@ -75,13 +75,16 @@ class ItemWorkOrder {
     @NotNull(groups=[Pengisian, Default]) @Min(0l)
     Integer jumlah
 
+    @Embedded
+    Diskon diskon
+
     String keterangan
 
     @NotNull @ManyToOne
     WorkOrder workOrder
 
     BigDecimal total() {
-        jumlah * harga
+        (diskon? diskon.hasilDiskon(harga): harga) * jumlah
     }
 }
 

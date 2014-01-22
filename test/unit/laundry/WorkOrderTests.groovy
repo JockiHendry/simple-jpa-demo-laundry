@@ -1,11 +1,13 @@
 package laundry
 
+import domain.Diskon
 import domain.EventPekerjaan
 import domain.ItemPakaian
 import domain.ItemWorkOrder
 import domain.JenisWork
 import domain.Pelanggan
 import domain.PembayaranCash
+import domain.PilihanDiskon
 import domain.StatusPekerjaan
 import domain.Work
 import domain.WorkOrder
@@ -137,7 +139,54 @@ class WorkOrderTests extends GriffonUnitTestCase {
         assertEquals(59500, woCorporateExpress.hitungSubtotal())
         assertEquals(59500, woCorporateExpress.hitungSurcharge())
         assertEquals(59500 * 2, woCorporateExpress.total)
+    }
 
+    void testTotalWithDiskon() {
+        Work w1 = new Work(new ItemPakaian('Long Coat'),  new JenisWork('Laundry'))
+        w1.hargaCorporate = 22500
+        w1.hargaOutsider = 21000
+        Work w2 = new Work(new ItemPakaian('Kebaya Suits'), new JenisWork('Dry Cleaning'))
+        w2.hargaCorporate = 19500
+        w2.hargaOutsider = 18000
+        Work w3 = new Work(new ItemPakaian('Long Coat'), new JenisWork('Pressing'))
+        w3.hargaCorporate = 17500
+        w3.hargaOutsider = 17000
+
+        // Diskon 10%
+        WorkOrder woCorporate = new WorkOrder(pelanggan: new Pelanggan(corporate: true), diskon: new Diskon(pilihanPersen: PilihanDiskon.SEPULUH_PERSEN))
+        woCorporate.tambahItem(w1)
+        woCorporate.tambahItem(w2)
+        woCorporate.tambahItem(w3)
+        assertEquals(59500, woCorporate.hitungSubtotal())
+        assertEquals(0, woCorporate.hitungSurcharge())
+        assertEquals(53550, woCorporate.total)
+
+        // Diskon Rp 5000
+        WorkOrder woOutsider = new WorkOrder(pelanggan: new Pelanggan(), diskon: new Diskon(nominal: 5000))
+        woOutsider.tambahItem(w1)
+        woOutsider.tambahItem(w2)
+        woOutsider.tambahItem(w3)
+        assertEquals(56000, woOutsider.hitungSubtotal())
+        assertEquals(0, woOutsider.hitungSurcharge())
+        assertEquals(51000, woOutsider.total)
+
+        // Diskon 10% + Rp 5000
+        WorkOrder woCorporateExpress = new WorkOrder(pelanggan: new Pelanggan(corporate: true), express: true, diskon: new Diskon(PilihanDiskon.SEPULUH_PERSEN, 5000))
+        woCorporateExpress.tambahItem(w1)
+        woCorporateExpress.tambahItem(w2)
+        woCorporateExpress.tambahItem(w3)
+        assertEquals(59500, woCorporateExpress.hitungSubtotal())
+        assertEquals(59500, woCorporateExpress.hitungSurcharge())
+        assertEquals(102100, woCorporateExpress.total)
+
+        // Setiap item diskon 5%, untuk total diskon 10%
+        WorkOrder woPromo = new WorkOrder(pelanggan: new Pelanggan(), diskon: new Diskon(pilihanPersen: PilihanDiskon.SEPULUH_PERSEN))
+        woPromo.tambahItem(new ItemWorkOrder(w1, w1.hargaCorporate, 2, new Diskon(pilihanPersen: PilihanDiskon.LIMA_PERSEN))) // Total: 2 * 22500 - 5% == 42750
+        woPromo.tambahItem(new ItemWorkOrder(w2, w2.hargaCorporate, 1, new Diskon(pilihanPersen: PilihanDiskon.LIMA_PERSEN))) // Total: 1 * 19500 - 5% == 18525
+        woPromo.tambahItem(new ItemWorkOrder(w3, w3.hargaCorporate, 3, new Diskon(pilihanPersen: PilihanDiskon.LIMA_PERSEN))) // Total: 3 * 17500 - 5% == 49875
+        assertEquals(111150, woPromo.hitungSubtotal())
+        assertEquals(0, woPromo.hitungSurcharge())
+        assertEquals(100035, woPromo.total)
     }
 
     void testTotalExpress() {

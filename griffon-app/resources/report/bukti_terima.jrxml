@@ -45,6 +45,9 @@
 		<field name="workOrder" class="domain.WorkOrder">
 			<fieldDescription><![CDATA[workOrder]]></fieldDescription>
 		</field>
+		<field name="diskon" class="domain.Diskon">
+			<fieldDescription><![CDATA[diskon]]></fieldDescription>
+		</field>
 		<variable name="total" class="java.math.BigDecimal" calculation="Sum">
 			<variableExpression><![CDATA[$F{jumlah} * $F{harga}]]></variableExpression>
 			<initialValueExpression><![CDATA[0]]></initialValueExpression>
@@ -235,7 +238,7 @@ JRBeanCollectionDataSource($F{itemWorkOrders})]]></dataSourceExpression>
 								<text><![CDATA[]]></text>
 							</staticText>
 						</jr:tableFooter>
-						<jr:columnHeader height="20" rowSpan="1">
+						<jr:columnHeader height="18" rowSpan="1">
 							<staticText>
 								<reportElement uuid="5ae6f7bb-d40f-4cbb-a0a0-692eac8e7cd0" x="0" y="0" width="128" height="15"/>
 								<box leftPadding="5" bottomPadding="1">
@@ -247,7 +250,7 @@ JRBeanCollectionDataSource($F{itemWorkOrders})]]></dataSourceExpression>
 								<text><![CDATA[Item]]></text>
 							</staticText>
 						</jr:columnHeader>
-						<jr:detailCell height="18" rowSpan="1">
+						<jr:detailCell height="19" rowSpan="1">
 							<textField>
 								<reportElement uuid="df334ec9-c076-400d-8d44-5a17f0527aa8" x="0" y="0" width="128" height="18"/>
 								<box leftPadding="5"/>
@@ -256,10 +259,10 @@ JRBeanCollectionDataSource($F{itemWorkOrders})]]></dataSourceExpression>
 							</textField>
 						</jr:detailCell>
 					</jr:column>
-					<jr:column width="90" uuid="422c4f4a-a3b2-41b7-b52e-63c7c157a3ad">
+					<jr:column width="72" uuid="422c4f4a-a3b2-41b7-b52e-63c7c157a3ad">
 						<jr:tableFooter height="131" rowSpan="1">
 							<staticText>
-								<reportElement uuid="8b9b963c-d1ed-424a-a597-b8035e3fb0c7" x="0" y="0" width="90" height="131"/>
+								<reportElement uuid="8b9b963c-d1ed-424a-a597-b8035e3fb0c7" x="0" y="0" width="72" height="131"/>
 								<box>
 									<topPen lineWidth="1.0"/>
 								</box>
@@ -267,9 +270,9 @@ JRBeanCollectionDataSource($F{itemWorkOrders})]]></dataSourceExpression>
 								<text><![CDATA[]]></text>
 							</staticText>
 						</jr:tableFooter>
-						<jr:columnHeader height="20" rowSpan="1">
+						<jr:columnHeader height="18" rowSpan="1">
 							<staticText>
-								<reportElement uuid="8091802c-2160-4ef0-ae83-2debc26052f2" x="0" y="0" width="90" height="15"/>
+								<reportElement uuid="8091802c-2160-4ef0-ae83-2debc26052f2" x="0" y="0" width="72" height="15"/>
 								<box leftPadding="5" bottomPadding="1">
 									<bottomPen lineWidth="1.0"/>
 								</box>
@@ -279,19 +282,19 @@ JRBeanCollectionDataSource($F{itemWorkOrders})]]></dataSourceExpression>
 								<text><![CDATA[Category]]></text>
 							</staticText>
 						</jr:columnHeader>
-						<jr:detailCell height="18" rowSpan="1">
+						<jr:detailCell height="19" rowSpan="1">
 							<textField>
-								<reportElement uuid="30f483d9-0840-4c2a-849d-37a9c084d784" x="0" y="0" width="90" height="18"/>
+								<reportElement uuid="30f483d9-0840-4c2a-849d-37a9c084d784" x="0" y="0" width="72" height="18"/>
 								<box leftPadding="5"/>
 								<textElement/>
 								<textFieldExpression><![CDATA[$F{work}.itemPakaian.kategori ?: $F{work}.itemPakaian.bahan]]></textFieldExpression>
 							</textField>
 						</jr:detailCell>
 					</jr:column>
-					<jr:column width="91" uuid="2f838dc8-8a42-482a-9451-7edf1a891949">
+					<jr:column width="68" uuid="2f838dc8-8a42-482a-9451-7edf1a891949">
 						<jr:tableFooter height="131" rowSpan="1">
 							<staticText>
-								<reportElement uuid="851758d6-cba2-4c24-a52a-1d66cbc64e3f" x="0" y="0" width="91" height="131"/>
+								<reportElement uuid="851758d6-cba2-4c24-a52a-1d66cbc64e3f" x="0" y="0" width="68" height="131"/>
 								<box>
 									<topPen lineWidth="1.0"/>
 								</box>
@@ -299,9 +302,9 @@ JRBeanCollectionDataSource($F{itemWorkOrders})]]></dataSourceExpression>
 								<text><![CDATA[]]></text>
 							</staticText>
 						</jr:tableFooter>
-						<jr:columnHeader height="20" rowSpan="1">
+						<jr:columnHeader height="18" rowSpan="1">
 							<staticText>
-								<reportElement uuid="87447d90-774d-4235-9aca-904f77fae617" x="0" y="0" width="91" height="15"/>
+								<reportElement uuid="87447d90-774d-4235-9aca-904f77fae617" x="0" y="0" width="68" height="15"/>
 								<box leftPadding="5" bottomPadding="1">
 									<bottomPen lineWidth="1.0"/>
 								</box>
@@ -311,19 +314,19 @@ JRBeanCollectionDataSource($F{itemWorkOrders})]]></dataSourceExpression>
 								<text><![CDATA[Service]]></text>
 							</staticText>
 						</jr:columnHeader>
-						<jr:detailCell height="18" rowSpan="1">
+						<jr:detailCell height="19" rowSpan="1">
 							<textField>
-								<reportElement uuid="c32c1615-7a11-4c7f-89c3-c4a44ef513e8" x="0" y="0" width="91" height="18"/>
+								<reportElement uuid="c32c1615-7a11-4c7f-89c3-c4a44ef513e8" x="0" y="0" width="68" height="18"/>
 								<box leftPadding="5"/>
 								<textElement/>
 								<textFieldExpression><![CDATA[$F{work}.jenisWork.nama]]></textFieldExpression>
 							</textField>
 						</jr:detailCell>
 					</jr:column>
-					<jr:column width="57" uuid="ae3b2625-43cb-4347-ab0c-ba4bc1d89c3d">
+					<jr:column width="38" uuid="ae3b2625-43cb-4347-ab0c-ba4bc1d89c3d">
 						<jr:tableFooter height="131" rowSpan="1">
 							<staticText>
-								<reportElement uuid="6dfe081c-9c9d-4693-9547-d417669ed885" x="0" y="0" width="57" height="131"/>
+								<reportElement uuid="6dfe081c-9c9d-4693-9547-d417669ed885" x="0" y="0" width="38" height="131"/>
 								<box>
 									<topPen lineWidth="1.0"/>
 								</box>
@@ -331,24 +334,56 @@ JRBeanCollectionDataSource($F{itemWorkOrders})]]></dataSourceExpression>
 								<text><![CDATA[]]></text>
 							</staticText>
 						</jr:tableFooter>
-						<jr:columnHeader height="20" rowSpan="1">
+						<jr:columnHeader height="18" rowSpan="1">
 							<staticText>
-								<reportElement uuid="0175c09d-b86e-4c5f-af4c-f383ccf4253c" x="0" y="0" width="57" height="15"/>
+								<reportElement uuid="0175c09d-b86e-4c5f-af4c-f383ccf4253c" x="0" y="0" width="38" height="15"/>
 								<box leftPadding="5" bottomPadding="1">
 									<bottomPen lineWidth="1.0"/>
 								</box>
 								<textElement textAlignment="Right" verticalAlignment="Middle">
 									<font isBold="true"/>
 								</textElement>
-								<text><![CDATA[Quantity]]></text>
+								<text><![CDATA[Qty]]></text>
 							</staticText>
 						</jr:columnHeader>
-						<jr:detailCell height="18" rowSpan="1">
+						<jr:detailCell height="19" rowSpan="1">
 							<textField pattern="#,##0">
-								<reportElement uuid="0cf05555-1516-4f44-83d0-7b7e210b5a85" x="0" y="0" width="57" height="18"/>
+								<reportElement uuid="0cf05555-1516-4f44-83d0-7b7e210b5a85" x="0" y="0" width="38" height="18"/>
 								<box leftPadding="5"/>
 								<textElement textAlignment="Right"/>
 								<textFieldExpression><![CDATA[$F{jumlah}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="58" uuid="0d5b9ff5-197d-4d7f-ae3a-d8298eb90585">
+						<jr:tableFooter height="131" rowSpan="1">
+							<staticText>
+								<reportElement uuid="f15d6544-e188-427a-8eff-44f40e7ff0c8" x="0" y="0" width="58" height="131"/>
+								<box>
+									<topPen lineWidth="1.0"/>
+								</box>
+								<textElement/>
+								<text><![CDATA[]]></text>
+							</staticText>
+						</jr:tableFooter>
+						<jr:columnHeader height="18" rowSpan="1">
+							<staticText>
+								<reportElement uuid="ccca68b3-7428-48d2-8c84-903eea2c2bfc" x="0" y="0" width="58" height="15"/>
+								<box leftPadding="5" bottomPadding="1">
+									<bottomPen lineWidth="1.0"/>
+								</box>
+								<textElement textAlignment="Right" verticalAlignment="Middle">
+									<font isBold="true"/>
+								</textElement>
+								<text><![CDATA[Diskon]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell height="19" rowSpan="1">
+							<textField isStretchWithOverflow="true" pattern="#,##0" isBlankWhenNull="true">
+								<reportElement uuid="b61c4926-8de0-46c5-bcba-c81bd1fa90a0" x="0" y="0" width="58" height="18"/>
+								<box leftPadding="5"/>
+								<textElement textAlignment="Right"/>
+								<textFieldExpression><![CDATA[$F{diskon}]]></textFieldExpression>
 							</textField>
 						</jr:detailCell>
 					</jr:column>
@@ -406,7 +441,7 @@ JRBeanCollectionDataSource($F{itemWorkOrders})]]></dataSourceExpression>
 								<text><![CDATA[Sisa Pembayaran:]]></text>
 							</staticText>
 						</jr:tableFooter>
-						<jr:columnHeader height="20" rowSpan="1">
+						<jr:columnHeader height="18" rowSpan="1">
 							<staticText>
 								<reportElement uuid="f9ee6079-71ad-4887-8540-e6361abf0180" x="0" y="0" width="90" height="15"/>
 								<box leftPadding="5" bottomPadding="1">
@@ -418,7 +453,7 @@ JRBeanCollectionDataSource($F{itemWorkOrders})]]></dataSourceExpression>
 								<text><![CDATA[Price / Unit (IDR)]]></text>
 							</staticText>
 						</jr:columnHeader>
-						<jr:detailCell height="18" rowSpan="1">
+						<jr:detailCell height="19" rowSpan="1">
 							<textField pattern="#,##0">
 								<reportElement uuid="b3e3dc09-6085-453b-a37d-c2d6aaf136fc" x="0" y="0" width="90" height="18"/>
 								<box leftPadding="5"/>
@@ -450,6 +485,11 @@ JRBeanCollectionDataSource($F{itemWorkOrders})]]></dataSourceExpression>
 								<textFieldExpression><![CDATA[$F{_THIS}.workOrder.hitungSubtotal() +
 $F{_THIS}.workOrder.hitungSurcharge()]]></textFieldExpression>
 							</textField>
+							<textField pattern="#,##0" isBlankWhenNull="true">
+								<reportElement uuid="3008bd5e-a0d6-461c-9c90-fff8d746af5d" x="0" y="56" width="96" height="15"/>
+								<textElement textAlignment="Right" verticalAlignment="Middle"/>
+								<textFieldExpression><![CDATA[$F{_THIS}.workOrder.hitungDiskon()]]></textFieldExpression>
+							</textField>
 							<textField pattern="#,##0">
 								<reportElement uuid="e3dd9ba1-9680-410c-a354-fa42279e4604" x="0" y="86" width="96" height="15"/>
 								<textElement textAlignment="Right" verticalAlignment="Middle">
@@ -473,7 +513,7 @@ $F{_THIS}.workOrder.pembayaran.jumlahBayarDimuka: 0]]></textFieldExpression>
 								<textFieldExpression><![CDATA[$F{_THIS}.workOrder.pembayaran.total()]]></textFieldExpression>
 							</textField>
 						</jr:tableFooter>
-						<jr:columnHeader height="20" rowSpan="1">
+						<jr:columnHeader height="18" rowSpan="1">
 							<staticText>
 								<reportElement uuid="f36b99bc-7088-461b-85fa-a8074c120236" x="0" y="0" width="96" height="15"/>
 								<box leftPadding="5" bottomPadding="1">
@@ -485,7 +525,7 @@ $F{_THIS}.workOrder.pembayaran.jumlahBayarDimuka: 0]]></textFieldExpression>
 								<text><![CDATA[Amount (IDR)]]></text>
 							</staticText>
 						</jr:columnHeader>
-						<jr:detailCell height="18" rowSpan="1">
+						<jr:detailCell height="19" rowSpan="1">
 							<textField pattern="#,##0">
 								<reportElement uuid="0e097956-eee9-4c06-ba94-d533e79680e3" x="0" y="0" width="96" height="18"/>
 								<box leftPadding="5"/>

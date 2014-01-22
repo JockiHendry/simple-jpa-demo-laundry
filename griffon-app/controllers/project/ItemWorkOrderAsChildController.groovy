@@ -43,6 +43,10 @@ class ItemWorkOrderAsChildController {
 
     def save = {
         ItemWorkOrder itemWorkOrder = new ItemWorkOrder('work': model.selectedWork, 'harga': model.harga, 'jumlah': model.jumlah, 'keterangan': model.keterangan)
+        if (model.pilihanPersen.selectedItem?.persen > 0 || model.diskonNominal > 0) {
+            Diskon diskon = new Diskon(model.pilihanPersen.selectedItem, model.diskonNominal)
+            itemWorkOrder.diskon = diskon
+        }
         if (!validate(itemWorkOrder, Pengisian)) return_failed()
 
         if (view.table.selectionModel.selectionEmpty) {
@@ -58,10 +62,11 @@ class ItemWorkOrderAsChildController {
                 return
             }
             ItemWorkOrder selectedItemWorkOrder = view.table.selectionModel.selected[0]
-            selectedItemWorkOrder.work = model.selectedWork
-            selectedItemWorkOrder.harga = model.harga
-            selectedItemWorkOrder.jumlah = model.jumlah
-            selectedItemWorkOrder.keterangan = model.keterangan
+            selectedItemWorkOrder.work = itemWorkOrder.work
+            selectedItemWorkOrder.harga = itemWorkOrder.harga
+            selectedItemWorkOrder.jumlah = itemWorkOrder.jumlah
+            selectedItemWorkOrder.diskon = itemWorkOrder.diskon
+            selectedItemWorkOrder.keterangan = itemWorkOrder.keterangan
         }
         execInsideUISync {
             clear()
@@ -119,6 +124,8 @@ class ItemWorkOrderAsChildController {
             model.selectedWork = null
             model.harga = null
             model.jumlah = null
+            model.pilihanPersen.selectedItem = null
+            model.diskonNominal = null
             model.keterangan = null
 
             model.errors.clear()
@@ -138,6 +145,8 @@ class ItemWorkOrderAsChildController {
                 model.selectedWork = selected.work
                 model.harga = selected.harga
                 model.jumlah = selected.jumlah
+                model.pilihanPersen.selectedItem = selected.diskon?.pilihanPersen
+                model.diskonNominal = selected.diskon?.nominal
                 model.keterangan = selected.keterangan
             }
         }

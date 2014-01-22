@@ -29,6 +29,8 @@ class WorkOrderModel {
     @Bindable String keteranganPembayaran
     @Bindable BigDecimal jumlahBayarDimuka
     @Bindable String nomorKartu
+    @Bindable EnumComboBoxModel<PilihanDiskon> pilihanPersen = new EnumComboBoxModel<>(PilihanDiskon)
+    @Bindable BigDecimal diskonNominal
 
     @Bindable String nomorSearch
     @Bindable String pelangganSearch

@@ -84,6 +84,10 @@ class WorkOrderController {
         WorkOrder workOrder = new WorkOrder('nomor': model.nomor, 'tanggal': model.tanggal, 'pelanggan': model.selectedPelanggan,
             'itemWorkOrders': new ArrayList(model.itemWorkOrders), 'statusTerakhir': model.statusTerakhir, 'keterangan': model.keterangan,
             'express': model.express)
+        if (model.pilihanPersen.selectedItem?.persen > 0 || model.diskonNominal > 0) {
+            Diskon diskon = new Diskon(model.pilihanPersen.selectedItem, model.diskonNominal)
+            workOrder.diskon = diskon
+        }
         workOrder.itemWorkOrders.each { ItemWorkOrder itemWorkOrder ->
             itemWorkOrder.workOrder = workOrder
         }
@@ -153,6 +157,7 @@ class WorkOrderController {
             selectedWorkOrder.pelanggan = model.selectedPelanggan
             selectedWorkOrder.keterangan = model.keterangan
             selectedWorkOrder.express = model.express
+            selectedWorkOrder.diskon = workOrder.diskon
             selectedWorkOrder.itemWorkOrders.clear()
             selectedWorkOrder.itemWorkOrders.addAll(model.itemWorkOrders)
             selectedWorkOrder.itemWorkOrders.each { ItemWorkOrder itemWorkOrder ->
@@ -203,6 +208,8 @@ class WorkOrderController {
             model.pembayaranKartuDebit = false
             model.pembayaranCompliant = false
             model.nomorKartu = null
+            model.pilihanPersen.selectedItem = null
+            model.diskonNominal = null
             model.errors.clear()
             view.table.selectionModel.clearSelection()
         }
@@ -239,7 +246,8 @@ class WorkOrderController {
                 if (model.pembayaranKartuDebit) {
                     model.nomorKartu = selected.pembayaran.nomorKartu
                 }
-
+                model.pilihanPersen.selectedItem = selected.diskon?.pilihanPersen
+                model.diskonNominal = selected.diskon?.nominal
                 model.keteranganPembayaran = selected.pembayaran?.keterangan
             }
         }

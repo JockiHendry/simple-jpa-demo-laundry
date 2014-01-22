@@ -15,6 +15,8 @@ class ItemWorkOrderAsChildModel {
     @Bindable Work selectedWork
     @Bindable Integer jumlah
     @Bindable BigDecimal harga
+    @Bindable EnumComboBoxModel<PilihanDiskon> pilihanPersen = new EnumComboBoxModel<>(PilihanDiskon)
+    @Bindable BigDecimal diskonNominal
     @Bindable String keterangan
 
     BasicEventList<ItemWorkOrder> itemWorkOrderList = new BasicEventList<>()

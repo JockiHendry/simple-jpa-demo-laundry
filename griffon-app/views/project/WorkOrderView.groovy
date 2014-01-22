@@ -60,6 +60,7 @@ application(title: 'Work Order',
                         templateRenderer(templateExpression: {it?'Y': 'N'})
                     }
                     glazedColumn(name: 'Keterangan', property: 'keterangan')
+                    glazedColumn(name: 'Diskon', property: 'diskon', columnClass: Integer)
                     glazedColumn(name: 'Total', expression: {it.total}, columnClass: Integer) {
                         templateRenderer('${currencyFormat(it)}', horizontalAlignment: RIGHT)
                     }
@@ -107,6 +108,14 @@ application(title: 'Work Order',
             label('Keterangan:')
             textField(id: 'keterangan', columns: 50, text: bind('keterangan', target: model, mutual: true), errorPath: 'keterangan')
             errorLabel(path: 'keterangan', constraints: 'wrap')
+
+            label('Diskon:')
+            panel(layout: new FlowLayout(FlowLayout.LEADING, 0, 0)) {
+                comboBox(id: 'pilihanPersen', model: model.pilihanPersen, errorPath: 'pilihanPersen')
+                label('% dan Nominal Rp')
+                numberTextField(id: 'diskonNominal', columns: 20, bindTo: 'diskonNominal', errorPath: 'diskonNominal')
+            }
+            errorLabel(path: 'diskon', constraints: 'wrap')
 
             label('Express:')
             checkBox(id: 'express', selected: bind('express', target: model, mutual: true), errorPath: 'express')
