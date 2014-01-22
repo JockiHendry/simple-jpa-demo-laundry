@@ -21,6 +21,13 @@ application {
     locale = 'id_ID'
 }
 mvcGroups {
+    // MVC Group for "historyWorkOrder"
+    'historyWorkOrder' {
+        model      = 'project.HistoryWorkOrderModel'
+        view       = 'project.HistoryWorkOrderView'
+        controller = 'project.HistoryWorkOrderController'
+    }
+
     // MVC Group for "previewFaktur"
     'previewFaktur' {
         model      = 'laundry.PreviewFakturModel'
