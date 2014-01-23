@@ -15,7 +15,8 @@ class LaporanModel {
 
 enum JenisLaporan {
 
-    LAPORAN_KUANTITAS_PER_PELANGGAN('Laporan Kuantitas Per Pelanggan', 'laporan_kuantitas_per_pelanggan', 'kriteriaKuantitasPerPelanggan')
+    LAPORAN_KUANTITAS_PER_PELANGGAN('Laporan Kuantitas Per Pelanggan', 'laporan_kuantitas_per_pelanggan', 'kriteriaKuantitasPerPelanggan'),
+    LAPORAN_PENDAPATAN_PER_PELANGGAN('Laporan Pendapatan Per Pelanggan', 'laporan_pendapatan_per_pelanggan', 'kriteriaPendapatanPerPelanggan')
 
     String keterangan
     String namaLaporan

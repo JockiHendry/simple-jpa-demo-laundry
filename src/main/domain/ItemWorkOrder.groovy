@@ -37,6 +37,8 @@ class ItemWorkOrder {
     @NotNull(groups=[Pengisian, Default])
     BigDecimal harga
 
+    BigDecimal hargaSetelahDiskon
+
     @NotNull(groups=[Pengisian, Default]) @Min(0l)
     Integer jumlah
 
@@ -48,8 +50,12 @@ class ItemWorkOrder {
     @NotNull @ManyToOne
     WorkOrder workOrder
 
+    public BigDecimal getHargaSetelahDiskon() {
+        this.hargaSetelahDiskon = diskon? diskon.hasilDiskon(harga): harga
+    }
+
     BigDecimal total() {
-        (diskon? diskon.hasilDiskon(harga): harga) * jumlah
+        getHargaSetelahDiskon() * jumlah
     }
 }
 

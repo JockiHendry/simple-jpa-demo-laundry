@@ -21,6 +21,13 @@ application {
     locale = 'id_ID'
 }
 mvcGroups {
+    // MVC Group for "kriteriaPendapatanPerPelanggan"
+    'kriteriaPendapatanPerPelanggan' {
+        model      = 'laundry.KriteriaPendapatanPerPelangganModel'
+        view       = 'laundry.KriteriaPendapatanPerPelangganView'
+        controller = 'laundry.KriteriaPendapatanPerPelangganController'
+    }
+
     // MVC Group for "kriteriaKuantitasPerPelanggan"
     'kriteriaKuantitasPerPelanggan' {
         model      = 'laundry.KriteriaKuantitasPerPelangganModel'
