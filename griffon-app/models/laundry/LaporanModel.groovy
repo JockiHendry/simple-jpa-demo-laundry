@@ -15,20 +15,16 @@ class LaporanModel {
 
 enum JenisLaporan {
 
-    LAPORAN_HARIAN('Laporan Harian', 'laporan_harian', 'ItemWorkOrder.LaporanBulanan'),
-    LAPORAN_PELANGGAN('Laporan Transaksi Pelanggan', 'laporan_pelanggan', 'ItemWorkOrder.LaporanPelanggan'),
-    LAPORAN_PELANGGAN_CORPORATE('Laporan Transaksi Pelanggan (Corporate)', 'laporan_pelanggan', 'ItemWorkOrder.LaporanPelangganCorporate'),
-    LAPORAN_PELANGGAN_OUTSIDER('Laporan Transaksi Pelanggan (Outsider)', 'laporan_pelanggan', 'ItemWorkOrder.LaporanPelangganOutsider'),
-    LAPORAN_PEMASUKAN('Laporan Pemasukan', 'laporan_pemasukan', 'ItemWorkOrder.LaporanPemasukan')
+    LAPORAN_KUANTITAS_PER_PELANGGAN('Laporan Kuantitas Per Pelanggan', 'laporan_kuantitas_per_pelanggan', 'kriteriaKuantitasPerPelanggan')
 
     String keterangan
     String namaLaporan
-    String namedQuery
+    String namaMVC
 
-    public JenisLaporan(String keterangan, String namaLaporan, String namedQuery) {
+    public JenisLaporan(String keterangan, String namaLaporan, String namaMVC) {
         this.keterangan = keterangan
         this.namaLaporan = namaLaporan
-        this.namedQuery = namedQuery
+        this.namaMVC = namaMVC
     }
 
     @Override

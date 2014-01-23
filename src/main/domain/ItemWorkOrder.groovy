@@ -28,41 +28,6 @@ import org.joda.time.*
 
 import javax.validation.groups.Default
 
-@NamedQueries([
-    @NamedQuery(name='ItemWorkOrder.LaporanBulanan', query='''
-        SELECT DAY(wo.tanggal) AS tanggal, i.jumlah, i.work.itemPakaian.nama AS nama
-        FROM WorkOrder wo JOIN wo.itemWorkOrders i
-        WHERE wo.tanggal BETWEEN :tanggalMulaiCari AND :tanggalSelesaiCari
-        ORDER BY tanggal, nama
-    '''),
-    @NamedQuery(name='ItemWorkOrder.LaporanPemasukan', query='''
-        SELECT  i.work.itemPakaian.nama AS nama, SUM(i.harga *  i.jumlah) AS total
-        FROM WorkOrder wo JOIN wo.itemWorkOrders i
-        WHERE wo.tanggal BETWEEN :tanggalMulaiCari AND :tanggalSelesaiCari
-        GROUP BY nama
-        ORDER BY nama
-    '''),
-    @NamedQuery(name='ItemWorkOrder.LaporanPelanggan', query='''
-        SELECT wo.pelanggan.nama AS pelanggan, i.jumlah, i.work.itemPakaian.nama AS nama
-        FROM WorkOrder wo JOIN wo.itemWorkOrders i
-        WHERE wo.tanggal BETWEEN :tanggalMulaiCari AND :tanggalSelesaiCari
-        ORDER BY pelanggan, nama
-    '''),
-    @NamedQuery(name='ItemWorkOrder.LaporanPelangganCorporate', query='''
-        SELECT wo.pelanggan.nama AS pelanggan, i.jumlah, i.work.itemPakaian.nama AS nama
-        FROM WorkOrder wo JOIN wo.itemWorkOrders i
-        WHERE wo.tanggal BETWEEN :tanggalMulaiCari AND :tanggalSelesaiCari
-            AND wo.pelanggan.corporate = true
-        ORDER BY pelanggan, nama
-    '''),
-    @NamedQuery(name='ItemWorkOrder.LaporanPelangganOutsider', query='''
-        SELECT wo.pelanggan.nama AS pelanggan, i.jumlah, i.work.itemPakaian.nama AS nama
-        FROM WorkOrder wo JOIN wo.itemWorkOrders i
-        WHERE wo.tanggal BETWEEN :tanggalMulaiCari AND :tanggalSelesaiCari
-            AND wo.pelanggan.corporate = false
-        ORDER BY pelanggan, nama
-    ''')
-])
 @DomainClass @Entity @Canonical
 class ItemWorkOrder {
 

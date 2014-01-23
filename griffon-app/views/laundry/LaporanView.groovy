@@ -19,13 +19,7 @@ application(title: 'laundry',
             flowLayout(alignment: FlowLayout.LEADING)
             label('Pilih Laporan: ')
             comboBox(id: 'jenisLaporan', model: model.jenisLaporanSearch)
-            label("Periode: ")
-            dateTimePicker(id: 'tanggalMulaiCari', localDate: bind('tanggalMulaiCari', target: model, mutual: true),
-                    dateVisible: true, timeVisible: false)
-            label(" s/d ")
-            dateTimePicker(id: 'tanggalSelesaiCari', localDate: bind('tanggalSelesaiCari', target: model, mutual: true),
-                    dateVisible: true, timeVisible: false)
-            button('Tampilkan Laporan', actionPerformed: controller.search)
+            button('Tampilkan Laporan...', actionPerformed: controller.search)
         }
 
         panel(id: 'content', constraints: CENTER) {
