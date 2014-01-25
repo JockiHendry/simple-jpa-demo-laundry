@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="laporan_pemasukan" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="4309294f-e5c9-4271-8da2-99378c573004">
-	<property name="ireport.zoom" value="1.771561000000001"/>
-	<property name="ireport.x" value="263"/>
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<parameter name="tanggalMulaiCari" class="org.joda.time.LocalDate">
 		<defaultValueExpression><![CDATA[org.joda.time.LocalDate.now()]]></defaultValueExpression>
@@ -32,7 +32,7 @@ ORDER BY
 		<variableExpression><![CDATA[$F{harga}]]></variableExpression>
 		<initialValueExpression><![CDATA[0]]></initialValueExpression>
 	</variable>
-	<variable name="totalPerPelanggan" class="java.lang.Integer" resetType="Group" resetGroup="Pelanggan" calculation="Sum">
+	<variable name="totalPerPelanggan" class="java.math.BigDecimal" resetType="Group" resetGroup="Pelanggan" calculation="Sum">
 		<variableExpression><![CDATA[$F{harga}]]></variableExpression>
 	</variable>
 	<variable name="totalPerTanggal" class="java.math.BigDecimal" resetType="Group" resetGroup="tanggal" calculation="Sum">
@@ -77,7 +77,7 @@ ORDER BY
 				<textField pattern="#,##0.00">
 					<reportElement uuid="1aa84f48-4395-48f6-b5cf-5a59462364fb" x="450" y="7" width="105" height="20"/>
 					<textElement textAlignment="Right" verticalAlignment="Middle"/>
-					<textFieldExpression><![CDATA[$V{totalPerPelanggan}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$V{totalPerTanggal}]]></textFieldExpression>
 				</textField>
 				<line>
 					<reportElement uuid="b8ea1ddf-a7ba-49c9-87f0-6f8852de1bfb" x="0" y="26" width="555" height="1"/>
@@ -120,7 +120,7 @@ ORDER BY
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font isBold="true"/>
 				</textElement>
-				<text><![CDATA[Harga (Rp)]]></text>
+				<text><![CDATA[Total (Rp)]]></text>
 			</staticText>
 			<staticText>
 				<reportElement uuid="46615462-8e2d-40bf-ae6e-7dad9ab5ca7d" x="285" y="0" width="165" height="23"/>
@@ -160,17 +160,17 @@ ORDER BY
 	<detail>
 		<band height="17" splitType="Stretch">
 			<textField pattern="#,##0.00">
-				<reportElement uuid="89c915a7-3f65-40db-af10-5461d170643c" x="450" y="1" width="105" height="14"/>
+				<reportElement uuid="89c915a7-3f65-40db-af10-5461d170643c" x="450" y="0" width="105" height="16"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{harga}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="8366b21d-2331-46c6-8d26-ddc7a2d05c7b" isPrintRepeatedValues="false" x="285" y="1" width="165" height="15" printWhenGroupChanges="Pelanggan"/>
+				<reportElement uuid="8366b21d-2331-46c6-8d26-ddc7a2d05c7b" x="285" y="0" width="165" height="16" printWhenGroupChanges="Pelanggan"/>
 				<textElement verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{kategori}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="0a2a4458-9d98-4cbd-931e-dc0e221f588d" isPrintRepeatedValues="false" x="225" y="0" width="60" height="15" printWhenGroupChanges="Pelanggan"/>
+				<reportElement uuid="0a2a4458-9d98-4cbd-931e-dc0e221f588d" isPrintRepeatedValues="false" x="225" y="0" width="60" height="16" printWhenGroupChanges="Pelanggan"/>
 				<textElement verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{tanggal}.toString('dd-MM-YYYY')]]></textFieldExpression>
 			</textField>

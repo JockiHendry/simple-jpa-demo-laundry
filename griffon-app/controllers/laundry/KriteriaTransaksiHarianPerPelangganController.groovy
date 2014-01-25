@@ -50,7 +50,7 @@ class KriteriaTransaksiHarianPerPelangganController {
             params['kategori'] = '%' + model.kategori.trim() + '%'
         }
 
-        query.append(' GROUP BY i.workOrder.pelanggan.nama, i.work.itemPakaian.kategori ORDER BY nama, kategori')
+        query.append(' GROUP BY i.workOrder.pelanggan.nama, i.workOrder.tanggal, i.work.itemPakaian.kategori ORDER BY nama, tanggal, kategori')
 
         def result = executeQuery(query.toString(), [:], params)
 

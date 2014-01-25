@@ -29,7 +29,7 @@ class KriteriaPendapatanPerPelangganController {
                 i.work.itemPakaian.kategori.nama AS kategori,
                 i.work.itemPakaian.nama AS itemPakaian,
                 SUM(i.jumlah) AS jumlah,
-                SUM(i.hargaSetelahDiskon) AS harga
+                i.hargaSetelahDiskon AS harga
             FROM
                 ItemWorkOrder i
 ''')

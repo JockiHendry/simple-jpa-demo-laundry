@@ -96,7 +96,7 @@ ORDER BY
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font isBold="true"/>
 				</textElement>
-				<text><![CDATA[Harga Disc (Rp)]]></text>
+				<text><![CDATA[Harga (Rp)]]></text>
 			</staticText>
 			<staticText>
 				<reportElement uuid="dc45086c-de86-4ebb-9740-b61da860281d" x="462" y="0" width="93" height="23"/>
