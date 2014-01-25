@@ -53,7 +53,7 @@ application(title: 'Work Order',
                     glazedColumn(name: 'Pelanggan', property: 'pelanggan') {
                         templateRenderer('${it.nama}')
                     }
-                    glazedColumn(name: 'Pembayaran', property: 'pembayaran', width: 200) {
+                    glazedColumn(name: 'Pembayaran', property: 'pembayaran') {
                         templateRenderer(templateExpression: { it?.getNamaDeskripsi()?: '-'})
                     }
                     glazedColumn(name: 'Lunas?', expression: {it.pembayaran?.isLunas()}, width: 60) {
@@ -67,6 +67,11 @@ application(title: 'Work Order',
                     }
                     glazedColumn(name: 'Jumlah Pakaian', expression: {it.jumlahPakaian()}, columnClass: Integer)
                     glazedColumn(name: 'Keterangan', property: 'keterangan')
+                    glazedColumn(name: 'Status', property: 'statusTerakhir')
+                    glazedColumn(name: 'Diskon', property: 'diskon', columnClass: Integer)
+                    glazedColumn(name: 'Jumlah Diskon', expression: {it.hitungDiskon()}, columnClass: Integer) {
+                        templateRenderer("\${it==0?'-':currencyFormat(it)}", horizontalAlignment: RIGHT)
+                    }
                     glazedColumn(name: 'Total', expression: {it.total}, columnClass: Integer) {
                         templateRenderer('${currencyFormat(it)}', horizontalAlignment: RIGHT)
                     }

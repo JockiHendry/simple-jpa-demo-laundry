@@ -51,7 +51,7 @@ application(title: 'Work Order',
                     glazedColumn(name: 'Pelanggan', property: 'pelanggan') {
                         templateRenderer('${it.nama}')
                     }
-                    glazedColumn(name: 'Pembayaran', property: 'pembayaran', width: 200) {
+                    glazedColumn(name: 'Pembayaran', property: 'pembayaran') {
                         templateRenderer(templateExpression: { it?.getNamaDeskripsi()?: '-'})
                     }
                     glazedColumn(name: 'Lunas?', expression: {it.pembayaran?.isLunas()}, width: 60) {
@@ -70,6 +70,10 @@ application(title: 'Work Order',
                             condition(if_: {it==StatusPekerjaan.DICUCI}, then_property_: 'foreground', is_: Color.BLUE, else_is_: Color.GRAY)
                             condition(if_: {isSelected}, then_property_: 'foreground', is_: Color.WHITE)
                         }
+                    }
+                    glazedColumn(name: 'Diskon', property: 'diskon', columnClass: Integer)
+                    glazedColumn(name: 'Jumlah Diskon', expression: {it.hitungDiskon()}, columnClass: Integer) {
+                        templateRenderer("\${it==0?'-':currencyFormat(it)}", horizontalAlignment: RIGHT)
                     }
                     glazedColumn(name: 'Total', expression: {it.total}, columnClass: Integer) {
                         templateRenderer('${currencyFormat(it)}', horizontalAlignment: RIGHT)

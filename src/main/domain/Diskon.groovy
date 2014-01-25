@@ -63,7 +63,7 @@ class Diskon implements Comparable {
             result << "${NumberFormat.numberInstance.format(pilihanPersen.persen.doubleValue())} %"
         }
         if (nominal) {
-            result << NumberFormat.currencyInstance.format(nominal.doubleValue())
+            result << NumberFormat.numberInstance.format(nominal.doubleValue())
         }
         result.join(' + ')
     }

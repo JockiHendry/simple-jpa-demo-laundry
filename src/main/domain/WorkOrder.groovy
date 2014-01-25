@@ -164,7 +164,7 @@ class WorkOrder {
     }
 
     BigDecimal hitungDiskon() {
-        diskon.jumlahDiskon(hitungSubtotal() + hitungSurcharge())
+        diskon?.jumlahDiskon(hitungSubtotal() + hitungSurcharge())?:0
     }
 
 }

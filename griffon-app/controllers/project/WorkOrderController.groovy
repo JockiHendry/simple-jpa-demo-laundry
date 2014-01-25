@@ -84,7 +84,7 @@ class WorkOrderController {
         WorkOrder workOrder = new WorkOrder('nomor': model.nomor, 'tanggal': model.tanggal, 'pelanggan': model.selectedPelanggan,
             'itemWorkOrders': new ArrayList(model.itemWorkOrders), 'statusTerakhir': model.statusTerakhir, 'keterangan': model.keterangan,
             'express': model.express)
-        if (model.pilihanPersen.selectedItem?.persen > 0 || model.diskonNominal > 0) {
+        if ((model.pilihanPersen.selectedItem && model.pilihanPersen.selectedItem.persen > 0) || model.diskonNominal > 0) {
             Diskon diskon = new Diskon(model.pilihanPersen.selectedItem, model.diskonNominal)
             workOrder.diskon = diskon
         }

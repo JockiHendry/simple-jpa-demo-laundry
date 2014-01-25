@@ -49,31 +49,35 @@ class ReportTest {
         Work work4 = new Work(itemPakaian: itemPakaian4, jenisWork: pressing, hargaOutsider: 1000.0, hargaCorporate: 1500.0)
 
         WorkOrder workOrderBiasa = new WorkOrder(nomor: "2014/WO/0001", tanggal: LocalDate.now().minusDays(5), pelanggan: pelanggan)
-        workOrderBiasa.tambahItem(new ItemWorkOrder(work1, work1.getHarga(pelanggan), 5))
-        workOrderBiasa.tambahItem(new ItemWorkOrder(work2, work2.getHarga(pelanggan), 3))
-        workOrderBiasa.tambahItem(new ItemWorkOrder(work3, work3.getHarga(pelanggan), 2))
-        workOrderBiasa.tambahItem(new ItemWorkOrder(work4, work4.getHarga(pelanggan), 1))
+        workOrderBiasa.tambahItem(new ItemWorkOrder(work1, work1.getHarga(pelanggan), null, 5))
+        workOrderBiasa.tambahItem(new ItemWorkOrder(work2, work2.getHarga(pelanggan), null, 3))
+        workOrderBiasa.tambahItem(new ItemWorkOrder(work3, work3.getHarga(pelanggan), null, 2))
+        workOrderBiasa.tambahItem(new ItemWorkOrder(work4, work4.getHarga(pelanggan), null, 1))
         workOrderBiasa.pembayaran = new PembayaranCash(tanggal: LocalDate.now().minusDays(5), tagihan: workOrderBiasa.total)
         workOrderBiasa.diterima(LocalDateTime.now().minusDays(5))
 
         WorkOrder workOrderSignedBill = new WorkOrder(nomor: "2014/WO/0002", tanggal: LocalDate.now().minusDays(5), pelanggan: pelanggan)
-        workOrderSignedBill.tambahItem(new ItemWorkOrder(work1, work1.getHarga(pelanggan), 5))
-        workOrderSignedBill.tambahItem(new ItemWorkOrder(work2, work2.getHarga(pelanggan), 3))
-        workOrderSignedBill.tambahItem(new ItemWorkOrder(work3, work3.getHarga(pelanggan), 2))
-        workOrderSignedBill.tambahItem(new ItemWorkOrder(work4, work4.getHarga(pelanggan), 1))
+        workOrderSignedBill.tambahItem(new ItemWorkOrder(work1, work1.getHarga(pelanggan), null, 5))
+        workOrderSignedBill.tambahItem(new ItemWorkOrder(work2, work2.getHarga(pelanggan), null, 3))
+        workOrderSignedBill.tambahItem(new ItemWorkOrder(work3, work3.getHarga(pelanggan), null, 2))
+        workOrderSignedBill.tambahItem(new ItemWorkOrder(work4, work4.getHarga(pelanggan), null, 1))
         workOrderSignedBill.pembayaran = new PembayaranSignedBill(tanggal: LocalDate.now().minusDays(5),
             tagihan: workOrderSignedBill.total, jumlahBayarDimuka: 3000)
         workOrderSignedBill.diterima(LocalDateTime.now().minusDays(5))
 
         WorkOrder workOrderExpress = new WorkOrder(nomor: "2014/WO/0003", tanggal: LocalDate.now().minusDays(5), pelanggan: pelanggan)
-        workOrderExpress.tambahItem(new ItemWorkOrder(work1, work1.getHarga(pelanggan), 5))
-        workOrderExpress.tambahItem(new ItemWorkOrder(work2, work2.getHarga(pelanggan), 3))
-        workOrderExpress.tambahItem(new ItemWorkOrder(work3, work3.getHarga(pelanggan), 2))
-        workOrderExpress.tambahItem(new ItemWorkOrder(work4, work4.getHarga(pelanggan), 1))
+        workOrderExpress.tambahItem(new ItemWorkOrder(work1, work1.getHarga(pelanggan), null, 5))
+        workOrderExpress.tambahItem(new ItemWorkOrder(work2, work2.getHarga(pelanggan), null, 3))
+        workOrderExpress.tambahItem(new ItemWorkOrder(work3, work3.getHarga(pelanggan), null, 2))
+        workOrderExpress.tambahItem(new ItemWorkOrder(work4, work4.getHarga(pelanggan), null, 1))
         workOrderExpress.express = true
         workOrderExpress.pembayaran = new PembayaranCash(tanggal: LocalDate.now().minusDays(5), tagihan: workOrderExpress.total)
         workOrderExpress.diterima(LocalDateTime.now().minusDays(5))
 
         [workOrderBiasa, workOrderExpress, workOrderSignedBill]
+    }
+
+    public static void main(String[] args) {
+        println getDataWorkOrder()
     }
 }

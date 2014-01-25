@@ -32,8 +32,11 @@ application(title: 'Item Work Order',
                     glazedColumn(name: 'Harga', property: 'harga', columnClass: Integer) {
                         templateRenderer('${currencyFormat(it)}', horizontalAlignment: RIGHT)
                     }
-                    glazedColumn(name: 'Diskon', property: 'diskon', columnClass: Integer)
                     glazedColumn(name: 'Keterangan', property: 'keterangan')
+                    glazedColumn(name: 'Diskon', property: 'diskon', columnClass: Integer)
+                    glazedColumn(name: 'Total Diskon', expression: {it.diskon?.jumlahDiskon(it.harga)?.multiply(it.jumlah)}, columnClass: Integer) {
+                        templateRenderer("\${it==null?'-':currencyFormat(it)}", horizontalAlignment: RIGHT)
+                    }
                     glazedColumn(name: 'Total', expression: {it.total()}, columnClass: Integer) {
                         templateRenderer('${currencyFormat(it)}', horizontalAlignment: RIGHT)
                     }

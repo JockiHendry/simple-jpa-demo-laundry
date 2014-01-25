@@ -43,7 +43,7 @@ class ItemWorkOrderAsChildController {
 
     def save = {
         ItemWorkOrder itemWorkOrder = new ItemWorkOrder('work': model.selectedWork, 'harga': model.harga, 'jumlah': model.jumlah, 'keterangan': model.keterangan)
-        if (model.pilihanPersen.selectedItem?.persen > 0 || model.diskonNominal > 0) {
+        if ((model.pilihanPersen.selectedItem && model.pilihanPersen.selectedItem.persen > 0) || model.diskonNominal > 0) {
             Diskon diskon = new Diskon(model.pilihanPersen.selectedItem, model.diskonNominal)
             itemWorkOrder.diskon = diskon
         }
