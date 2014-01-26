@@ -25,10 +25,12 @@ class WorkOrderModel {
     @Bindable boolean pembayaranCash
     @Bindable boolean pembayaranSignedBill
     @Bindable boolean pembayaranKartuDebit
+    @Bindable boolean pembayaranKartuKredit
     @Bindable boolean pembayaranCompliant
     @Bindable String keteranganPembayaran
     @Bindable BigDecimal jumlahBayarDimuka
-    @Bindable String nomorKartu
+    @Bindable String nomorKartuDebit
+    @Bindable String nomorKartuKredit
     @Bindable EnumComboBoxModel<PilihanDiskon> pilihanPersen = new EnumComboBoxModel<>(PilihanDiskon)
     @Bindable BigDecimal diskonNominal
 

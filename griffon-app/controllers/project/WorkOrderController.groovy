@@ -106,7 +106,10 @@ class WorkOrderController {
                 keterangan: model.keteranganPembayaran, jumlahBayarDimuka: model.jumlahBayarDimuka)
         } else if (model.pembayaranKartuDebit) {
             pembayaran = new PembayaranKartuDebit(tanggal: workOrder.tanggal, tagihan: workOrder.total,
-                keterangan: model.keteranganPembayaran, nomorKartu: model.nomorKartu)
+                keterangan: model.keteranganPembayaran, nomorKartu: model.nomorKartuDebit)
+        } else if (model.pembayaranKartuKredit) {
+            pembayaran = new PembayaranKartuKredit(tanggal: workOrder.tanggal, tagihan: workOrder.total,
+                keterangan: model.keteranganPembayaran, nomorKartu: model.nomorKartuKredit)
         } else if (model.pembayaranCompliant) {
             pembayaran = new PembayaranCompliant(tanggal: workOrder.tanggal, tagihan: workOrder.total,
                 keterangan: model.keteranganPembayaran)
@@ -209,8 +212,10 @@ class WorkOrderController {
             model.pembayaranCash = true
             model.pembayaranSignedBill = false
             model.pembayaranKartuDebit = false
+            model.pembayaranKartuKredit = false
             model.pembayaranCompliant = false
-            model.nomorKartu = null
+            model.nomorKartuDebit = null
+            model.nomorKartuKredit = null
             model.pilihanPersen.selectedItem = null
             model.diskonNominal = null
             model.errors.clear()
@@ -242,12 +247,16 @@ class WorkOrderController {
                 model.pembayaranCash = model.pembayaran instanceof PembayaranCash
                 model.pembayaranSignedBill = model.pembayaran instanceof PembayaranSignedBill
                 model.pembayaranKartuDebit = model.pembayaran instanceof PembayaranKartuDebit
+                model.pembayaranKartuKredit = model.pembayaran instanceof PembayaranKartuKredit
                 model.pembayaranCompliant = model.pembayaran instanceof PembayaranCompliant
                 if (model.pembayaranSignedBill) {
                     model.jumlahBayarDimuka = selected.pembayaran.jumlahBayarDimuka
                 }
                 if (model.pembayaranKartuDebit) {
-                    model.nomorKartu = selected.pembayaran.nomorKartu
+                    model.nomorKartuDebit = selected.pembayaran.nomorKartu
+                }
+                if (model.pembayaranKartuKredit) {
+                    model.nomorKartuKredit = selected.pembayaran.nomorKartu
                 }
                 model.pilihanPersen.selectedItem = selected.diskon?.pilihanPersen
                 model.diskonNominal = selected.diskon?.nominal

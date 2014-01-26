@@ -140,6 +140,8 @@ application(title: 'Work Order',
                     selected: bind('pembayaranSignedBill', target: model, mutual: true))
                 radioButton('Kartu Debit', id: 'pembayaranKartuDebit', buttonGroup: pembayaranGroup, actionPerformed: { mainPanel.revalidate() },
                     selected: bind('pembayaranKartuDebit', target: model, mutual: true))
+                radioButton('Kartu Kredit', id: 'pembayaranKartuKredit', buttonGroup: pembayaranGroup, actionPerformed: { mainPanel.revalidate() },
+                        selected: bind('pembayaranKartuKredit', target: model, mutual: true))
                 radioButton('Compliment', id: 'pembayaranCompliant', buttonGroup: pembayaranGroup, actionPerformed: { mainPanel.revalidate() },
                     selected: bind('pembayaranCompliant', target: model, mutual: true))
             }
@@ -153,9 +155,13 @@ application(title: 'Work Order',
             numberTextField(id: 'jumlahBayarDimuka', columns: 20, bindTo: 'jumlahBayarDimuka', nfParseBigDecimal: true,
                 visible: bind {model.pembayaranSignedBill}, constraints: 'hidemode 3, wrap')
 
-            label('Nomor Kartu:', visible: bind{model.pembayaranKartuDebit})
-            textField(id: 'nomorKartu', columns: 20, text: bind('nomorKartu', target: model, mutual: true),
-                visible: bind {model.pembayaranKartuDebit}, constraints: 'wrap')
+            label('Nomor Kartu:', visible: bind{model.pembayaranKartuDebit}, constraints: 'hidemode 3')
+            textField(id: 'nomorKartuDebit', columns: 20, text: bind('nomorKartuDebit', target: model, mutual: true),
+                visible: bind {model.pembayaranKartuDebit}, constraints: 'hidemode 3,wrap')
+
+            label('Nomor Kartu:', visible: bind{model.pembayaranKartuKredit}, constraints: 'hidemode 3')
+            textField(id: 'nomorKartuKredit', columns: 20, text: bind('nomorKartuKredit', target: model, mutual: true),
+                    visible: bind {model.pembayaranKartuKredit}, constraints: 'hidemode 3, wrap')
 
             panel(constraints: 'span, growx, wrap') {
                 flowLayout(alignment: FlowLayout.LEADING)
