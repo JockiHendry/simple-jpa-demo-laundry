@@ -108,18 +108,7 @@ application(title: 'Work Order',
 
             panel(constraints: 'span, growx, wrap') {
                 flowLayout(alignment: FlowLayout.LEADING)
-                button('Proses Order Ini Menjadi Sedang Dikerjakan...', actionPerformed: {
-                    if (model.statusTerakhir != StatusPekerjaan.DITERIMA) {
-                        JOptionPane.showMessageDialog(mainPanel, "Tidak dapat mengubah work order ini karena statusnya tidak memungkinkan untuk diproses!",
-                            "Update Tidak Diperbolehkan", JOptionPane.ERROR_MESSAGE)
-                        return
-                    }
-                    if (JOptionPane.showConfirmDialog(mainPanel, "Apakah Anda yakin order ini sudah memasuki proses pencucian?",
-                            'Konfirmasi Pencucian', JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE) != JOptionPane.YES_OPTION) {
-                        return
-                    }
-                    controller.prosesCuci()
-                })
+                button('Proses Order Ini Menjadi Sedang Dikerjakan...', actionPerformed: controller.prosesCuci)
                 mvcPopupButton(id: 'detailStatus', text: 'Detail Status...', mvcGroup: 'eventPekerjaanAsChild',
                         args: {[parentWorkOrder: view.table.selectionModel.selected[0]]}, dialogProperties: [title: 'Detail Status'],
                         visible: bind {table.isRowSelected}, onFinish: { m, v, c ->

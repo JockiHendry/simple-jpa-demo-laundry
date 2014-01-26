@@ -119,7 +119,10 @@ class WorkOrderController {
         model.pembayaran = pembayaran
         workOrder.pembayaran = pembayaran
 
-
+        if (workOrder.tanggal.isAfter(LocalDate.now())) {
+            model.errors['tanggal'] = 'Tanggal tidak boleh di masa depan (lebih dari hari ini)'
+            return
+        }
         if (!validate(workOrder)) return
 
         if (model.id == null) {

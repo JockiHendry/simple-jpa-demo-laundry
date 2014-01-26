@@ -61,7 +61,9 @@ application(title: 'Work Order',
                         templateRenderer(templateExpression: {it?'Y': 'N'})
                     }
                     glazedColumn(name: 'Estimasi Selesai', property: 'estimasiSelesai', width: 120) {
-                        templateRenderer("\${it? it.toString('dd-MM-yyyy'): '-'}")
+                        templateRenderer("\${it? it.toString('dd-MM-yyyy'): '-'}") {
+                            condition(if_: {it?.isBefore(LocalDate.now())}, then_property_: 'foreground', is_: Color.RED, else_is_: Color.BLACK)
+                        }
                     }
                     glazedColumn(name: 'Jumlah Pakaian', expression: {it.jumlahPakaian()}, columnClass: Integer)
                     glazedColumn(name: 'Keterangan', property: 'keterangan')
@@ -101,18 +103,7 @@ application(title: 'Work Order',
 
             panel(constraints: 'span, growx, wrap') {
                 flowLayout(alignment: FlowLayout.LEADING)
-                button('Proses Order Ini Menjadi Telah Selesai Dicuci...', actionPerformed: {
-                    if (model.statusTerakhir != StatusPekerjaan.DICUCI) {
-                        JOptionPane.showMessageDialog(mainPanel, "Tidak dapat mengubah work order ini karena statusnya tidak memungkinkan untuk diproses!",
-                                "Update Tidak Diperbolehkan", JOptionPane.ERROR_MESSAGE)
-                        return
-                    }
-                    if (JOptionPane.showConfirmDialog(mainPanel, "Apakah Anda yakin order ini telah selesai dicuci?",
-                            'Konfirmasi Selesai Dicuci', JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE) != JOptionPane.YES_OPTION) {
-                        return
-                    }
-                    controller.prosesSelesaiCuci()
-                })
+                button('Proses Order Ini Menjadi Telah Selesai Dicuci...', actionPerformed: controller.prosesSelesaiCuci)
                 mvcPopupButton(id: 'detailStatus', text: 'Detail Status...', mvcGroup: 'eventPekerjaanAsChild',
                         args: {[parentWorkOrder: view.table.selectionModel.selected[0]]}, dialogProperties: [title: 'Detail Status'],
                         visible: bind {table.isRowSelected}, onFinish: { m, v, c ->

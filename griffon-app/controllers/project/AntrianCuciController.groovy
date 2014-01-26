@@ -65,10 +65,33 @@ class AntrianCuciController {
     }
 
     def prosesCuci = {
+
+        if (model.statusTerakhir != StatusPekerjaan.DITERIMA) {
+            JOptionPane.showMessageDialog(view.mainPanel, "Tidak dapat mengubah work order ini karena statusnya tidak memungkinkan untuk diproses!",
+                    "Update Tidak Diperbolehkan", JOptionPane.ERROR_MESSAGE)
+            return
+        }
+
+        // validasi
+        if (model.tanggal.toLocalDate().isBefore(view.table.selectionModel.selected[0].tanggal)) {
+            model.errors['tanggal'] = 'Tanggal mulai dkerjakan harus setelah tanggal yang tertera di WO'
+        }
+        if (model.estimasiSelesai.isBefore(model.tanggal.toLocalDate())) {
+            model.errors['estimasiSelesai'] = 'Tanggal estimasi selesai harus setelah tanggal mulai dikerjakan'
+        }
+        if (model.hasError()) return
+
+        // konfirmasi
+        if (JOptionPane.showConfirmDialog(view.mainPanel, "Apakah Anda yakin order ini sudah memasuki proses pencucian?",
+                'Konfirmasi Pencucian', JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE) != JOptionPane.YES_OPTION) {
+            return
+        }
+
         WorkOrder workOrder = merge(view.table.selectionModel.selected[0])
         if (model.keterangan && !model.keterangan.isEmpty()) {
             workOrder.keterangan = model.keterangan
         }
+
         workOrder.dicuci(model.tanggal)
         workOrder.estimasiSelesai = model.estimasiSelesai
         execInsideUISync {

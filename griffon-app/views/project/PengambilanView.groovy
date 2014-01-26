@@ -115,13 +115,7 @@ application(title: 'Work Order',
                 flowLayout(alignment: FlowLayout.LEADING)
                 button('Proses Pengambilan...', enabled: bind('isRowSelected', source: table, converter: {
                         it && view.table.selectionModel.selected[0].statusTerakhir == StatusPekerjaan.DISELESAIKAN }),
-                        actionPerformed: {
-                            if (JOptionPane.showConfirmDialog(mainPanel, "Apakah Anda yakin order ini diambil pada tanggal ${model.tanggal.toString('dd-MM-yyyy')}?",
-                                    'Konfirmasi Selesai Dicuci', JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE) != JOptionPane.YES_OPTION) {
-                                return
-                            }
-                            controller.prosesPengambilan()
-                })
+                        actionPerformed: controller.prosesPengambilan)
                 mvcPopupButton(id: 'detailStatus', text: 'Detail Status...', mvcGroup: 'eventPekerjaanAsChild',
                         args: {[parentWorkOrder: view.table.selectionModel.selected[0]]}, dialogProperties: [title: 'Detail Status'],
                         visible: bind {table.isRowSelected}, onFinish: { m, v, c ->

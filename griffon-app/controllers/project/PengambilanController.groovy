@@ -70,7 +70,21 @@ class PengambilanController {
     }
 
     def prosesPengambilan = {
+
         WorkOrder workOrder = merge(view.table.selectionModel.selected[0])
+
+        // validasi
+        if (model.tanggal.isBefore(workOrder.getEvent(StatusPekerjaan.DISELESAIKAN).tanggal)) {
+            model.errors['tanggal'] = 'Tanggal pengambilan harus setelah tanggal WO selesai dikerjakan'
+            return
+        }
+
+        // konfirmasi
+        if (JOptionPane.showConfirmDialog(view.mainPanel, "Apakah Anda yakin order ini diambil pada tanggal ${model.tanggal.toString('dd-MM-yyyy')}?",
+                'Konfirmasi Selesai Dicuci', JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE) != JOptionPane.YES_OPTION) {
+            return
+        }
+
         if (model.keterangan && !model.keterangan.isEmpty()) {
             workOrder.keterangan = model.keterangan
         }

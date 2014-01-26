@@ -5,6 +5,7 @@ import domain.WorkOrder
 import org.joda.time.LocalDate
 import simplejpa.transaction.Transaction
 
+import javax.swing.JOptionPane
 import javax.swing.event.ListSelectionEvent
 
 @Transaction
@@ -61,7 +62,26 @@ class PencucianController {
     }
 
     def prosesSelesaiCuci = {
+
+        if (model.statusTerakhir != StatusPekerjaan.DICUCI) {
+            JOptionPane.showMessageDialog(view.mainPanel, "Tidak dapat mengubah work order ini karena statusnya tidak memungkinkan untuk diproses!",
+                    "Update Tidak Diperbolehkan", JOptionPane.ERROR_MESSAGE)
+            return
+        }
+
+        // validasi
         WorkOrder workOrder = merge(view.table.selectionModel.selected[0])
+        if (model.tanggal.isBefore(workOrder.getEvent(StatusPekerjaan.DICUCI).tanggal)) {
+            model.errors['tanggal'] = 'Tanggal selesai dkerjakan harus setelah tanggal mulai dikerjakan'
+            return
+        }
+
+        // konfirmasi
+        if (JOptionPane.showConfirmDialog(view.mainPanel, "Apakah Anda yakin order ini telah selesai dicuci?",
+                'Konfirmasi Selesai Dicuci', JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE) != JOptionPane.YES_OPTION) {
+            return
+        }
+
         if (model.keterangan && !model.keterangan.isEmpty()) {
             workOrder.keterangan = model.keterangan
         }
