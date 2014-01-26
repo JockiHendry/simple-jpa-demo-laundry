@@ -68,7 +68,7 @@ application(title: 'Work Order',
                         }
                     }
                     glazedColumn(name: 'Diskon', property: 'diskon', columnClass: Integer)
-                    glazedColumn(name: 'Jumlah Diskon', expression: {it.hitungDiskon()}, columnClass: Integer) {
+                    glazedColumn(name: 'Jumlah Diskon', property: 'jumlahDiskon', columnClass: Integer) {
                         templateRenderer("\${it==0?'-':currencyFormat(it)}", horizontalAlignment: RIGHT)
                     }
                     glazedColumn(name: 'Total', expression: {it.total}, columnClass: Integer) {

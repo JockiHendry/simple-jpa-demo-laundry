@@ -19,7 +19,8 @@ enum JenisLaporan {
     LAPORAN_PENDAPATAN_PER_PELANGGAN('Laporan Pendapatan Per Pelanggan', 'laporan_pendapatan_per_pelanggan', 'kriteriaPendapatanPerPelanggan'),
     LAPORAN_KUANTITAS_PER_PAKAIAN('Laporan Kuantitas Per Pakaian', 'laporan_kuantitas_per_pakaian', 'kriteriaKuantitasPerPakaian'),
     LAPORAN_PENDAPATAN_PER_PAKAIAN('Laporan Pendapatan Per Pakaian', 'laporan_pendapatan_per_pakaian', 'kriteriaPendapatanPerPakaian'),
-    LAPORAN_TRANSAKSI_HARIAN_PER_PELANGGAN('Laporan Transaksi Harian Per Pelanggan', 'laporan_transaksi_harian_per_pelanggan', 'kriteriaTransaksiHarianPerPelanggan')
+    LAPORAN_TRANSAKSI_HARIAN_PER_PELANGGAN('Laporan Transaksi Harian Per Pelanggan', 'laporan_transaksi_harian_per_pelanggan', 'kriteriaTransaksiHarianPerPelanggan'),
+    LAPORAN_PENDAPATAN_HARIAN('Laporan Pendapatan Harian', 'laporan_pendapatan_harian', 'kriteriaLaporanPendapatanHarian')
 
     String keterangan
     String namaLaporan

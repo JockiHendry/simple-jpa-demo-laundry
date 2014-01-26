@@ -51,6 +51,8 @@ class WorkOrder {
     @Embedded
     Diskon diskon
 
+    BigDecimal jumlahDiskon
+
     String keterangan
 
     @Type(type="org.jadira.usertype.dateandtime.joda.PersistentLocalDate")
@@ -127,6 +129,11 @@ class WorkOrder {
     BigDecimal getTotal() {
         BigDecimal total = hitungSubtotal() + hitungSurcharge()
         this.total = diskon ? diskon.hasilDiskon(total): total
+    }
+
+    BigDecimal getJumlahDiskon() {
+        BigDecimal total = hitungSubtotal() + hitungSurcharge()
+        this.jumlahDiskon = diskon ? diskon.jumlahDiskon(total): 0
     }
 
     LocalDate getEstimasiSelesaiSementara() {

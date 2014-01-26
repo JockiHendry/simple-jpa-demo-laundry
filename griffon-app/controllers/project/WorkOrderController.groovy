@@ -97,6 +97,11 @@ class WorkOrderController {
         if (model.pembayaranCash) {
             pembayaran = new PembayaranCash(tanggal: workOrder.tanggal, tagihan: workOrder.total, keterangan: model.keteranganPembayaran)
         } else if (model.pembayaranSignedBill) {
+            if (model.jumlahBayarDimuka == null) {
+                JOptionPane.showMessageDialog(view.mainPanel, 'Jumlah downpayment (pembayaran di muka) wajib di-isi',
+                    'Kesalahan Validasi', JOptionPane.ERROR_MESSAGE)
+                return
+            }
             if (model.jumlahBayarDimuka >= workOrder.total) {
                 JOptionPane.showMessageDialog(view.mainPanel, 'Jumlah downpayment (pembayaran di muka) harus kurang dari harga total',
                     'Kesalahan Validasi', JOptionPane.ERROR_MESSAGE)
@@ -105,14 +110,21 @@ class WorkOrderController {
             pembayaran = new PembayaranSignedBill(tanggal: workOrder.tanggal, tagihan: workOrder.total,
                 keterangan: model.keteranganPembayaran, jumlahBayarDimuka: model.jumlahBayarDimuka)
         } else if (model.pembayaranKartuDebit) {
+            if (model.nomorKartuDebit == null || model.nomorKartuDebit.isEmpty()) {
+                JOptionPane.showMessageDialog(view.mainPanel, 'Nomor kartu debit wajib di-isi', 'Kesalahan Validasi', JOptionPane.ERROR_MESSAGE)
+                return
+            }
             pembayaran = new PembayaranKartuDebit(tanggal: workOrder.tanggal, tagihan: workOrder.total,
                 keterangan: model.keteranganPembayaran, nomorKartu: model.nomorKartuDebit)
         } else if (model.pembayaranKartuKredit) {
+            if (model.nomorKartuKredit == null || model.nomorKartuKredit.isEmpty()) {
+                JOptionPane.showMessageDialog(view.mainPanel, 'Nomor kartu kredit wajib di-isi', 'Kesalahan Validasi', JOptionPane.ERROR_MESSAGE)
+                return
+            }
             pembayaran = new PembayaranKartuKredit(tanggal: workOrder.tanggal, tagihan: workOrder.total,
                 keterangan: model.keteranganPembayaran, nomorKartu: model.nomorKartuKredit)
         } else if (model.pembayaranCompliant) {
-            pembayaran = new PembayaranCompliant(tanggal: workOrder.tanggal, tagihan: workOrder.total,
-                keterangan: model.keteranganPembayaran)
+            pembayaran = new PembayaranCompliant(tanggal: workOrder.tanggal, tagihan: workOrder.total, keterangan: model.keteranganPembayaran)
         }
         if (!pembayaran) {
             JOptionPane.showMessageDialog(view.mainPanel, 'Anda harus memilih salah satu metode pembayaran.', 'Kesalahan Validasi',
