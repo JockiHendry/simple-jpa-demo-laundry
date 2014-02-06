@@ -27,7 +27,7 @@ class KriteriaTransaksiHarianPerPelangganController {
                 i.workOrder.pelanggan.nama AS nama,
                 i.workOrder.tanggal AS tanggal,
                 i.work.itemPakaian.kategori.nama AS kategori,
-                SUM(i.hargaSetelahDiskon) AS harga
+                SUM(i.hargaSetelahDiskon * i.jumlah) AS total
             FROM
                 ItemWorkOrder i
 ''')
