@@ -44,7 +44,7 @@ class KriteriaLaporanPendapatanHarianController {
 
             def itemPendapatanTunai = pendapatanTunai.find { it[0].isEqual(tanggal) }
             if (itemPendapatanTunai) {
-                barisResult['tunai'] = itemPendapatanTunai[1] + (itemPendapatanTunai[2]?:0)
+                barisResult['tunai'] = itemPendapatanTunai[1]
                 jumlahDiskon += (itemPendapatanTunai[2]?:0)
             }
             def itemDownpayment = downpayment.find { it[0].isEqual(tanggal) }
@@ -58,19 +58,19 @@ class KriteriaLaporanPendapatanHarianController {
 
             def itemPendapatanKartuDebit = pendapatanKartuDebit.find { it[0].isEqual(tanggal) }
             if (itemPendapatanKartuDebit) {
-                barisResult['kartuDebit'] = itemPendapatanKartuDebit[1] + (itemPendapatanKartuDebit[2]?:0)
+                barisResult['kartuDebit'] = itemPendapatanKartuDebit[1]
                 jumlahDiskon += (itemPendapatanKartuDebit[2]?:0)
             }
 
             def itemPendapatanKartuKredit = pendapatanKartuKredit.find { it[0].isEqual(tanggal) }
             if (itemPendapatanKartuKredit) {
-                barisResult['kartuKredit'] = itemPendapatanKartuKredit[1] + (itemPendapatanKartuKredit[2]?:0)
+                barisResult['kartuKredit'] = itemPendapatanKartuKredit[1]
                 jumlahDiskon += (itemPendapatanKartuKredit[2]?:0)
             }
 
             def itemPendapatanSignedBill = pendapatanSignedBill.find { it[0].isEqual(tanggal) }
             if (itemPendapatanSignedBill) {
-                barisResult['signedBill'] = itemPendapatanSignedBill[1] + (itemPendapatanSignedBill[2]?:0)
+                barisResult['signedBill'] = itemPendapatanSignedBill[1]
                 jumlahDiskon += (itemPendapatanSignedBill[2]?:0)
             }
 
