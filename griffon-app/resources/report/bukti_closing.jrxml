@@ -1,0 +1,266 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="bukti_terima" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="ad762834-2100-420f-bfd2-e354d4e480e5">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="expressChecked" mode="Opaque" backcolor="#FFFFFF">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$F{express}==true]]></conditionExpression>
+			<style mode="Opaque" backcolor="#000000"/>
+		</conditionalStyle>
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$F{express}==false]]></conditionExpression>
+			<style mode="Opaque" backcolor="#FFFFFF"/>
+		</conditionalStyle>
+	</style>
+	<style name="regularChecked">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$F{express}==true]]></conditionExpression>
+			<style mode="Opaque" forecolor="#000000" backcolor="#FFFFFF"/>
+		</conditionalStyle>
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$F{express}==false]]></conditionExpression>
+			<style mode="Opaque" backcolor="#000000"/>
+		</conditionalStyle>
+	</style>
+	<parameter name="logo" class="java.lang.Object" isForPrompting="false"/>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<field name="aktualTunai" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[aktualTunai]]></fieldDescription>
+	</field>
+	<field name="aktual" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[aktual]]></fieldDescription>
+	</field>
+	<field name="compliment" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[compliment]]></fieldDescription>
+	</field>
+	<field name="kartuDebit" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[kartuDebit]]></fieldDescription>
+	</field>
+	<field name="kartuKredit" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[kartuKredit]]></fieldDescription>
+	</field>
+	<field name="signedBill" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[signedBill]]></fieldDescription>
+	</field>
+	<field name="tanggal" class="org.joda.time.LocalDate">
+		<fieldDescription><![CDATA[tanggal]]></fieldDescription>
+	</field>
+	<field name="total" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[total]]></fieldDescription>
+	</field>
+	<field name="tunai" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[tunai]]></fieldDescription>
+	</field>
+	<field name="user" class="java.lang.String">
+		<fieldDescription><![CDATA[user]]></fieldDescription>
+	</field>
+	<field name="_THIS" class="java.lang.Object">
+		<fieldDescription><![CDATA[_THIS]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<pageHeader>
+		<band height="79" splitType="Stretch">
+			<image>
+				<reportElement uuid="a1060103-fbbd-4d68-b1cf-1a64539c7f18" x="0" y="0" width="91" height="74"/>
+				<imageExpression><![CDATA[$P{logo}]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement uuid="c34edd9d-4930-45e5-bfd6-2eff5426e62d" x="102" y="0" width="453" height="26"/>
+				<textElement>
+					<font fontName="Arial" size="16" isBold="true"/>
+				</textElement>
+				<text><![CDATA[NOTA DAY-END CLOSING]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<detail>
+		<band height="415" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="719cf196-d17c-44eb-a109-8a52c6a0d172" x="2" y="12" width="209" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Day-End Closing Untuk Tanggal:]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="e273936a-9c11-4fcd-8727-5978603453c6" x="222" y="12" width="333" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{tanggal}.toString('dd-MM-YYYY')]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="4e53b27b-c8e2-4329-9660-d57b7b988f47" x="2" y="32" width="209" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Dibuat Pada Tanggal:]]></text>
+			</staticText>
+			<textField pattern="dd-MM-yyyy HH:mm">
+				<reportElement uuid="f4c53f96-4961-413d-9e81-42b697eeb37e" x="222" y="32" width="333" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{_THIS}.createdDate]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="75cd9175-0182-437c-9efd-dfebc5c9a36b" x="2" y="52" width="209" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Dibuat Oleh:]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="b0adb30e-c81e-4749-9ab4-90d3f7c30899" x="222" y="52" width="333" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{user}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="5cc9e857-1077-4ef2-bb9a-e3b56bbe2cbd" x="2" y="82" width="209" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Tunai (Yang Seharusnya):]]></text>
+			</staticText>
+			<textField pattern="¤ #,##0.00">
+				<reportElement uuid="4798b021-903f-4e6a-9029-aed7e9d22003" x="222" y="82" width="102" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{tunai}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="1bdb2838-c4a1-4d07-94f0-80c986cae4b8" x="2" y="102" width="209" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Tunai (Yang Tersedia):]]></text>
+			</staticText>
+			<textField pattern="¤ #,##0.00">
+				<reportElement uuid="cce737f7-8844-4d61-870e-b9047528f922" x="222" y="102" width="102" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{aktualTunai}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="17692ff4-95c3-4c5e-a37d-c3a59df6d562" x="2" y="122" width="209" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Signed Bill:]]></text>
+			</staticText>
+			<textField pattern="¤ #,##0.00">
+				<reportElement uuid="e460dcc5-f983-4998-9eff-c53cbff7bd8b" x="222" y="122" width="102" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{signedBill}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="45fad04a-ba3d-4b58-a185-ea20c6120086" x="2" y="142" width="209" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Kartu Debit:]]></text>
+			</staticText>
+			<textField pattern="¤ #,##0.00">
+				<reportElement uuid="56a847bb-02cd-4f28-9aec-bbc7539e925e" x="222" y="142" width="102" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{kartuDebit}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="d5250160-57e5-406f-acd6-cce5bfc1e1ec" x="2" y="161" width="209" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Kartu Kredit:]]></text>
+			</staticText>
+			<textField pattern="¤ #,##0.00">
+				<reportElement uuid="3457b6f9-70cf-4f68-b381-fe6751b30240" x="222" y="161" width="102" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{kartuKredit}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="5e0d2277-74a1-44fb-aad1-8d743ff18c55" x="2" y="181" width="209" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Compliment:]]></text>
+			</staticText>
+			<textField pattern="¤ #,##0.00">
+				<reportElement uuid="9555a10d-82e2-4a02-8bcb-69d48fd4397c" x="222" y="181" width="102" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{compliment}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement uuid="f27376e3-4390-47af-ab4c-f5d099c1cdad" x="2" y="77" width="553" height="1"/>
+			</line>
+			<line>
+				<reportElement uuid="bd30fc5a-b86a-477c-8dcb-c511c5eed630" x="2" y="208" width="553" height="1"/>
+			</line>
+			<staticText>
+				<reportElement uuid="2dd3a61a-2896-46e1-841e-268ec4d1a400" x="2" y="217" width="209" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total (Yang Seharusnya):]]></text>
+			</staticText>
+			<textField pattern="¤ #,##0.00">
+				<reportElement uuid="7cbd538b-a20d-48e9-9784-00ba2483a376" x="222" y="217" width="102" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{total}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="6ae4742b-eaca-42b9-8e2e-7be9beaee457" x="2" y="237" width="209" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total (Yang Tersedia):]]></text>
+			</staticText>
+			<textField pattern="¤ #,##0.00">
+				<reportElement uuid="7e8d4a92-f356-4715-b026-a2df96178f41" x="222" y="237" width="102" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{aktual}]]></textFieldExpression>
+			</textField>
+			<textField pattern="¤ #,##0.00">
+				<reportElement uuid="b8bd177b-c20d-4b77-9878-fb23673a8782" x="222" y="257" width="102" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{total} - $F{aktual}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="93cb051f-41d3-40a6-b8b1-84ee97fb61d2" x="2" y="257" width="209" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Selisih:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="b4a88941-e7c8-4dd5-b504-2a79c97cd9db" x="430" y="318" width="125" height="97"/>
+				<box topPadding="2" leftPadding="0">
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Top">
+					<font isBold="false" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[Tanda Tangan Pengawas]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="f984bd46-df37-414b-9f09-453139f71840" x="0" y="318" width="430" height="97"/>
+				<box topPadding="3" leftPadding="5">
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement>
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Keterangan]]></text>
+			</staticText>
+			<line>
+				<reportElement uuid="0e0c3dda-09d3-4ad2-a5b5-2645b2237d7a" x="2" y="1" width="553" height="1"/>
+			</line>
+		</band>
+	</detail>
+</jasperReport>

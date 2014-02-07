@@ -157,7 +157,7 @@ class WorkOrderController {
             persist(workOrder)
 
             execInsideUIAsync {
-                DialogUtils.showMVCGroup('previewFaktur', [workOrder: workOrder, fileReport: 'bukti_terima'], app, view,
+                DialogUtils.showMVCGroup('previewFaktur', [source: workOrder, fileReport: 'bukti_terima'], app, view,
                         [title: 'Preview Bukti Penerimaan', size: new Dimension(840,600)])
             }
 

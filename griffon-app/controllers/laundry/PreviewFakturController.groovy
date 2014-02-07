@@ -15,7 +15,7 @@ class PreviewFakturController {
 
     void mvcGroupInit(Map args) {
         List source = []
-        source << args.'workOrder'
+        source << args.'source'
         String fileReport = args.'fileReport'
 
         Map parameters = ['logo': ImageIO.read(getResourceAsStream("report/logo.jpg"))]

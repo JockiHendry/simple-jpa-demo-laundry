@@ -182,7 +182,7 @@ application(title: 'Work Order',
                 })
 
                 mvcPopupButton('Cetak Bukti Penerimaan', mvcGroup: 'previewFaktur', args: {[
-                        workOrder: view.table.selectionModel.selected[0],
+                        source: view.table.selectionModel.selected[0],
                         fileReport: 'bukti_terima'
                     ]}, dialogProperties: [
                         title: 'Preview Bukti Penerimaan', size: new Dimension(840,600)

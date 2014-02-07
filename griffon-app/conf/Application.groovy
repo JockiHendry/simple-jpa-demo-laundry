@@ -21,6 +21,13 @@ application {
     locale = 'id_ID'
 }
 mvcGroups {
+    // MVC Group for "dayEndClosing"
+    'dayEndClosing' {
+        model      = 'project.DayEndClosingModel'
+        view       = 'project.DayEndClosingView'
+        controller = 'project.DayEndClosingController'
+    }
+
     // MVC Group for "kriteriaLaporanPendapatanHarian"
     'kriteriaLaporanPendapatanHarian' {
         model      = 'laundry.KriteriaLaporanPendapatanHarianModel'
