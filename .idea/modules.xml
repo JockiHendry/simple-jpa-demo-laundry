@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/laundry.iml" filepath="$PROJECT_DIR$/laundry.iml" />
+      <module fileurl="file://$PROJECT_DIR$/laundry-griffonPluginFixes.iml" filepath="$PROJECT_DIR$/laundry-griffonPluginFixes.iml" />
       <module fileurl="file://$PROJECT_DIR$/laundry-griffonPlugins.iml" filepath="$PROJECT_DIR$/laundry-griffonPlugins.iml" />
     </modules>
   </component>

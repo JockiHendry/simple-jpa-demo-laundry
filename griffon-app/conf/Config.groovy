@@ -23,30 +23,29 @@ log4j = {
         development {
             appenders {
                 console name: 'stdout', layout: pattern(conversionPattern: '%d [%t] %-5p %c - %m%n')
-                rollingFile name: 'sqlLog', file: "${System.getProperty('user.home')}/Desktop/sql.log",
-                        layout: pattern(conversionPattern: '%d [%t] %-5p %c - %m%n'),
-                        maxFileSize: 10485760, maxBackupIndex: 20
             }
             root {
-                debug 'stdout'
+                warn 'stdout'
                 additivity = false
             }
 
             error  additivity: false, stdout: ['org.dbunit']
 
             debug  additivity: false, stdout: [
-                    'simplejpa',
-                    'net.sf.jasperreports',
-                    'org.jboss',
-                    'org.codehaus',
-                    'org.hibernate',
-                    'project',
-                    'griffon.util',
-                    'griffon.core',
-                    'griffon.swing',
-                    'griffon.app']
+                'org.hibernate.SQL',
+            ]
 
-            debug  sqlLog: ['com.mysql.jdbc.log']
+            warn   additivity: false, stdout: [
+                'simplejpa',
+                'net.sf.jasperreports',
+                'org.jboss',
+                'org.codehaus',
+                'org.hibernate',
+                'project',
+                'griffon.util',
+                'griffon.core',
+                'griffon.swing',
+                'griffon.app']
         }
 
         production {

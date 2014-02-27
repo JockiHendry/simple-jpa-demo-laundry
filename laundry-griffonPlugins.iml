@@ -2,14 +2,14 @@
 <module type="JAVA_MODULE" version="4">
   <component name="NewModuleRootManager" inherit-compiler-output="true">
     <exclude-output />
-    <content url="file://$USER_HOME$/.griffon/1.4.0/projects/laundry/plugins/jxlayer-1.0.0" />
-    <content url="file://$USER_HOME$/.griffon/1.4.0/projects/laundry/plugins/miglayout-1.0.0" />
-    <content url="file://$USER_HOME$/.griffon/1.4.0/projects/laundry/plugins/simple-jpa-0.5.3" />
-    <content url="file://$USER_HOME$/.griffon/1.4.0/projects/laundry/plugins/swing-1.4.0" />
-    <content url="file://$USER_HOME$/.griffon/1.4.0/projects/laundry/plugins/swingx-builder-0.7" />
+    <content url="file://$USER_HOME$/.griffon/1.5.0/projects/laundry/plugins/jxlayer-1.0.0" />
+    <content url="file://$USER_HOME$/.griffon/1.5.0/projects/laundry/plugins/miglayout-1.0.0" />
+    <content url="file://$USER_HOME$/.griffon/1.5.0/projects/laundry/plugins/simple-jpa-0.6" />
+    <content url="file://$USER_HOME$/.griffon/1.5.0/projects/laundry/plugins/swing-1.4.0" />
+    <content url="file://$USER_HOME$/.griffon/1.5.0/projects/laundry/plugins/swingx-builder-0.7" />
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" scope="PROVIDED" name="griffon-1.4.0" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="griffon-1.5.0" level="project" />
     <orderEntry type="module-library" exported="">
       <library name="Griffon:lib (laundry-griffonPlugins)">
         <CLASSES />
